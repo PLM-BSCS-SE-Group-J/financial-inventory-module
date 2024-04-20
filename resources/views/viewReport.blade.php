@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/app.css')
+    <title>Financial Inventory</title>
+    <link rel="stylesheet" href="./dist/output.css">
+
+    <style>
+      .vertical-menu {
+          width: 500px;
+          height: auto;
+          overflow-y: auto;
+      }
+      .vertical-menu a {
+          background-color: #f1f5f9;
+          color: black;
+          display: block;
+          padding: 12px;
+          text-decoration: none;
+      }
+      .vertical-menu a:nth-child(even){
+          background-color: #FFFFFF;
+      }
+      .vertical-menu a:hover{
+          background-color: #d1d5db; 
+          color: black;
+          display: block;
+          padding: 12px;
+          text-decoration: none
+      }
+      .scroll-container::-webkit-scrollbar {
+          width: 8px;
+      }
+      .scroll-container::-webkit-scrollbar-track {
+          background-color: #f1f1f1;
+      }
+      .scroll-container::-webkit-scrollbar-thumb {
+          background-color: #888;
+          border-radius: 10px;
+      }
+      .scroll-container::-webkit-scrollbar-thumb:hover {
+          background-color: #555; 
+      }
+    </style>
+
+</head>
+
+<body class="bg-neutral-100">
+  <div class="h-screen">
+    <!--Logout Button Modal--> 
+    <div id="logout dialog" class="fixed left=0 top=0 bg-black bg-opacity-50 z-20 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
+      <div class="bg-white rounded-xl shadow-lg shadow-slate-200 px-8 pt-10 pb-8 w-[30%] h-[25%] flex flex-col overflow-hidden">
+        <div class="flex flex-col gap-6 w-full">
+          <span class="text-2xl font-semibold text-black">Are you absolutely sure?</span>
+          <span class="text-lg text-gray-500">Clicking Yes will log you out of the session.</span>
+          <div class="flex justify-end pt-2 gap-4">
+            <button onclick="hideLogoutDialog()">
+              <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Cancel.png" alt="Cancel">
+            </button>
+            <button onclick="document.location='Login Page.html'">
+              <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Main Div-->
+
+    <!--Header-->
+    <nav class="flex items-center justify-between bg-white py-1 px-4">
+      <div class="flex items-center space-x-4">
+        <img class="w-116 h-20 rounded-xl" style="margin:10px" src="storage/assets/PLM LOGO.png" alt="Logo">
+      </div>
+      <div class="relative flex items-center space-x-4 ml-auto">
+        <input type="text" class="block w-full h-10 rounded-lg border-0 py-1.5 pl-11 pr-24 bg-zinc-100 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Search Here">
+        <img class="absolute top-1/2 transform -translate-y-1/2 w-5 h-5" src="storage/assets/search.png" alt="Search Icon">
+      </div>
+      <div class="flex items-center space-x-4 ml-8 pr-8">
+        <img class="w-10 h-10" src="storage/assets/usericon.png" alt="Profile Picture">
+        <span class="text-lg text-gray-500">Mara Calinao</span>
+        <img class="w-3 h-2" src="storage/assets/dropdowndark.png" alt="arrow down">
+      </div>
+      </nav>
+    <!--Header-->
+
+    <!--Lower Div-->
+    <div class="flex w-auto h-screen">
+      <!--Side Nav Bar-->
+      <div id="accordion" class="bg-indigo-800 text-white h-screen w-80 overflow-hidden flex flex-col">
+        <nav class="flex flex-col h-full w-full">
+          <!--Financial Inventory Title-->
+          <div class="flex items-center justify-center py-6 pl-4 pr-6">
+            <a href="homePage">
+              <span class="text-2xl font-semibold leading-10">Financial Inventory</span>
+            </a>
+          </div>
+          <!--Assets-->
+          <div class="item mt-1">
+            <div class="header font-bold flex items-center cursor-pointer hover:bg-indigo-900">
+              <div class="flex items-center py-2 px-9 gap-3">
+                <img class="w-12 h-8" src="storage/assets/assets.png">
+                <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Assets</span>
+              </div>
+              <img class="inactiveIcon w-3 h-2 ml-7" src="storage/assets/dropdown.png">
+              <img class="activeIcon w-3 h-2 ml-7" src="storage/assets/flyup.png">
+            </div>
+
+            <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
+              <a href="fixedAssets" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
+              <a href="supplies" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Supplies</a>
+            </div>
+          </div>
+          <!--Reports-->
+          <div class="item mt-5">
+            <div class="header font-bold flex items-center cursor-pointer hover:bg-indigo-900">
+              <div class="flex items-center py-2 px-9 gap-3">
+                <img class="w-12 h-8" src="storage/assets/reports.png">
+                <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Reports</span>
+              </div>
+              <img class="inactiveIcon w-3 h-2 ml-4" src="storage/assets/dropdown.png">
+              <img class="activeIcon w-3 h-2 ml-4" src="storage/assets/flyup.png">
+            </div>
+
+            <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
+              <a href="genReport" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Generate Reports</a>
+              <a href="viewReport" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
+            </div>
+          </div>
+          <!--Settings-->
+          <a href="" class="flex items-center mt-auto mb-2 hover:bg-indigo-900 py-1 pl-8 gap-5">
+            <img class="w-6 h-6" src="storage/assets/settings.png">
+            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Settings</span>
+          </a>
+          <!--Logout-->
+          <div class="relative flex items-center mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
+            <button onclick="showLogoutDialog()" class="flex items-center gap-5">
+              <img class="w-6 h-6" src="storage/assets/logout.png" alt="Logout Icon">
+              <span class="text-xl font-normal leading-7 text-white transition duration-300">Logout</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+      <!--Side Nav Bar-->
+    
+      <!--Lower-Right Div-->
+      <div class="flex flex-col w-screen bg-neutral-200">
+        <!--Title-->
+        <div class="flex h-24 w-auto my-4 mx-4 bg-white rounded-2xl shadow">
+          <div class="flex h-24 w-5/6 px-5 items-center">
+            <div class="mx-4 w-fit h-fit text-4xl font-regular">Reports</div>
+            <img class="my-4 w-8 h-6" src="storage/assets/arrowright.png">
+            <div class="mx-2 w-auto h-fit text-4xl font-semibold">View All Reports</div>
+          </div>
+        </div>
+        <!--Title-->
+
+        <div class="flex h-[85%] mb-4 mr-5">
+            <!--Scroll Menu-->
+            <div class="tab flex flex-col h-full w-auto mb-auto mx-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
+              <div class="flex ml-4 border-8 justify-between border-white">
+                <div class="flex w-auto">
+                  <button onclick="openTab(event, 'recent')" class="hover:bg-gray-300">
+                    <div class="text-xl font-normal rounded-xl px-4 py-1">Recent</div>
+                  </button>
+                  <button onclick="openTab(event, 'showall')" class="hover:bg-gray-300">
+                    <div class="text-xl font-normal rounded-md px-4 py-1">Show All</div>
+                  </button>
+                </div>
+                <div class="flex ml-7 mt-0.5 gap-2">
+                  <div class="text-xl py-1 items-center">Sort by:</div>
+                  <!--Sort By Dropdown-->
+                  <div id="accordion" class="static h-full w-36 flex flex-col">
+                    <nav class="flex flex-col h-full w-full">
+                      <!--Sort By Options-->
+                      <div class="item2 absolute">
+                        <div class="header font-bold flex items-center cursor-pointer text-black hover:bg-gray-300">
+                          <div class="flex items-center py-1 pl-4">
+                            <span class="w-full text-xl font-normal leading-7 transition duration-300">Name</span>
+                          </div>
+                          <img class="inactiveIcon w-3 h-2 ml-8" src="storage/assets/dropdowndark.png">
+                          <img class="activeIcon w-3 h-2 ml-8" src="storage/assets/flyupdark.png">
+                        </div>
+                        <div class="content font-medium transition-all duration-500 flex flex-col">
+                          <a href="" class="w-32 h-fit px-2 py-2 bg-white text-black hover:bg-gray-300">Oldest</a>
+                          <a href="" class="w-32 h-fit px-2 py-2 bg-white text-black hover:bg-gray-300">Newest</a>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+              <div class="overflow-auto border-8 border-white scroll-container">
+                <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
+                  <div class="vertical-menu scroll-container rounded-xl">
+                    <div id="recent" class="tab-content">
+                      <a href="#">Recently Viewed 1</a>
+                      <a href="#">Recently Viewed 2</a>
+                      <a href="#">Recently Viewed 3</a>
+                      <a href="#">Recently Viewed 4</a>
+                      <a href="#">Recently Viewed 5</a>
+                      <a href="#">Recently Viewed 6</a>
+                      <a href="#">Recently Viewed 7</a>
+                      <a href="#">Recently Viewed 8</a>
+                      <a href="#">Recently Viewed 9</a>
+                      <a href="#">Recently Viewed 10</a>
+                      <a href="#">Recently Viewed 11</a>
+                      <a href="#">Recently Viewed 12</a>
+                      <a href="#">Recently Viewed 13</a>
+                      <a href="#">Recently Viewed 14</a>
+                      <a href="#">Recently Viewed 15</a>
+                    </div>
+                    <div id="showall" class="hidden tab-content">
+                      <a href="#">Old Report 1</a>
+                      <a href="#">Old Report 2</a>
+                      <a href="#">Old Report 3</a>
+                      <a href="#">Old Report 4</a>
+                      <a href="#">Old Report 5</a>
+                      <a href="#">Recently Viewed 1</a>
+                      <a href="#">Recently Viewed 2</a>
+                      <a href="#">Recently Viewed 3</a>
+                      <a href="#">Recently Viewed 4</a>
+                      <a href="#">Recently Viewed 5</a>
+                      <a href="#">Not Recently Viewed 1</a>
+                      <a href="#">Not Recently Viewed 2</a>
+                      <a href="#">Not Recently Viewed 3</a>
+                      <a href="#">Not Recently Viewed 4</a>
+                      <a href="#">Not Recently Viewed 5</a>
+                      <a href="#">Not Recently Viewed 6</a>
+                      <a href="#">Not Recently Viewed 7</a>
+                      <a href="#">Not Recently Viewed 8</a>
+                      <a href="#">Not Recently Viewed 9</a>
+                      <a href="#">Not Recently Viewed 10</a>
+                      <a href="#">Recently Viewed 6</a>
+                      <a href="#">Recently Viewed 7</a>
+                      <a href="#">Recently Viewed 8</a>
+                      <a href="#">Recently Viewed 9</a>
+                      <a href="#">Recently Viewed 10</a>
+                      <a href="#">Recently Viewed 11</a>
+                      <a href="#">Recently Viewed 12</a>
+                      <a href="#">Recently Viewed 13</a>
+                      <a href="#">Recently Viewed 14</a>
+                      <a href="#">Recently Viewed 15</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Scroll Menu-->
+
+            <!--PDF Viewer-->
+            <div class="h-full w-full mr-4 rounded-2xl shadow-lg scroll-container">
+                <object data="Inventory Module (Financial System) Documentation.pdf" type="application/pdf" class="flex justify-center items-center h-full w-full">
+                    <p class="py-2 px-4 bg-gold rounded-md">Unable to display PDF file. <a href=""><strong><u>Download</u></strong></a> instead.</p>
+                </object>
+            </div>
+            <!--PDF Viewer-->
+        </div>
+        
+      </div>
+      <!--Lower-Right Div-->
+  
+    </div>
+    <!--Lower Div-->
+
+  </div>
+  <!--Main Div-->
+
+  <!--Log Out Modal Script-->
+  <script>
+    function showLogoutDialog(){
+      let dialog = document.getElementById('logout dialog');
+      dialog.classList.remove('hidden');
+      dialog.classList.add('flex');
+      setTimeout(() => {
+      dialog.classList.add('opacity-100');
+      }, 20);
+    }
+
+    function hideLogoutDialog(){
+      let dialog = document.getElementById('logout dialog');
+      dialog.classList.add('opacity-0');
+      dialog.classList.remove('opacity-100');
+      setTimeout(() => {
+      dialog.classList.add('hidden');
+      dialog.classList.remove('flex');
+      }, 500);
+    }
+  </script>
+
+  <!--Tab Navigation Script-->
+  <script>
+    // Function to set default tab content as "recent"
+    function setDefaultTabContent() {
+      var tabContent = document.getElementsByClassName('tab-content');
+      for (var i = 0; i < tabContent.length; i++) {
+        if (tabContent[i].id === 'recent') {
+          tabContent[i].style.display = 'block'; // Set the "recent" tab content to display
+        } else {
+          tabContent[i].style.display = 'none'; // Hide other tab content
+        }
+      }
+      
+      var tabLinks = document.getElementById('recent').getElementsByTagName('a');
+      for (var j = 0; j < tabLinks.length; j++) {
+        tabLinks[j].classList.remove('text-gray-600', 'hover:text-blue-700');
+        tabLinks[j].classList.add('bg-white', 'text-blue-700');
+      }
+    }
+  
+    // Function to toggle between tabs
+    function openTab(evt, tabName) {
+      var i, tabContent, tabLinks;
+      
+      tabContent = document.getElementsByClassName('tab-content');
+      for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].style.display = 'none';
+      }
+      
+      tabLinks = document.getElementsByTagName('a');
+      for (i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].classList.remove('bg-white', 'text-blue-700');
+        tabLinks[i].classList.add('text-gray-600', 'hover:text-blue-700');
+      }
+      
+      document.getElementById(tabName).style.display = 'block';
+      evt.currentTarget.classList.remove('text-gray-600', 'hover:text-blue-700');
+      evt.currentTarget.classList.add('bg-white', 'text-blue-700');
+    }
+  
+    // Call the function to set default tab content when the page loads
+    window.onload = function() {
+      setDefaultTabContent();
+    };
+  </script>
+
+  <!--Side Menu Accordion-->
+  <script>
+    let items = document.querySelectorAll('#accordion .item .header');
+
+    items.forEach((item)=>{
+        item.addEventListener('click',(e)=>{
+        let currentItem = e.currentTarget.closest('.item');
+
+        //Activate the accordion
+        e.currentTarget.closest('.item').classList.toggle('active');
+
+        if (!isActive) {
+            currentItem.classList.add('active');
+        }
+        });
+    });
+  </script>
+
+  <!--Time Selection Accordion-->
+  <script>
+    let items2 = document.querySelectorAll('#accordion .item2 .header');
+
+    items2.forEach((item)=>{
+        item.addEventListener('click',(e)=>{
+        let currentItem = e.currentTarget.closest('.item2');
+
+        //Activate the accordion
+        e.currentTarget.closest('.item2').classList.toggle('active');
+
+        if (!isActive) {
+            currentItem.classList.add('active');
+        }
+        });
+    });
+  </script>
+</body>
+
+</html>

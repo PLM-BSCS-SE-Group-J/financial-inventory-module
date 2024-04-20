@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FixedAssetsController;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +15,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/loginPage', function () {
+    return view('loginPage');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/homePage', function () {
+    return view('homePage');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/fixedAssets', function () {
+    return view('fixedAssets');
+});
+
+Route::get('/fixedAssets',[FixedAssetsController::class,'show'])->name('fixedAssets');
+Route::post('/fixedAssets', [FixedAssetsController::class, 'DataInsert'])->name('assets.add');
+Route::delete('/fixedAssets/{id}', [FixedAssetsController::class, 'destroy'])->name('assets.destroy');
+Route::get('/exportPDF', [FixedAssetsController::class,'exportPDF'])->name('exportPDF');
+Route::get('editAssets/{id}',[FixedAssetsController::class, 'edit']);
+Route::put('updateAssets/{id}', [FixedAssetsController::class, 'editAssets']);
+
+Route::get('/export', [FixedAssetsController::class,'export'])->name('export');
+Route::post('/import', [FixedAssetsController::class,'import'])->name('import');
+Route::get('/search', [FixedAssetsController::class,'search'])->name('search');
+
+Route::get('/supplies', function () {
+    return view('supplies');
+});
+
+Route::get('/genReport', function () {
+    return view('genReport');
+});
+
+Route::get('/viewReport', function () {
+    return view('viewReport');
+});
