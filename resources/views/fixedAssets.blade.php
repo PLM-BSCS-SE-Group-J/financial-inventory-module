@@ -290,6 +290,12 @@
                       <input type="file" name="fixed_assets" class="ml-2" required>
                     </form>
                   </div>
+                  <!--Yearly/Monthly Button Trigger-->
+                  <label class="flex cursor-pointer gap-2">
+                    <span class="label-text text-base">Yearly</span> 
+                    <input type="checkbox" value="synthwave" class="toggle theme-controller bg-indigo-800" onchange="toggleDepreciation()"/>
+                    <span class="label-text text-base">Monthly</span> 
+                  </label>
                   <!--Search Button Trigger-->
                   <form action ="{{url('search')}}" method="GET">
                   <div class="relative flex items-center space-x-4 ml-auto">
@@ -313,7 +319,7 @@
                   <th class="w-44 border rowtext-margin text-left border-slate-100">Original Cost</th>
                   <th class="w-44 border rowtext-margin text-left border-slate-100">Netbook Value</th>
                   <th class="w-44 border rowtext-margin text-left border-slate-100">Accumulated Depreciation</th>
-                  <th class="w-44 border rowtext-margin text-left border-slate-100">Monthly Depreciation</th>
+                  <th class="w-40 border rowtext-margin text-left border-slate-100 depreciation-header">Yearly Depreciation</th>
                   <th class="w-20 border rowtext-margin text-left border-slate-100">Actions</th>
                 </tr>
               </thead>
@@ -327,7 +333,7 @@
                   <td class="border rowtext-margin border-slate-100">{{$data->dateAcquired}}</td>
                   <td class="border rowtext-margin border-slate-100">{{$data->OrigVal}}</td>
                   <td class="border rowtext-margin border-slate-100">{{$data->CurrentVal}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->DepVal}}</td>
+                  <td class="border rowtext-margin border-slate-100 depreciation-cell">{{$data->DepVal}}</td>
                   <td class="border rowtext-margin border-slate-100">{{$data->DepVal}}</td>
                   <td class="flex flex-col rowtext-margin">
                     <a href="{{ url('editAssets/'.$data->id) }}" class="text-indigo-800 underline">View</a>
@@ -355,47 +361,30 @@
   </div>
   <!--Main Div-->
 
-  <!--Add Modal Script-->
+  <!--Yearly/Monthly Script-->
   <script>
-    function showAddDialog(){
-      let dialog = document.getElementById('add dialog');
-      dialog.classList.remove('hidden');
-      dialog.classList.add('flex');
-      setTimeout(() => {
-      dialog.classList.add('opacity-100');
-      }, 20);
-    }
+    function toggleDepreciation() {
+      var slider = document.querySelector('.toggle');
+      var columnHeader = document.querySelector('.depreciation-header');
+      var depreciationCells = document.querySelectorAll('.depreciation-cell');
 
-    function hideAddDialog(){
-      let dialog = document.getElementById('add dialog');
-      dialog.classList.add('opacity-0');
-      dialog.classList.remove('opacity-100');
-      setTimeout(() => {
-      dialog.classList.add('hidden');
-      dialog.classList.remove('flex');
-      }, 500);
-    }
-  </script>
-
-  <!--Add Validation Modal Script-->
-  <script>
-    function showAddValidDialog(){
-      let dialog = document.getElementById('add validation dialog');
-      dialog.classList.remove('hidden');
-      dialog.classList.add('flex');
-      setTimeout(() => {
-      dialog.classList.add('opacity-100');
-      }, 20);
-    }
-
-    function hideAddValidDialog(){
-      let dialog = document.getElementById('add validation dialog');
-      dialog.classList.add('opacity-0');
-      dialog.classList.remove('opacity-100');
-      setTimeout(() => {
-      dialog.classList.add('hidden');
-      dialog.classList.remove('flex');
-      }, 500);
+      if (slider.checked) {
+        columnHeader.textContent = 'Monthly Depreciation';
+        // Update backend computation for monthly depreciation
+        depreciationCells.forEach(cell => {
+          // Update each cell's computation logic
+          // For example:
+          // cell.textContent = calculateMonthlyDepreciation(...);
+        });
+      } else {
+        columnHeader.textContent = 'Yearly Depreciation';
+        // Update backend computation for yearly depreciation
+        depreciationCells.forEach(cell => {
+          // Update each cell's computation logic
+          // For example:
+          // cell.textContent = calculateYearlyDepreciation(...);
+        });
+      }
     }
   </script>
 
