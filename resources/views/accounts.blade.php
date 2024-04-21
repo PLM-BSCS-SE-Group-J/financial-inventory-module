@@ -73,7 +73,7 @@
 
             <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
               <a href="fixedAssets" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
-              <a href="supplies" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Supplies</a>
+              <a href="accounts" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
             </div>
           </div>
           <!--Reports-->
@@ -115,7 +115,7 @@
           <div class="flex h-24 w-5/6 px-5 items-center">
             <div class="mx-4 w-fit h-fit text-4xl font-regular">Assets</div>
             <img class="my-4 w-8 h-6" src="storage/assets/arrowright.png">
-            <div class="mx-2 w-auto h-fit text-4xl font-semibold">Supplies</div>
+            <div class="mx-2 w-auto h-fit text-4xl font-semibold">Accounts</div>
           </div>
         </div>
       </div>

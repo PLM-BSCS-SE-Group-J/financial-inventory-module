@@ -38,8 +38,8 @@ Route::get('/export', [FixedAssetsController::class,'export'])->name('export');
 Route::post('/import', [FixedAssetsController::class,'import'])->name('import');
 Route::get('/search', [FixedAssetsController::class,'search'])->name('search');
 
-Route::get('/supplies', function () {
-    return view('supplies');
+Route::get('/accounts', function () {
+    return view('accounts');
 });
 
 Route::get('/genReport', function () {
@@ -48,4 +48,8 @@ Route::get('/genReport', function () {
 
 Route::get('/viewReport', function () {
     return view('viewReport');
+});
+
+Route::get('/addAssets', function () {
+    return view('addAssets');
 });

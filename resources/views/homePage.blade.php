@@ -35,7 +35,8 @@
           width: 195px;
       }
       .image-format2 {
-          margin-top: 30px;
+          margin-top: 20px;
+          margin-bottom: -20px;
           margin-left: 20px;
           height: 33px;
           width: 195px;
@@ -169,7 +170,7 @@
 
           <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
             <a href="fixedAssets" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
-            <a href="supplies" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Supplies</a>
+            <a href="accounts" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
           </div>
         </div>
         <!--Reports-->
@@ -229,12 +230,12 @@
                     <img class="assetbuttonsize3 -mt-1" src="storage/assets/Generate Reports (1).png">
                   </button>
                   <button onclick="document.location='viewReport'">
-                    <img class="assetbuttonsize4 mt-2" src="storage/assets/View All Reports (1).png">
+                    <img class="assetbuttonsize4 mt-0" src="storage/assets/View All Reports (1).png">
                   </button>
                 </div>
               </div>
             </div>
-            <div class="interact-dashboard flex flex-col mb-2 bg-white rounded-2xl justify-between shadow-lg">
+            <div class="interact-dashboard h-auto flex flex-col mb-2 bg-white rounded-2xl justify-between shadow-lg">
               <div class="flex flex-col items-center mt-5 pt-2">
                 <p class="text-indigo-900 font-semibold text-4xl mt-2">Hello, Mara!</p>
                 <p class="text-gray-900 font-medium text-xl mt-4">What do you want to do today?</p>
@@ -242,10 +243,10 @@
               <div class="flex justify-center opacity-100">
                 <img src="storage/assets/officerworker.png" class="image-size">
               </div>
-              <div class="flex justify-center text-center w-2/3 motivation-message bg-neutral-300 px-4 rounded-2xl">
+              <div class="flex justify-center text-center w-auto motivation-message px-4 rounded-2xl">
                 <p class="text-indigo-900 text-base quotes-format font-normal" id="motivationalQuote"></p>
               </div>
-              <div class="flex justify-center items-baseline pb-3 bg-neutral-300 p-3 rounded-2xl shadow-lg">
+              <div class="flex justify-center items-baseline pb-3 p-3 rounded-2xl shadow-lg">
                 <span id="datetime" class="text-indigo-900 text-base mb-4 font-bold"></span>
               </div>
             </div>
