@@ -161,91 +161,54 @@
 
         <div class="flex h-[85%] mb-4 mr-5">
             <!--Scroll Menu-->
-            <div class="tab flex flex-col h-full w-auto mb-auto mx-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
-              <div class="flex ml-4 border-8 justify-between border-white">
-                <div class="flex w-auto">
-                  <button onclick="openTab(event, 'recent')" class="hover:bg-gray-300">
-                    <div class="text-xl font-normal rounded-xl px-4 py-1">Recent</div>
-                  </button>
-                  <button onclick="openTab(event, 'showall')" class="hover:bg-gray-300">
-                    <div class="text-xl font-normal rounded-md px-4 py-1">Show All</div>
-                  </button>
-                </div>
-                <div class="flex ml-7 mt-0.5 gap-2">
-                  <div class="text-xl py-1 items-center">Sort by:</div>
-                  <!--Sort By Dropdown-->
-                  <div id="accordion" class="static h-full w-36 flex flex-col">
-                    <nav class="flex flex-col h-full w-full">
-                      <!--Sort By Options-->
-                      <div class="item2 absolute">
-                        <div class="header font-bold flex items-center cursor-pointer text-black hover:bg-gray-300">
-                          <div class="flex items-center py-1 pl-4">
-                            <span class="w-full text-xl font-normal leading-7 transition duration-300">Name</span>
-                          </div>
-                          <img class="inactiveIcon w-3 h-2 ml-8" src="storage/assets/dropdowndark.png">
-                          <img class="activeIcon w-3 h-2 ml-8" src="storage/assets/flyupdark.png">
-                        </div>
-                        <div class="content font-medium transition-all duration-500 flex flex-col">
-                          <a href="" class="w-32 h-fit px-2 py-2 bg-white text-black hover:bg-gray-300">Oldest</a>
-                          <a href="" class="w-32 h-fit px-2 py-2 bg-white text-black hover:bg-gray-300">Newest</a>
-                        </div>
-                      </div>
-                    </nav>
+            <div class="flex flex-col h-full w-auto mb-auto ml-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
+              <div class="flex ml-2 justify-between items-center border-8 border-white">
+                <div class="flex items-center justify-start">
+                  <div>
+                    <label for="sort">Sort By: </label>
+                  </div>
+                  <div class="dropdown dropdown-hover">
+                    <div tabindex="0" role="button" class="btn ml-2">Asset Code</div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52">
+                      <li><a>Asset Description</a></li>
+                      <li><a>Date Acquired</a></li>
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div class="overflow-auto border-8 border-white scroll-container">
+              <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
                 <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
                   <div class="vertical-menu scroll-container rounded-xl">
-                    <div id="recent" class="tab-content">
-                      <a href="#">Recently Viewed 1</a>
-                      <a href="#">Recently Viewed 2</a>
-                      <a href="#">Recently Viewed 3</a>
-                      <a href="#">Recently Viewed 4</a>
-                      <a href="#">Recently Viewed 5</a>
-                      <a href="#">Recently Viewed 6</a>
-                      <a href="#">Recently Viewed 7</a>
-                      <a href="#">Recently Viewed 8</a>
-                      <a href="#">Recently Viewed 9</a>
-                      <a href="#">Recently Viewed 10</a>
-                      <a href="#">Recently Viewed 11</a>
-                      <a href="#">Recently Viewed 12</a>
-                      <a href="#">Recently Viewed 13</a>
-                      <a href="#">Recently Viewed 14</a>
-                      <a href="#">Recently Viewed 15</a>
-                    </div>
-                    <div id="showall" class="hidden tab-content">
-                      <a href="#">Old Report 1</a>
-                      <a href="#">Old Report 2</a>
-                      <a href="#">Old Report 3</a>
-                      <a href="#">Old Report 4</a>
-                      <a href="#">Old Report 5</a>
-                      <a href="#">Recently Viewed 1</a>
-                      <a href="#">Recently Viewed 2</a>
-                      <a href="#">Recently Viewed 3</a>
-                      <a href="#">Recently Viewed 4</a>
-                      <a href="#">Recently Viewed 5</a>
-                      <a href="#">Not Recently Viewed 1</a>
-                      <a href="#">Not Recently Viewed 2</a>
-                      <a href="#">Not Recently Viewed 3</a>
-                      <a href="#">Not Recently Viewed 4</a>
-                      <a href="#">Not Recently Viewed 5</a>
-                      <a href="#">Not Recently Viewed 6</a>
-                      <a href="#">Not Recently Viewed 7</a>
-                      <a href="#">Not Recently Viewed 8</a>
-                      <a href="#">Not Recently Viewed 9</a>
-                      <a href="#">Not Recently Viewed 10</a>
-                      <a href="#">Recently Viewed 6</a>
-                      <a href="#">Recently Viewed 7</a>
-                      <a href="#">Recently Viewed 8</a>
-                      <a href="#">Recently Viewed 9</a>
-                      <a href="#">Recently Viewed 10</a>
-                      <a href="#">Recently Viewed 11</a>
-                      <a href="#">Recently Viewed 12</a>
-                      <a href="#">Recently Viewed 13</a>
-                      <a href="#">Recently Viewed 14</a>
-                      <a href="#">Recently Viewed 15</a>
-                    </div>
+                    <a href="#">Recently Viewed 1</a>
+                    <a href="#">Recently Viewed 2</a>
+                    <a href="#">Recently Viewed 3</a>
+                    <a href="#">Recently Viewed 4</a>
+                    <a href="#">Recently Viewed 5</a>
+                    <a href="#">Recently Viewed 6</a>
+                    <a href="#">Recently Viewed 7</a>
+                    <a href="#">Recently Viewed 8</a>
+                    <a href="#">Recently Viewed 9</a>
+                    <a href="#">Recently Viewed 10</a>
+                    <a href="#">Recently Viewed 11</a>
+                    <a href="#">Recently Viewed 12</a>
+                    <a href="#">Recently Viewed 13</a>
+                    <a href="#">Recently Viewed 14</a>
+                    <a href="#">Recently Viewed 15</a>
+                    <a href="#">Recently Viewed 16</a>
+                    <a href="#">Recently Viewed 17</a>
+                    <a href="#">Recently Viewed 18</a>
+                    <a href="#">Recently Viewed 19</a>
+                    <a href="#">Recently Viewed 20</a>
+                    <a href="#">Recently Viewed 21</a>
+                    <a href="#">Recently Viewed 22</a>
+                    <a href="#">Recently Viewed 23</a>
+                    <a href="#">Recently Viewed 24</a>
+                    <a href="#">Recently Viewed 25</a>
+                    <a href="#">Recently Viewed 26</a>
+                    <a href="#">Recently Viewed 27</a>
+                    <a href="#">Recently Viewed 28</a>
+                    <a href="#">Recently Viewed 29</a>
+                    <a href="#">Recently Viewed 30</a>
                   </div>
                 </div>
               </div>
@@ -290,52 +253,6 @@
       dialog.classList.remove('flex');
       }, 500);
     }
-  </script>
-
-  <!--Tab Navigation Script-->
-  <script>
-    // Function to set default tab content as "recent"
-    function setDefaultTabContent() {
-      var tabContent = document.getElementsByClassName('tab-content');
-      for (var i = 0; i < tabContent.length; i++) {
-        if (tabContent[i].id === 'recent') {
-          tabContent[i].style.display = 'block'; // Set the "recent" tab content to display
-        } else {
-          tabContent[i].style.display = 'none'; // Hide other tab content
-        }
-      }
-      
-      var tabLinks = document.getElementById('recent').getElementsByTagName('a');
-      for (var j = 0; j < tabLinks.length; j++) {
-        tabLinks[j].classList.remove('text-gray-600', 'hover:text-blue-700');
-        tabLinks[j].classList.add('bg-white', 'text-blue-700');
-      }
-    }
-  
-    // Function to toggle between tabs
-    function openTab(evt, tabName) {
-      var i, tabContent, tabLinks;
-      
-      tabContent = document.getElementsByClassName('tab-content');
-      for (i = 0; i < tabContent.length; i++) {
-        tabContent[i].style.display = 'none';
-      }
-      
-      tabLinks = document.getElementsByTagName('a');
-      for (i = 0; i < tabLinks.length; i++) {
-        tabLinks[i].classList.remove('bg-white', 'text-blue-700');
-        tabLinks[i].classList.add('text-gray-600', 'hover:text-blue-700');
-      }
-      
-      document.getElementById(tabName).style.display = 'block';
-      evt.currentTarget.classList.remove('text-gray-600', 'hover:text-blue-700');
-      evt.currentTarget.classList.add('bg-white', 'text-blue-700');
-    }
-  
-    // Call the function to set default tab content when the page loads
-    window.onload = function() {
-      setDefaultTabContent();
-    };
   </script>
 
   <!--Side Menu Accordion-->
