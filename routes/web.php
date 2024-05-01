@@ -40,7 +40,7 @@ Route::post('/import', [FixedAssetsController::class,'import'])->name('import');
 Route::get('/search', [FixedAssetsController::class,'search'])->name('search');
 
 Route::get('/accounts', function () {
-    return view('supplies');
+    return view('accounts');
 });
 
 Route::get('/genReport', function () {

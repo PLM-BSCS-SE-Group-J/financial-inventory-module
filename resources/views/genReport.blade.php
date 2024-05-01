@@ -135,7 +135,7 @@
 
             <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
               <a href="fixedAssets" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
-              <a href="supplies" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Supplies</a>
+              <a href="accounts" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
             </div>
           </div>
           <!--Reports-->
