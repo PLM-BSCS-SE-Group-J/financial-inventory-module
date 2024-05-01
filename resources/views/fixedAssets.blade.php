@@ -320,28 +320,30 @@
                   <th class="w-44 border rowtext-margin text-left border-slate-100">Netbook Value</th>
                   <th class="w-44 border rowtext-margin text-left border-slate-100">Accumulated Depreciation</th>
                   <th class="w-40 border rowtext-margin text-left border-slate-100 depreciation-header">Yearly Depreciation</th>
+                  <th class="w-40 border rowtext-margin text-left border-slate-100 depreciation-header">Monthly Depreciation</th>
                   <th class="w-20 border rowtext-margin text-left border-slate-100">Actions</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
               @foreach($fixedassets as $data)
                 <tr class="h-8 hover:bg-gray-300">
-                  <td class="border text-center border-slate-100">{{$data->AccountNum}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->ItemName}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->AccountName}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->Status}}</td>
+                  <td class="border text-center border-slate-100">{{$data->AssetCode}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->AssetDesc}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->AccountTitle}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->status}}</td>
                   <td class="border rowtext-margin border-slate-100">{{$data->dateAcquired}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->OrigVal}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->CurrentVal}}</td>
-                  <td class="border rowtext-margin border-slate-100 depreciation-cell">{{$data->DepVal}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->DepVal}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->OrigCost}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->NetbookVal}}</td>
+                  <td class="border rowtext-margin border-slate-100 depreciation-cell">{{$data->AccuDep}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->YearlyDep}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$data->MonthlyDep}}</td>
                   <td class="flex flex-col rowtext-margin">
                     <a href="{{ url('editAssets/'.$data->id) }}" class="text-indigo-800 underline">View</a>
-                    <a href="{{ route('assets.destroy', $data->id)}}" class="text-indigo-800 underline" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">Delete</a>
-                    <form id="delete-form" method="POST" action="{{ route('assets.destroy', $data->id)}}" style="display: none;">            
+                    <form method="POST" action="{{ route('assets.destroy', $data->id)}}">            
                         @csrf
                         @method('delete')
-                    </form>
+                        <button class="text-indigo-800 underline">Delete</button>
+                    </form> 
                   </td> 
                 </tr>
             @endforeach

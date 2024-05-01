@@ -28,10 +28,11 @@ Route::get('/fixedAssets', function () {
 });
 
 Route::get('/fixedAssets',[FixedAssetsController::class,'show'])->name('fixedAssets');
-Route::post('/fixedAssets', [FixedAssetsController::class, 'DataInsert'])->name('assets.add');
 Route::delete('/fixedAssets/{id}', [FixedAssetsController::class, 'destroy'])->name('assets.destroy');
 Route::get('/exportPDF', [FixedAssetsController::class,'exportPDF'])->name('exportPDF');
+
 Route::get('editAssets/{id}',[FixedAssetsController::class, 'edit']);
+
 Route::put('updateAssets/{id}', [FixedAssetsController::class, 'editAssets']);
 
 Route::get('/export', [FixedAssetsController::class,'export'])->name('export');
@@ -39,7 +40,7 @@ Route::post('/import', [FixedAssetsController::class,'import'])->name('import');
 Route::get('/search', [FixedAssetsController::class,'search'])->name('search');
 
 Route::get('/accounts', function () {
-    return view('accounts');
+    return view('supplies');
 });
 
 Route::get('/genReport', function () {
@@ -53,3 +54,4 @@ Route::get('/viewReport', function () {
 Route::get('/addAssets', function () {
     return view('addAssets');
 });
+Route::post('/addAssets', [FixedAssetsController::class, 'DataInsert'])->name('assets.add');

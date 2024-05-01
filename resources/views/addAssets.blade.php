@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,26 +72,29 @@
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-full w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-2xl">
               <div class="jumbotron h-full w-full flex flex-col p-4">
-                <form action="" method="POST">
+                <form action="{{ route('assets.add')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Code</label>
-                          <input type="text" name="AccountNum" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
+                          <input type="text" name="AssetCode" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
                       </div>
                     </div>
                     <div class="form-group mb-3">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Description</label>
-                        <input type="text" name="ItemName" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
+                        <input type="text" name="AssetDesc" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
                     </div>
                     <div class="form-group mb-3">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <input type="text" name="AccountName" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
+                        <input type="text" name="AccountTitle" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
                     </div>
                     <div class="form-group mb-3">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
-                        <input type="text" name="AccountName" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                        <input type="text" name="AccountClass" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Use Life</label>
+                        <input type="number" name="UseLife" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Use Life" required=""> 
                     </div>
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
@@ -101,27 +103,23 @@
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Original Cost</label>
-                          <input type="number" name="OrigVal" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
+                          <input type="number" name="OrigCost" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
                       </div>
                     </div>
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Netbook Value</label>
-                          <input type="number" name="OrigVal" value="" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
+                          <input type="number" name="NetbookVal" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Status</label>
-                          <input type="number" name="OrigVal" value="" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Active" required=""> 
+                          <input type="text" name="status" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Active" required=""> 
                       </div>
                     </div>
                     <div class="flex gap-3 mb-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Accumulated Depreciation</label>
-                          <input type="number" name="OrigVal" value="" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
-                      </div>
-                      <div class="form-group mb-3 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Yearly Depreciation</label>
-                          <input type="number" name="OrigVal" value="" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
+                          <input type="number" name="AccuDep" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
                     </div>
                     <div class="form-group mt-4">
@@ -134,6 +132,7 @@
                         <img class="w-50 h-10" src="{{asset('storage/assets/Cancel Button.png')}}">
                       </a>
                     </div>
+                    
                 </form>
               </div>
             </div>

@@ -8,6 +8,7 @@ use App\Models\fixed_assets;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Carbon;
 
 class FixedAssetsController extends Controller
 {
@@ -21,16 +22,38 @@ class FixedAssetsController extends Controller
 
         $fixedassets = new fixed_assets;
 
-        $fixedassets->AccountNum=$request->AccountNum;
-        $fixedassets->AccountName=$request->AccountName;
-        $fixedassets->ItemName=$request->ItemName;
-        $fixedassets->Status=$request->Status;
+        $today = Carbon::today()->format('Y-m-d');
+        $current = Carbon::parse($today);
+        $fixedassets->AssetCode=$request->AssetCode;
+        $fixedassets->AssetDesc=$request->AssetDesc;
+        $fixedassets->AccountTitle=$request->AccountTitle;
+        $fixedassets->AccountClass=$request->AccountClass;
+        $fixedassets->UseLife=$request->UseLife;
         $fixedassets->dateAcquired=$request->dateAcquired;
-        $fixedassets->OrigVal=$request->OrigVal;
-        $fixedassets->CurrentVal=$request->CurrentVal;
-        $fixedassets->DepVal=$request->DepVal;
+        $fixedassets->OrigCost=$request->OrigCost;
+        
+        $salvageVal = $fixedassets->OrigCost * 0.05;
+        $fixedassets->YearlyDep= ($fixedassets->OrigCost - $salvageVal) / $fixedassets->UseLife;
+        $fixedassets->MonthlyDep=$fixedassets->YearlyDep/12;
         $fixedassets->timestamps=false;
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->dateAcquired);
+        $acquired = Carbon::parse($fixedassets->dateAcquired);
+        if($date->addYears($fixedassets->UseLife)<$today){
+            $fixedassets->status="Inactive";
+        }
+        else{
+            $fixedassets->status="Active";
+        }
 
+        if($acquired == $current){
+            $fixedassets->NetbookVal=$fixedassets->OrigCost;
+        }
+        else{
+            $diffmonth = $acquired->diffInMonths($current);
+            $fixedassets->AccuDep=$fixedassets->MonthlyDep * $diffmonth;
+            $fixedassets->NetbookVal=$fixedassets->OrigCost - $fixedassets->AccuDep;
+        }
+        
         $fixedassets->save();
         
         return redirect()->route('fixedAssets')->with('success','Added Successfully!');
@@ -50,19 +73,26 @@ class FixedAssetsController extends Controller
     }
 
     public function editAssets(Request $request, $id){
-       $fixedassets = fixed_assets::find($id);
-       $fixedassets->AccountNum = $request->input('AccountNum');
-       $fixedassets->ItemName = $request->input('ItemName');
-       $fixedassets->AccountName = $request->input('AccountName');
-       $fixedassets->Status = $request->input('Status');
-       $fixedassets->dateAcquired = $request->input('dateAcquired');
-       $fixedassets->OrigVal = $request->input('OrigVal');
-       $fixedassets->CurrentVal = $request->input('CurrentVal');
-       $fixedassets->DepVal = $request->input('DepVal');
-       $fixedassets->timestamps=false;
-       $fixedassets->update();       
+        $fixedassets = fixed_assets::find($id);
+        $fixedassets->AssetCode=$request->input('AssetCode');
+        $fixedassets->AssetDesc=$request->input('AssetDesc');
+        $fixedassets->AccountTitle=$request->input('AccountTitle');
+        $fixedassets->AccountClass=$request->input('AccountClass');
+        $fixedassets->UseLife=$request->input('UseLife');
+        $fixedassets->dateAcquired=$request->input('dateAcquired');
+        $fixedassets->OrigCost=$request->input('OrigCost');
+        $fixedassets->NetbookVal=$request->input('NetbookVal');
+        $fixedassets->status=$request->input('status');
+        $fixedassets->AccuDep=$request->input('AccuDep');
+        $fixedassets->MonthlyDep=$request->input('MonthlyDep');
+        $fixedassets->YearlyDep=$request->input('YearlyDep');
+        $fixedassets->dateRetired=$request->input('dateRetired');
+        $fixedassets->PersonCharge=$request->input('PersonCharge');
+        $fixedassets->timestamps=false;
 
-       return redirect()->route('fixedAssets')->with('status', 'Updated Successfully!');
+        $fixedassets->update();       
+
+        return redirect()->route('fixedAssets')->with('status', 'Updated Successfully!');
     }
 
     public function exportPDF(){
@@ -87,7 +117,7 @@ class FixedAssetsController extends Controller
     public function search(Request $request){
         $search = $request->search;
 
-        $fixedassets = fixed_assets::where('ItemName','Like','%'.$search.'%')->orWhere('AccountNum','Like','%'.$search.'%')->get();
+        $fixedassets = fixed_assets::where('AssetCode','Like','%'.$search.'%')->orWhere('AssetDesc','Like','%'.$search.'%')->get();
         return view('fixedAssets',compact('fixedassets'));
     }
 }
