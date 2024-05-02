@@ -60,9 +60,9 @@
             <div class="flex h-24 w-5/6 px-5 items-center">
               <div class="mx-4 w-fit h-fit text-4xl font-regular">Assets</div>
               <img class="my-4 w-8 h-6" src="{{asset('storage/assets/arrowright.png')}}">
-              <div class="mx-2 w-auto h-fit text-4xl font-regular">Fixed Assets</div>
+              <div class="mx-2 w-auto h-fit text-4xl font-regular">Accounts</div>
               <img class="my-4 w-8 h-6" src="{{asset('storage/assets/arrowright.png')}}">
-              <div class="mx-2 w-auto h-fit text-4xl font-semibold">Add Asset</div>
+              <div class="mx-2 w-full h-fit text-4xl font-semibold">Add Classification</div>
             </div>
           </div>
         </div>
@@ -70,67 +70,31 @@
 
         <div class="flex h-[85%] mb-4 justify-center">
             <!--Generate Report Format-->
-            <div class="tab flex flex-col h-full w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-2xl">
+            <div class="tab flex flex-col h-auto w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-2xl">
               <div class="jumbotron h-full w-full flex flex-col p-4">
                 <form action="{{ route('assets.add')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="flex gap-3 w-full">
-                      <div class="form-group mb-2 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Code</label>
-                          <input type="text" name="AssetCode" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
-                      </div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Description</label>
-                        <input type="text" name="AssetDesc" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
-                    </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Title</label>
                         <input type="text" name="AccountTitle" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
                         <input type="text" name="AccountClass" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Use Life</label>
                         <input type="number" name="UseLife" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Use Life" required=""> 
                     </div>
-                    <div class="flex gap-3 w-full">
-                      <div class="form-group mb-3 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Date Acquired</label>
-                          <input type="date" name="dateAcquired" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
-                      </div>
-                      <div class="form-group mb-2 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Original Cost</label>
-                          <input type="number" name="OrigCost" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
-                      </div>
-                    </div>
-                    <div class="flex gap-3 w-full">
-                      <div class="form-group mb-3 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Netbook Value</label>
-                          <input type="number" name="NetbookVal" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
-                      </div>
-                      <div class="form-group mb-2 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Status</label>
-                          <input type="text" name="status" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Active" required=""> 
-                      </div>
-                    </div>
-                    <div class="flex gap-3 mb-2 w-full">
-                      <div class="form-group mb-3 w-full">
-                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Accumulated Depreciation</label>
-                          <input type="number" name="AccuDep" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-center gap-3 form-group mt-4">
+                    <div class="form-group mt-8 mb-2">
                       <button type="submit">
-                        <img class="w-50 h-10" src="{{asset('storage/assets/Add Button.png')}}">
+                        <img class="w-50 h-10" src="{{asset('storage/assets/Add Classification.png')}}">
                       </button>
-                      <a href="fixedAssets" class="flex justify-center">
+                      <a href="accounts" class="flex justify-center">
                         <img class="w-50 h-10" src="{{asset('storage/assets/Cancel Button.png')}}">
                       </a>
                     </div>
-
+                    
                 </form>
               </div>
             </div>

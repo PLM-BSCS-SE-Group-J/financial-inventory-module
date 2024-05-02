@@ -43,6 +43,14 @@ Route::get('/accounts', function () {
     return view('accounts');
 });
 
+Route::get('/addAccounts', function () {
+    return view('addAccounts');
+});
+
+Route::get('/editAccounts', function () {
+    return view('editAccounts');
+});
+
 Route::get('/genReport', function () {
     return view('genReport');
 });
