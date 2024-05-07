@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     @vite('resources/css/app.css')
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
@@ -75,33 +76,45 @@
                 <form action="{{ route('assets.add')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="flex gap-3 w-full">
-                      <div class="form-group mb-2 w-full">
+                      <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Code</label>
                           <input type="text" name="AssetCode" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
                       </div>
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-3">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Description</label>
                         <input type="text" name="AssetDesc" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-3">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <input type="text" name="AccountTitle" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
+                        <select name="AccountTitle" style="width: 200px" class ="form-select">
+                            <option value="0" disabled="true" selected="true">Select Account Title</option>
+                              @foreach ($categoryData as $cat)
+                                <option value="{{$cat->AccountTitle}}">{{$cat->AccountTitle}}</option>
+                              @endforeach
+                        </select> 
                     </div>
-                    <div class="form-group mb-2">
+                    
+                    <div class="form-group mb-3 vehicle-type">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
-                        <input type="text" name="AccountClass" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                        <select name="AccountClass" style="width: 200px" class ="form-select">
+                            <option value="0" disabled="true" selected="true">Select Account Class</option>
+                              @foreach ($classData as $class)
+                                <option data-price="{{$class->UseLife}}"value="{{$class->AccountClass}}">{{$class->AccountClass}}</option>
+                              @endforeach
+                        </select>
                     </div>
-                    <div class="form-group mb-2">
-                        <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Use Life</label>
-                        <input type="number" name="UseLife" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Use Life" required=""> 
+
+                    <div class="form-group mb-3">
+                        <label for ="price" class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Use Life</label>
+                        <input type="number" name="UseLife" readonly value="" class="form-control price-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                     </div>
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Date Acquired</label>
                           <input type="date" name="dateAcquired" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
-                      <div class="form-group mb-2 w-full">
+                      <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Original Cost</label>
                           <input type="number" name="OrigCost" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
                       </div>
@@ -111,26 +124,28 @@
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Netbook Value</label>
                           <input type="number" name="NetbookVal" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
-                      <div class="form-group mb-2 w-full">
+                      <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Status</label>
-                          <input type="text" name="status" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Active" required=""> 
+                          <input type="text" name="status" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
                       </div>
                     </div>
-                    <div class="flex gap-3 mb-2 w-full">
+                    <div class="flex gap-3 mb-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Accumulated Depreciation</label>
                           <input type="number" name="AccuDep" readonly value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
                     </div>
-                    <div class="flex items-center justify-center gap-3 form-group mt-4">
+                    <div class="form-group mt-4">
                       <button type="submit">
                         <img class="w-50 h-10" src="{{asset('storage/assets/Add Button.png')}}">
                       </button>
+                    </div>
+                    <div>
                       <a href="fixedAssets" class="flex justify-center">
                         <img class="w-50 h-10" src="{{asset('storage/assets/Cancel Button.png')}}">
                       </a>
                     </div>
-
+                    
                 </form>
               </div>
             </div>
@@ -146,6 +161,17 @@
 
   </div>
   <!--Main Div-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    $('.vehicle-type').on('change', function() {
+      $('.price-input')
+      .val(
+      $(this).find(':selected').data('price')
+      );
+    });
+  </script>
+  
 
   <!--Log Out Modal Script-->
   <script>

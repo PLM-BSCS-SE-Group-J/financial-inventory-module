@@ -2,64 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\account;
 use Illuminate\Http\Request;
+use App\Models\acc_class;
+use App\Models\account;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AccountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+   function index(){
+        $data = acc_class::all();
+        return view('accounts',compact('data'));
+   }
+
+   public function InsertAccounts(Request $request){
+
+        $acc_class = new acc_class;
+
+        $acc_class->AccountClass = $request->AccountClass;
+        $acc_class->UseLife = $request->UseLife;
+        $acc_class->timestamps=false;
+        $acc_class->save();
+
+        Alert::success('Success', 'Asset Added Successfully!');
+        
+        return redirect('accounts')->with('success','Added Successfully!');
+
+   }
+
+   public function destroy($id){
+
+        $acc_class = acc_class::find($id);
+        $acc_class->delete();
+        return redirect('accounts')->with('success','Deleted Successfully!');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function viewedit($id)
     {
-        //
+       $acc_class = acc_class::find($id);
+       return view('editAccounts', compact('acc_class'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(account $account)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(account $account)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, account $account)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(account $account)
-    {
-        //
+    public function update(Request $request, $id){
+        $acc_class = acc_class::find($id);
+        $acc_class->AccountClass = $request->input('AccountClass');
+        $acc_class->UseLife = $request->input('UseLife');
+        $acc_class->timestamps=false;
+        $acc_class->update();
+        return redirect('accounts')->with('status',"Data Updated Successfully!");
     }
 }

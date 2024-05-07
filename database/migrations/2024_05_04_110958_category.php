@@ -7,17 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id()->unique()->autoIncrement();
-            $table->string('AccountTitle')->unique();
+            $table->string('AccountTitle');
         });
 
-        DB::table('accounts')->insert([
+        DB::table('categories')->insert([
             ['AccountTitle'=> 'School Buildings'],
             ['AccountTitle'=> 'Other Structures'],
             ['AccountTitle'=> 'Office Equipment'],
@@ -34,11 +32,8 @@ return new class extends Migration
         ]);
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        //
     }
 };

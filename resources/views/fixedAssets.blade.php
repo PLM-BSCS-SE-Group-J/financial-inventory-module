@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.6/css/dataTables.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @vite('resources/css/app.css')
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
@@ -146,7 +148,7 @@
                   <a class="text-sm" href="#">Technical and Scientific Equipment</a>
                   <a class="text-sm" href="#">Other Machinery and Equipment</a>
                   <a class="text-sm" href="#">Motor Vehicles</a>
-                  <a class="text-sm" href="#">Furniture and Fixtures </a>
+                  <a class="text-sm" href="#">Furniture and Fixtures</a>
                   <a class="text-sm" href="#">Books</a>
                   <a class="text-sm" href="#">Show All</a>
                 </div>
@@ -266,10 +268,71 @@
 
         <!--Title-->
         
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="date_filter">Filter by Date:</label>
+            <form method="get" action="fixedAssets">
+              <div class="input-group">
+                <select class="form-select" name="date_filter">
+                  <option value="">Select Date</option>
+                  <option value="this_week">This Week</option>
+                  <option value="this_month">This Month</option>
+                  <option value="this_year">This Year</option>
+                  <option value="this_decade">This Decade</option>
+                  <option value="all_dates">All Dates</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="form-group">
+            <label for="status_filter">Filter by Status:</label>
+            <form method="get" action="fixedAssets">
+              <div class="input-group">
+                <select class="form-select" name="status_filter">
+                  <option value="">Select Status</option>
+                  <option value="expired">Expired</option>
+                  <option value="active">Active</option>
+                  <option value="show_all">Show All</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="form-group">
+            <label for="title_filter">Filter by Account Titles:</label>
+            <form method="get" action="fixedAssets">
+              <div class="input-group">
+                <select class="form-select" name="title_filter">
+                  <option value="">Select Account Title</option>
+                  <option value="school_build">School Buildings</option>
+                  <option value="other_struc">Other Structures</option>
+                  <option value="office_equip">Office Equipment</option>
+                  <option value="ict">Information and Communication Technology</option>
+                  <option value="drre">Disaster Response and Rescue Equipment</option>
+                  <option value="mpse">Military, Police and Security Equipment</option>
+                  <option value="medical_equip">Medical Equipment</option>
+                  <option value="sports_equip">Sports Equipment</option>
+                  <option value="tech_equip">Technical and Scientific Equipment</option>
+                  <option value="other_mac">Other Machinery and Equipment</option>
+                  <option value="motor_vehicles">Motor Vehicles</option>
+                  <option value="furni_fix">Furniture and Fixtures</option>
+                  <option value="books">Books</option>
+                  <option value="display_all">Show All</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+              </div>
+            </form>
+          </div>         
+
+        </div>
+
         <!--Fixed Assets Table-->
         <div class="flex h-[85%] mb-auto mx-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
           <div class="overflow-auto border-8 border-white scroll-container">
-            <table class="table-fixed ml-4 mr-4 mb-4 mt-4 w-auto shadow-lg border-collapse border border-slate-300">
+            <table id="myTable" class="table-fixed ml-4 mr-4 mb-4 mt-4 w-auto shadow-lg border-collapse border border-slate-300">
               <div class="flex items-center mr-4">
                 <div class="relative flex items-center w-full space-x-4 ml-4 mt-4">
                   <!--Add Button Trigger-->
@@ -290,23 +353,6 @@
                       <input type="file" name="fixed_assets" class="ml-2" required>
                     </form>
                   </div>
-                  <!--Yearly/Monthly Button Trigger-->
-                  <label class="flex cursor-pointer gap-2">
-                    <span class="label-text text-base">Yearly</span> 
-                    <input type="checkbox" value="synthwave" class="toggle theme-controller bg-indigo-800" onchange="toggleDepreciation()"/>
-                    <span class="label-text text-base">Monthly</span> 
-                  </label>
-                  <!--Search Button Trigger-->
-                  <form action ="{{url('search')}}" method="GET">
-                  <div class="relative flex items-center space-x-4 ml-auto">
-                    <input type="search" name="search" class="block w-72 h-10 rounded-lg border-0 pl-11 pr-4 bg-zinc-100 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Search Asset">
-                    <img class="absolute top-1/2 transform -translate-y-1/2 w-5 h-5" src="storage/assets/search.png" alt="Search Icon">
-                  </div>
-                  </form>
-                  <!--Filter Button Trigger-->
-                  <button onclick="showFilterDialog()">
-                    <img class="h-5" src="storage/assets/filter.png" alt="Filter Button">
-                  </button>
                 </div>
               </div>
               <thead class="bg-slate-100 sticky top-0">
@@ -339,11 +385,8 @@
                   <td class="border rowtext-margin border-slate-100">{{$data->MonthlyDep}}</td>
                   <td class="flex flex-col rowtext-margin">
                     <a href="{{ url('editAssets/'.$data->id) }}" class="text-indigo-800 underline">View</a>
-                    <form method="POST" action="{{ route('assets.destroy', $data->id)}}">            
-                        @csrf
-                        @method('delete')
-                        <button class="text-indigo-800 underline">Delete</button>
-                    </form> 
+                    <a href="{{ url('delete/'.$data->id) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
+                    
                   </td> 
                 </tr>
             @endforeach
@@ -362,6 +405,37 @@
 
   </div>
   <!--Main Div-->
+
+  <!--For Table-->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="//cdn.datatables.net/2.0.6/js/dataTables.min.js"></script>
+  <script>
+    $(document).ready( function (){
+      $('#myTable').DataTable();
+    });
+  </script>
+  
+  
+  <!--Confirm Delete-->
+  <script>
+      function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');  
+        console.log(urlToRedirect); 
+        swal({
+            title: "Are you sure to Delete this post",
+            text: "You will not be able to revert this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willCancel) => {
+            if (willCancel) {
+                window.location.href = urlToRedirect;
+            }  
+        });
+    }
+</script>
 
   <!--Yearly/Monthly Script-->
   <script>

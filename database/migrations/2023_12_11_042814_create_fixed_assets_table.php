@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('fixed_assets', function (Blueprint $table) {
             $table->id()->unique()->autoIncrement();
-            $table->string('AssetCode')->unique();
+            $table->string('AssetCode');
             $table->string('AssetDesc');
-            $table->string('AccountTitle')->unique();
+            $table->string('AccountTitle');
             $table->string('AccountClass');
             $table->integer('UseLife');
             $table->date('dateAcquired');

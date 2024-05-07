@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.6/css/dataTables.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @vite('resources/css/app.css')
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
@@ -128,7 +131,7 @@
         <!--Fixed Assets Table-->
         <div class="flex flex-col h-full mb-4 mx-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
           <div class="overflow-auto h-full border-8 border-white scroll-container">
-            <table class="table-fixed ml-4 mr-4  mb-4 mt-4 w-[98%] shadow-lg border-collapse border border-slate-300">
+            <table id="myTable" class="table-fixed ml-4 mr-4  mb-4 mt-4 w-[98%] shadow-lg border-collapse border border-slate-300">
               <div class="flex items-center justify-between mr-4">
                 <div class="relative flex text-center space-x-4 ml-4 mt-4">
                   <div class="mx-2 h-fit text-2xl text-center font-semibold">Account Classifications</div>
@@ -137,62 +140,29 @@
                   <img class="h-10 mt-4" src="storage/assets/Add Classification.png" alt="Add Classification">
                 </a>
               </div>
-              <!--Search Bar-->
-              <div class="flex justify-between mx-4 mt-4">
-                <label class="input input-bordered w-full flex items-center gap-2">
-                  <input type="text" class="grow" placeholder="Search" />
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
-                </label>
-                <button class="btn ml-4">Reset</button>
-              </div>
-              <!--Search Bar--> 
               <thead class="bg-slate-100 sticky top-0">
                 <tr class="h-10">
-                  <th class="border rowtext-margin text-left border-slate-100">Account Title</th>
+                  
                   <th class="border rowtext-margin text-left border-slate-100">Account Classification</th>
                   <th class="border rowtext-margin text-left border-slate-100">Useful Life</th>
                   <th class="border rowtext-margin text-left border-slate-100">Actions</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
+                @foreach ($data as $dt)
                 <tr class="h-8 hover:bg-gray-300">
-                  <td class="border rowtext-margin border-slate-100">text</td>
-                  <td class="border rowtext-margin border-slate-100">text</td>
-                  <td class="border rowtext-margin border-slate-100">text</td>
+                  <td class="border rowtext-margin border-slate-100">{{$dt->AccountClass}}</td>
+                  <td class="border rowtext-margin border-slate-100">{{$dt->UseLife}}</td>
                   <td class="border rowtext-margin border-slate-100 flex flex-col rowtext-margin">
-                    <a href="editAccounts" class="text-indigo-800 underline">View</a>
-                    <form method="POST" action="">            
-                        @csrf
-                        @method('delete')
-                        <button class="text-indigo-800 underline">Delete</button>
-                    </form> 
+                    <a href="{{ url('editAccounts/'.$dt->id) }}" class="text-indigo-800 underline">View</a>
+                    <a href="{{ url('deleteAccount/'.$dt->id) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
+                    
                   </td> 
                 </tr>
-                <tr class="h-8 hover:bg-gray-300">
-                  <td class="border rowtext-margin border-slate-100">text</td>
-                  <td class="border rowtext-margin border-slate-100">text</td>
-                  <td class="border rowtext-margin border-slate-100">text</td>
-                  <td class="flex flex-col rowtext-margin">
-                    <a href="editAccounts" class="text-indigo-800 underline">View</a>
-                    <form method="POST" action="">            
-                        @csrf
-                        @method('delete')
-                        <button class="text-indigo-800 underline">Delete</button>
-                    </form> 
-                  </td> 
-                </tr>
+                @endforeach
               </tbody>
             </table>
-            <!--Page Button-->
-            <div class="flex justify-end mr-4">
-              <div class="join items-end">
-                <button class="join-item btn btn-active btn-sm">1</button>
-                <button class="join-item btn btn-sm">2</button>
-                <button class="join-item btn btn-sm">3</button>
-                <button class="join-item btn btn-sm">4</button>
-              </div>
-            </div>
-            <!--Page Button-->
+
           </div>
           
         </div>
@@ -205,6 +175,36 @@
 
   </div>
   <!--Main Div-->
+
+   <!--For Table-->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="//cdn.datatables.net/2.0.6/js/dataTables.min.js"></script>
+  <script>
+    $(document).ready( function (){
+      $('#myTable').DataTable();
+    });
+  </script>
+
+<!--Confirm Delete-->
+<script>
+      function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');  
+        console.log(urlToRedirect); 
+        swal({
+            title: "Are you sure to Delete this post",
+            text: "You will not be able to revert this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willCancel) => {
+            if (willCancel) {
+                window.location.href = urlToRedirect;
+            }  
+        });
+    }
+</script>
 
   <!--Log Out Modal Script-->
   <script>

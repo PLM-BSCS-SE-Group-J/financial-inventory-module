@@ -4,19 +4,106 @@ namespace App\Http\Controllers;
 
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
+use App\Models\acc_class;
+use App\Models\account;
 use App\Models\fixed_assets;
 use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
+
+use function Laravel\Prompts\confirm;
 
 class FixedAssetsController extends Controller
 {
-    public function show()
+    public function show(Request $request): Response
     {
-        $fixedassets = fixed_assets::all();
 
-        return view('fixedAssets',compact('fixedassets'));
+        $query = fixed_assets::query();
+        $date = $request->date_filter;
+        $status = $request->status_filter;
+        $title = $request->title_filter;
+
+        switch($date){
+            case 'this_week':
+                $query->whereBetween('dateAcquired',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                break;
+            case 'this_month':
+                $query->whereMonth('dateAcquired',Carbon::now()->month);
+                break;
+            case 'this_year':
+                $query->whereYear('dateAcquired',Carbon::now()->year);
+                break;
+            case 'this_decade':
+                $query->whereBetween('dateAcquired',[Carbon::now()->startOfDecade(), Carbon::now()]);
+                break;
+            case 'all_dates':
+                $query->whereBetween('dateAcquired',[Carbon::now()->startOfCentury(), Carbon::now()]);
+                break;
+        }
+        
+        switch($status){
+            case 'expired':
+                $query->where('status','Like','%'.$status.'%');
+                break;
+            case 'active':
+                $query->where('status','Like','%'.$status.'%');
+                break;
+            case 'show_all':
+                $query->where('status','Like','%active%')->orWhere('status','Like','%expired%');
+                break;
+        }
+
+        switch($title){
+            case 'school_build':
+                $query->where('AccountTitle','Like','%School Buildings%');
+                break;
+            case 'other_struc':
+                $query->where('AccountTitle','Like','%Other Structures%');
+                break;
+            case 'office_equip':
+                $query->where('AccountTitle','Like','%Office Equipment%');
+                break;
+            case 'ict':
+                $query->where('AccountTitle','Like','%Information and Communication Technology%');
+                break;
+            case 'drre':
+                $query->where('AccountTitle','Like','%Disaster Response and Rescue Equipment%');
+                break;
+            case 'mpse':
+                $query->where('AccountTitle','Like','%Military, Police and Security Equipment%');
+                break;
+            case 'medical_equip':
+                $query->where('AccountTitle','Like','%Medical Equipment%');
+                break;
+            case 'sports_equip':
+                $query->where('AccountTitle','Like','%Sports Equipment%');
+                break;
+            case 'tech_equip':
+                $query->where('AccountTitle','Like','%Technical and Scientific Equipment%');
+                break;
+            case 'other_mac':
+                $query->where('AccountTitle','Like','%Other Machinery and Equipment%');
+                break;
+            case 'motor_vehicles':
+                $query->where('AccountTitle','Like','%Motor Vehicles%');
+                break;
+            case 'furni_fix':
+                $query->where('AccountTitle','Like','%Furniture and Fixtures%');
+                break;
+            case 'books':
+                $query->where('AccountTitle','Like','%Books%');
+                break;
+            case 'display_all':
+                $query->where('AccountTitle','Like','%i%')->orWhere('AccountTitle','Like','%o%');
+                break;
+        }
+
+        $fixedassets = $query->get();
+
+        return response()->view('fixedAssets',compact('fixedassets'));
     }
     public function DataInsert(Request $request){
 
@@ -39,7 +126,7 @@ class FixedAssetsController extends Controller
         $date = Carbon::createFromFormat('Y-m-d', $fixedassets->dateAcquired);
         $acquired = Carbon::parse($fixedassets->dateAcquired);
         if($date->addYears($fixedassets->UseLife)<$today){
-            $fixedassets->status="Inactive";
+            $fixedassets->status="Expired";
         }
         else{
             $fixedassets->status="Active";
@@ -60,16 +147,18 @@ class FixedAssetsController extends Controller
     }
 
     public function destroy($id){
-
-        $fixedassets = fixed_assets::where('id',$id)->firstOrFail()->delete();
-
+        
+        $fixedassets = fixed_assets::find($id);
+        $fixedassets->delete();
         return redirect()->route('fixedAssets')->with('success','Deleted Successfully!');
     }
 
     public function edit($id)
     {
         $fixedassets = fixed_assets::find($id);
-        return view('editAssets', compact('fixedassets'));
+        $categoryData=account::all();
+        $classData=acc_class::all();
+        return view('editAssets', compact(['fixedassets','categoryData','classData']));
     }
 
     public function editAssets(Request $request, $id){
@@ -95,6 +184,13 @@ class FixedAssetsController extends Controller
         return redirect()->route('fixedAssets')->with('status', 'Updated Successfully!');
     }
 
+    public function search(Request $request){
+        $search = $request->search;
+
+        $fixedassets = fixed_assets::where('AssetCode','Like','%'.$search.'%')->orWhere('AccountTitle','Like','%'.$search.'%')->get();
+        return view('fixedAssets',compact('fixedassets'));
+    }
+    
     public function exportPDF(){
         $fixedassets = fixed_assets::get();
         $pdf = PDF::loadView('pdf.assets',[
@@ -113,11 +209,18 @@ class FixedAssetsController extends Controller
     public function export(){
         return Excel::download(new UsersExport, 'fixedAssets.xlsx');
     }
-    
-    public function search(Request $request){
-        $search = $request->search;
 
-        $fixedassets = fixed_assets::where('AssetCode','Like','%'.$search.'%')->orWhere('AssetDesc','Like','%'.$search.'%')->get();
-        return view('fixedAssets',compact('fixedassets'));
+
+    public function catfunct(){
+        $categoryData=account::all();
+        $classData=acc_class::all();
+        
+        return view('addAssets', compact(['categoryData','classData']));
     }
+
+    public function index(){
+        $fixedassets = fixed_assets::all();
+        return view('genReport',compact('fixedassets'));
+   }
+
 }

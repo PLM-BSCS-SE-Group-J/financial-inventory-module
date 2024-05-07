@@ -69,7 +69,7 @@
           background-color: #555; 
       }
     </style>
-
+  @livewireStyles
 </head>
 
 <body class="bg-neutral-100">
@@ -185,7 +185,7 @@
         <div class="flex h-[85%] mb-4 mr-5">
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-full w-full mb-auto ml-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
-              <form action="" method="" class="p-2 w-full h-auto">
+            <form action="" method="" class="p-2 w-full h-auto">
                 <div class="flex flex-col gap-4 mt-2">
                   <div class="flex gap-3 mb-3">
                     <div class="flex flex-col w-full">
@@ -244,7 +244,6 @@
                   </div>
                 </div>
 
-
                 <div class="flex flex-col flex-1 justify-center items-center gap-3">
                   <button type="button" onclick="" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
                     <img src="storage/assets/Generate.png" alt="Print Button" class="generate h-6">
@@ -255,7 +254,7 @@
                     <div class="text-white text-base font-medium leading-normal">PRINT</div>
                   </button>
                   <button type="button" onclick="" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
-                    <img src="storage/assets/Save Icon.png" alt="Save Button" class="save h-6">
+                    <a class="w-50 h-10" href="{{route('exportPDF')}}">Export to PDF</a>
                     <div class="text-white text-base font-medium leading-normal">SAVE</div>
                   </button>
                 </div>
@@ -287,36 +286,9 @@
               <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
                 <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
                   <div class="vertical-menu scroll-container rounded-xl">
-                    <a href="#">Recently Viewed 1</a>
-                    <a href="#">Recently Viewed 2</a>
-                    <a href="#">Recently Viewed 3</a>
-                    <a href="#">Recently Viewed 4</a>
-                    <a href="#">Recently Viewed 5</a>
-                    <a href="#">Recently Viewed 6</a>
-                    <a href="#">Recently Viewed 7</a>
-                    <a href="#">Recently Viewed 8</a>
-                    <a href="#">Recently Viewed 9</a>
-                    <a href="#">Recently Viewed 10</a>
-                    <a href="#">Recently Viewed 11</a>
-                    <a href="#">Recently Viewed 12</a>
-                    <a href="#">Recently Viewed 13</a>
-                    <a href="#">Recently Viewed 14</a>
-                    <a href="#">Recently Viewed 15</a>
-                    <a href="#">Recently Viewed 16</a>
-                    <a href="#">Recently Viewed 17</a>
-                    <a href="#">Recently Viewed 18</a>
-                    <a href="#">Recently Viewed 19</a>
-                    <a href="#">Recently Viewed 20</a>
-                    <a href="#">Recently Viewed 21</a>
-                    <a href="#">Recently Viewed 22</a>
-                    <a href="#">Recently Viewed 23</a>
-                    <a href="#">Recently Viewed 24</a>
-                    <a href="#">Recently Viewed 25</a>
-                    <a href="#">Recently Viewed 26</a>
-                    <a href="#">Recently Viewed 27</a>
-                    <a href="#">Recently Viewed 28</a>
-                    <a href="#">Recently Viewed 29</a>
-                    <a href="#">Recently Viewed 30</a>
+                  @foreach($fixedassets as $data)
+                    <a href="#">{{$data->AssetCode}}</a>
+                  @endforeach
                   </div>
                 </div>
               </div>
@@ -390,6 +362,7 @@
         });
     });
   </script>
+  @livewireScripts
 </body>
 
 </html>

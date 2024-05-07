@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @vite('resources/css/app.css')
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
 </head>
 
 <body class="bg-neutral-100">
+  @include('sweetalert::alert')
   <div class="h-screen">
     <!--Logout Button Modal--> 
     <div id="logout dialog" class="fixed left=0 top=0 bg-black bg-opacity-50 z-20 w-screen h-screen justify-center items-center opacity-0 hidden transition-opacity duration-500">
@@ -72,12 +74,9 @@
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-auto w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-2xl">
               <div class="jumbotron h-full w-full flex flex-col p-4">
-                <form action="{{ route('assets.add')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('accounts.add')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group mb-4">
-                        <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <input type="text" name="AccountTitle" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
-                    </div>
+                    
                     <div class="form-group mb-4">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
                         <input type="text" name="AccountClass" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
@@ -110,6 +109,21 @@
 
   </div>
   <!--Main Div-->
+
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $(document).on('change','.accountcat', function(){
+            var cat_id=$(this).val();
+            $.ajax({
+              
+            })
+
+        });
+    });
+  </script>
+
+    
 
   <!--Log Out Modal Script-->
   <script>

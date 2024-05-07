@@ -73,20 +73,16 @@
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-auto w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-lg">
               <div class="jumbotron h-full w-full flex flex-col justify-start p-4">
-                <form action="" method="POST">
+                <form action="{{ url('updateAccounts/'.$acc_class->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="form-group mb-4">
-                        <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <input type="text" name="AccountTitle" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Title" required=""> 
-                    </div>
                     <div class="form-group mb-4 w-full">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
-                        <input type="text" name="AccountClass" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                        <input type="text" name="AccountClass" value="{{$acc_class->AccountClass}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
                     </div>
                     <div class="form-group mb-4 w-full">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">UseLife</label>
-                        <input type="number" name="UseLife" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                        <input type="number" name="UseLife" value="{{$acc_class->UseLife}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
                     </div>
                     <div class="form-group mt-8">
                           <button type="submit">
