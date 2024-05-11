@@ -13,14 +13,20 @@ return new class extends Migration
     {
         Schema::create('fixed_assets', function (Blueprint $table) {
             $table->id()->unique()->autoIncrement();
-            $table->string('AccountNum')->unique();
-            $table->string('ItemName');
-            $table->string('AccountName')->unique();
-            $table->string('Status');
+            $table->string('AssetCode');
+            $table->string('AssetDesc');
+            $table->string('AccountTitle');
+            $table->string('AccountClass');
+            $table->integer('UseLife');
             $table->date('dateAcquired');
-            $table->double('OrigVal',12,2);
-            $table->double('CurrentVal',12,2);
-            $table->double('DepVal',12,2);
+            $table->double('OrigCost',12,2);
+            $table->double('NetbookVal',12,2);
+            $table->string('status');
+            $table->double('AccuDep',12,2);
+            $table->double('MonthlyDep',12,2);
+            $table->double('YearlyDep',12,2);
+            $table->date('dateRetired')->nullable();
+            $table->string('PersonCharge')->nullable();
         });
     }
 

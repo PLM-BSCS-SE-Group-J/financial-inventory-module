@@ -35,7 +35,7 @@
           width: 195px;
       }
       .image-format2 {
-          margin-top: 30px;
+          margin-top: 20px;
           margin-left: 20px;
           height: 33px;
           width: 195px;
@@ -51,12 +51,14 @@
           margin-bottom: 20px;
       }
       .assetbuttonsize2 {
-          height: 255px;
-          margin-top: -5px;
+          height: 245px;
+          margin-top: 5px;
           margin-bottom: 20px;
+          width: 570px;
       }
       .assetbuttonsize3 {
           height: 255px;
+          margin-top: -20px;
           margin-bottom: -15px;
           margin-right: 10px;
       }
@@ -157,35 +159,27 @@
           </a>
         </div>
         <!--Assets-->
-        <div class="item mt-1">
-          <div class="header font-bold flex items-center cursor-pointer hover:bg-indigo-900">
-            <div class="flex items-center py-2 px-9 gap-3">
-              <img class="w-12 h-8" src="storage/assets/assets.png">
-              <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Assets</span>
-            </div>
-            <img class="inactiveIcon w-3 h-2 ml-7" src="storage/assets/dropdown.png">
-            <img class="activeIcon w-3 h-2 ml-7" src="storage/assets/flyup.png">
+        <div class="collapse collapse-arrow hover:bg-indigo-900">
+          <input type="checkbox"/> 
+          <div class="collapse-title flex items-center py-2 px-7 gap-3">
+            <img class="w-12 h-8" src="storage/assets/assets.png">
+            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Assets</span>
           </div>
-
-          <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
-            <a href="fixedAssets" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
-            <a href="supplies" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Supplies</a>
+          <div class="collapse-content font-medium flex flex-col gap-2"> 
+            <a href="fixedAssets" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
+            <a href="accounts" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
           </div>
         </div>
         <!--Reports-->
-        <div class="item mt-5">
-          <div class="header font-bold flex items-center cursor-pointer hover:bg-indigo-900">
-            <div class="flex items-center py-2 px-9 gap-3">
-              <img class="w-12 h-8" src="storage/assets/reports.png">
-              <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Reports</span>
-            </div>
-            <img class="inactiveIcon w-3 h-2 ml-4" src="storage/assets/dropdown.png">
-            <img class="activeIcon w-3 h-2 ml-4" src="storage/assets/flyup.png">
+        <div class="collapse collapse-arrow hover:bg-indigo-900">
+          <input type="checkbox"/> 
+          <div class="collapse-title flex items-center py-2 px-7 gap-3">
+            <img class="w-12 h-8" src="storage/assets/reports.png">
+            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Reports</span>
           </div>
-
-          <div class="content font-medium transition-all duration-500 flex flex-col gap-2">
-            <a href="genReport" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">Generate Reports</a>
-            <a href="viewReport" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
+          <div class="collapse-content font-medium flex flex-col gap-2"> 
+            <a href="genReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Generate Report</a>
+            <a href="viewReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
           </div>
         </div>
         <!--Settings-->
@@ -214,14 +208,14 @@
                 <button onclick="document.location='fixedAssets'">
                   <img class="assetbuttonsize1 -mt-1" src="storage/assets/Check Fixed Assets (1).png">
                 </button>
-                <button onclick="document.location='supplies'">
-                  <img class="assetbuttonsize2 mt-2" src="storage/assets/Check Supplies (1).png">
+                <button onclick="document.location='accounts'">
+                  <img class="assetbuttonsize2 mt-2" src="storage/assets/Check Accounts.png">
                 </button>
               </div>
             </div>
           </div>
           <div class="flex h-full">
-            <div class="reports-dashboard flex w-full my-4 mx-4 bg-white rounded-2xl shadow-lg">
+            <div class="reports-dashboard flex w-full mt-4 mx-4 bg-white rounded-2xl shadow-lg">
               <div class="flex flex-col">
                 <img class="image-format2" src="storage/assets/reports dashboard.png">
                 <div class="flex flex-col items-center">
@@ -229,12 +223,12 @@
                     <img class="assetbuttonsize3 -mt-1" src="storage/assets/Generate Reports (1).png">
                   </button>
                   <button onclick="document.location='viewReport'">
-                    <img class="assetbuttonsize4 mt-2" src="storage/assets/View All Reports (1).png">
+                    <img class="assetbuttonsize4 mt-0" src="storage/assets/View All Reports (1).png">
                   </button>
                 </div>
               </div>
             </div>
-            <div class="interact-dashboard flex flex-col mb-2 bg-white rounded-2xl justify-between shadow-lg">
+            <div class="interact-dashboard h-auto flex flex-col mb-2 bg-white rounded-2xl justify-between shadow-lg">
               <div class="flex flex-col items-center mt-5 pt-2">
                 <p class="text-indigo-900 font-semibold text-4xl mt-2">Hello, Mara!</p>
                 <p class="text-gray-900 font-medium text-xl mt-4">What do you want to do today?</p>
@@ -242,10 +236,10 @@
               <div class="flex justify-center opacity-100">
                 <img src="storage/assets/officerworker.png" class="image-size">
               </div>
-              <div class="flex justify-center text-center w-2/3 motivation-message bg-neutral-300 px-4 rounded-2xl">
+              <div class="flex justify-center text-center w-auto motivation-message px-4 rounded-2xl">
                 <p class="text-indigo-900 text-base quotes-format font-normal" id="motivationalQuote"></p>
               </div>
-              <div class="flex justify-center items-baseline pb-3 bg-neutral-300 p-3 rounded-2xl shadow-lg">
+              <div class="flex justify-center items-baseline pb-3 p-3 rounded-2xl shadow-lg">
                 <span id="datetime" class="text-indigo-900 text-base mb-4 font-bold"></span>
               </div>
             </div>
@@ -329,24 +323,6 @@
       dialog.classList.remove('flex');
       }, 500);
     }
-  </script>
-
-  <!--Side Menu Accordion-->
-  <script>
-    let items = document.querySelectorAll('#accordion .item .header');
-
-    items.forEach((item)=>{
-        item.addEventListener('click',(e)=>{
-        let currentItem = e.currentTarget.closest('.item');
-
-        //Activate the accordion
-        e.currentTarget.closest('.item').classList.toggle('active');
-
-        if (!isActive) {
-            currentItem.classList.add('active');
-        }
-        });
-    });
   </script>
 
   <!--Script for Date and Time-->

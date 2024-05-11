@@ -10,13 +10,20 @@ class fixed_assets extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-        'AccountNum',
-        'ItemName',
-        'AccountName',
-        'Status',
+        'AssetCode',
+        'AssetDesc',
+        'AccountTitle',
+        'AccountClass',
+        'UseLife',
         'dateAcquired',
-        'OrigVal',
-        'CurrentVal',
-        'DepVal'
+        'OrigCost',
+        'NetbookVal',
+        'status',
+        'AccuDep',
+        'MonthlyDep',
+        'YearlyDep',
+        'dateRetired',
+        'PersonCharge',
     ];
+    protected $dateFormat = 'Y-m-d H:i:sO';
 }

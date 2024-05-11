@@ -19,7 +19,7 @@ class UsersExport implements FromCollection, WithHeadings, WithStyles
     }
     public function headings() :array
     {
-        return ["ID", "Item Code", "Item Name","Category", "Status", "Date Acquired", "Original Value", "Current Value", "Depreciation Value"];
+        return ["ID", "Asset Code", "Asset Description","Account Title", "Account Classification", "Use Life", "Date Acquired", "Original Cost", "Netbook Value","Status", "Accumulated Depreciation", "Yearly Depreciation", "Monthly Depreciation", "Date Retired", "Person In Charge"];
     }
 
     public function styles(Worksheet $sheet)

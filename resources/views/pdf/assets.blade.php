@@ -30,34 +30,55 @@
 
 <h1>Fixed Assets Table</h1>
 
-<table id="customers">
-  <tr>
-    <th>Item Code</th>
-    <th>Item Name</th>
-    <th>Category</th>
-    <th>Status</th>
-    <th>Date Acquired</th>
-    <th>Original Value</th>
-    <th>Current Value</th>
-    <th>Depreciation Value</th>
-  </tr>
   @if(count($fixedassets))
     @foreach($fixedassets as $data)
-        <tr>
-            <td>{{$data->AccountNum}}</td>
-            <td>{{$data->AccountName}}</td>
-            <td>{{$data->ItemName}}</td>
-            <td>{{$data->Status}}</td>
-            <td>{{$data->dateAcquired}}</td>
-            <td>{{$data->OrigVal}}</td>
-            <td>{{$data->CurrentVal}}</td>   
-            <td>{{$data->DepVal}}</td> 
-        </tr>
+       <h2>Asset Code</h2>
+       <p>{{$data->AssetCode}}</p>
+
+       <h2>Asset Description</h2>
+       <p>{{$data->AssetDesc}}</p>
+
+       <h2>Account Title</h2>
+       <p>{{$data->AccountTitle}}</p>
+
+       <h2>Account Classification</h2>
+       <p>{{$data->AccountClass}}</p>
+
+       <h2>Use Life</h2>
+       <p>{{$data->UseLife}}</p>
+
+       <h2>Date Acquired</h2>
+       <p>{{$data->dateAcquired}}</p>
+
+       <h2>Original Cost</h2>
+       <p>{{$data->OrigCost}}</p>
+
+       <h2>Netbook Value</h2>
+       <p>{{$data->NetbookVal}}</p>
+
+       <h2>Status</h2>
+       <p>{{$data->status}}</p>
+
+       <h2>Accumulated Depreciation</h2>
+       <p>{{$data->AccuDep}}</p>
+
+       <h2>Monthly Depreciation</h2>
+       <p>{{$data->MonthlyDep}}</p>
+
+       <h2>Yearly Depreciation</h2>
+       <p>{{$data->YearlyDep}}</p>
+
+       <h2>Date Retired</h2>
+       <p>{{$data->dateRetired}}</p>
+
+       <h2>Person In Charge</h2>
+       <p>{{$data->PersonCharge}}</p>
+
     @endforeach
   @else
-    <td colspan="3">No Assets Found</td>
+    <h2>No Assets Found</h2>
   @endif
-</table>
+
 
 </body>
 </html>
