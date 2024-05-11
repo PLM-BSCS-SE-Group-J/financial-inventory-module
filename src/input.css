@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*For Accordion Side Menu*/
+.item .activeIcon{
+    @apply hidden;
+}
+
+.item.active .inactiveIcon{
+    @apply hidden;
+}
+
+.item.active .activeIcon{
+    @apply block
+}
+
+.item:not(.active) .content{
+    @apply h-0 overflow-hidden py-0
+}
+
+.item .content{
+    @apply p-2 pl-14
+}
+/*For Accordion Side Menu*/
+
+/*For Time Selection Menu*/
+.item2 .activeIcon{
+    @apply hidden;
+}
+
+.item2.active .inactiveIcon{
+    @apply hidden;
+}
+
+.item2.active .activeIcon{
+    @apply block
+}
+
+.item2:not(.active) .content{
+    @apply h-0 overflow-hidden py-0
+}
+
+.item2 .content{
+    @apply p-2 pl-2
+}
+/*For Time Selection Menu*/
