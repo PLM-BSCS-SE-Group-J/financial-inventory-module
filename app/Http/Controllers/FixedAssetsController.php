@@ -222,5 +222,9 @@ class FixedAssetsController extends Controller
         $fixedassets = fixed_assets::all();
         return view('genReport',compact('fixedassets'));
    }
-
+    
+    public function display(){
+        $fixedassets = fixed_assets::all();
+        return view('viewReport',compact('fixedassets'));
+   }
 }
