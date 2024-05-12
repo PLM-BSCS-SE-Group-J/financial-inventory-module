@@ -82,5 +82,6 @@ Route::get('/genReport', function () {
 Route::get('/viewReport', function () {
     return view('viewReport');
 });
+Route::get('/viewReport',[FixedAssetsController::class, 'display']);
 Route::get('/genReport',[FixedAssetsController::class,'index']);
 Route::get('/exportPDF', [FixedAssetsController::class,'exportPDF'])->name('exportPDF');
