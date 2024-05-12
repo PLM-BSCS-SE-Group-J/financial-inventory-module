@@ -171,36 +171,9 @@
               <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
                 <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
                   <div class="vertical-menu scroll-container rounded-xl">
-                    <a href="#">Recently Viewed 1</a>
-                    <a href="#">Recently Viewed 2</a>
-                    <a href="#">Recently Viewed 3</a>
-                    <a href="#">Recently Viewed 4</a>
-                    <a href="#">Recently Viewed 5</a>
-                    <a href="#">Recently Viewed 6</a>
-                    <a href="#">Recently Viewed 7</a>
-                    <a href="#">Recently Viewed 8</a>
-                    <a href="#">Recently Viewed 9</a>
-                    <a href="#">Recently Viewed 10</a>
-                    <a href="#">Recently Viewed 11</a>
-                    <a href="#">Recently Viewed 12</a>
-                    <a href="#">Recently Viewed 13</a>
-                    <a href="#">Recently Viewed 14</a>
-                    <a href="#">Recently Viewed 15</a>
-                    <a href="#">Recently Viewed 16</a>
-                    <a href="#">Recently Viewed 17</a>
-                    <a href="#">Recently Viewed 18</a>
-                    <a href="#">Recently Viewed 19</a>
-                    <a href="#">Recently Viewed 20</a>
-                    <a href="#">Recently Viewed 21</a>
-                    <a href="#">Recently Viewed 22</a>
-                    <a href="#">Recently Viewed 23</a>
-                    <a href="#">Recently Viewed 24</a>
-                    <a href="#">Recently Viewed 25</a>
-                    <a href="#">Recently Viewed 26</a>
-                    <a href="#">Recently Viewed 27</a>
-                    <a href="#">Recently Viewed 28</a>
-                    <a href="#">Recently Viewed 29</a>
-                    <a href="#">Recently Viewed 30</a>
+                    @foreach($fixedassets as $data)
+                      <a href="#">{{$data->AssetCode}}</a>
+                    @endforeach
                   </div>
                 </div>
               </div>
