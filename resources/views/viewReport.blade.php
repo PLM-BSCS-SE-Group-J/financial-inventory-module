@@ -9,28 +9,46 @@
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
       .vertical-menu {
-          width: 500px;
+          width: 700px;
           height: auto;
           overflow-y: auto;
       }
-      .vertical-menu a {
+      .vertical-menu .asset-item {
+          display: flex;
+          align-items: center;
           background-color: #f1f5f9;
           color: black;
           display: block;
           padding: 12px;
           text-decoration: none;
+          cursor: pointer;
       }
-      .vertical-menu a:nth-child(even){
-          background-color: #FFFFFF;
-      }
-      .vertical-menu a:hover{
+      .vertical-menu .asset-item.odd:hover {
           background-color: #d1d5db; 
           color: black;
           display: block;
           padding: 12px;
           text-decoration: none
+      }
+      .vertical-menu .asset-item.even:hover {
+          background-color: #d1d5db; 
+          color: black;
+          display: block;
+          padding: 12px;
+          text-decoration: none
+      }
+      .vertical-menu .asset-item .checkbox-container {
+          margin-right: 10px;
+      }
+      .vertical-menu .asset-item.odd {
+          background-color: #f1f5f9;
+      }
+      .vertical-menu .asset-item.even {
+          background-color: #FFFFFF;
       }
       .scroll-container::-webkit-scrollbar {
           width: 8px;
@@ -154,35 +172,59 @@
         <div class="flex h-[85%] mb-4 mr-5">
             <!--Scroll Menu-->
             <div class="flex flex-col h-full w-auto mb-auto ml-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
-              <div class="flex ml-2 justify-between items-center border-8 border-white">
-                <div class="flex items-center justify-start">
-                  <div>
-                    <label for="sort">Sort By: </label>
-                  </div>
-                  <div class="dropdown dropdown-hover">
-                    <div tabindex="0" role="button" class="btn ml-2">Asset Code</div>
-                    <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52">
-                      <li><a>Asset Description</a></li>
-                      <li><a>Date Acquired</a></li>
-                    </ul>
+                <form action="" method="" id="sortForm">
+                    <div class="flex ml-2 justify-between items-center border-8 border-white">
+                        <div class="flex items-center justify-start">
+                          <div>
+                            <label for="sort">Sort By: </label>
+                          </div>
+                          <div class="dropdown dropdown-hover">
+                            <div tabindex="0" role="button" class="btn btn-ghost ml-2" id="selectedSort">Report Title</div>
+                            <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52"></ul>
+                          </div>
+                        </div>
+                        <div class="flex flex-1 justify-end items-center gap-3">
+                          <div>
+                            <label for="sort">Actions: </label>
+                          </div>
+                          <button type="button" onclick="deleteReports()" class="delete-button w-20 h-8 bg-red-700 hover:bg-red-900 rounded-md shadow flex items-center justify-center">
+                              <span class="text-white text-sm font-medium">Delete</span>
+                          </button>
+                          <button type="btn" onclick="" class="w-40 h-8 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">Show PDF Preview</span>
+                          </button>
+                          <div class="form-control">
+                            <label class="label cursor-pointer">
+                              <span class="label-text mr-2">Select All</span>
+                              <input type="checkbox" id="select-all-checkbox" class="checkbox checkbox-sm" />
+                            </label>
+                          </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="sort_by" id="sortBy" value="">
+                </form>
+                <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
+                  <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
+                    <div class="vertical-menu scroll-container rounded-xl">
+                      @foreach($reports as $index => $report)
+                          <div class="asset-item {{$index % 2 == 0 ? 'even' : 'odd'}}" data-url="path/to/pdf/{{ $report->ReportTitle }}" onclick="viewPDF(this)">
+                            <label class="checkbox-container">
+                                <input type="checkbox" class="asset-checkbox" data-id="{{ $report->ReportTitle }}">
+                                <a href="{{ url('delete-reports/').$report->ReportTitle }}" class="text-indigo-800 underline" onclick=""></a>
+                                <span class="checkmark"></span>
+                                {{ $report->ReportTitle }}
+                            </label>
+                          </div>
+                      @endforeach
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
-                <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
-                  <div class="vertical-menu scroll-container rounded-xl">
-                    @foreach($fixedassets as $data)
-                      <a href="#">{{$data->AssetCode}}</a>
-                    @endforeach
-                  </div>
-                </div>
-              </div>
             </div>
             <!--Scroll Menu-->
 
             <!--PDF Viewer-->
             <div class="h-full w-full ml-4 rounded-2xl shadow-lg scroll-container">
-                <object data="Inventory Module (Financial System) Documentation.pdf" type="application/pdf" class="flex justify-center items-center h-full w-full">
+                <object id="pdfViewer" data="{{ route('report.pdf', $reports->first()->id ?? 0) }}" type="application/pdf" class="flex justify-center items-center h-full w-full">
                     <p class="py-2 px-4 bg-gold rounded-md">Unable to display PDF file. <a href=""><strong><u>Download</u></strong></a> instead.</p>
                 </object>
             </div>
@@ -197,6 +239,160 @@
 
   </div>
   <!--Main Div-->
+
+  <!--Select all-->
+  <script>
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+      selectAllCheckbox.addEventListener('change', function(event) {
+          // Get all checkboxes in the vertical menu
+          const assetCheckboxes = document.querySelectorAll('.asset-checkbox');
+          // Update the state of all checkboxes based on the state of the "Select All" checkbox
+          assetCheckboxes.forEach(function(checkbox) {
+              checkbox.checked = event.target.checked;
+          });
+      });
+  </script>
+
+  <!--Delete-->
+  <script>
+    document.querySelector('.delete-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        const selectedReports = [];
+        
+        // Get all selected checkboxes
+        document.querySelectorAll('.asset-checkbox:checked').forEach(function(checkbox) {
+            selectedReports.push(checkbox.getAttribute('data-id'));
+        });
+        
+        if (selectedReports.length > 0) {
+            // Confirm deletion
+            const confirmDelete = confirm('Are you sure you want to delete the selected reports?');
+            if (confirmDelete) {
+                // Send delete request to the server
+                fetch('/delete-reports', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Ensure CSRF token is included for security
+                    },
+                    body: JSON.stringify({ reportTitles: selectedReports })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove deleted reports from the UI
+                        selectedReports.forEach(function(title) {
+                            document.querySelector(`.asset-checkbox[data-id="${title}"]`).closest('.asset-item').remove();
+                        });
+                        alert('Selected reports have been deleted.');
+                    } else {
+                        alert('An error occurred while deleting the reports.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the reports.');
+                });
+            }
+        } else {
+            alert('No reports selected for deletion.');
+        }
+    });
+  </script>
+
+  <!--Sort by-->
+    <script>
+    // Dropdown toggle
+    document.querySelectorAll('.dropdown').forEach(function(dropDownWrapper) {
+        const dropDownToggler = dropDownWrapper.querySelector('.btn');
+        const dropDownList = dropDownWrapper.querySelector('.dropdown-content');
+
+        dropDownToggler.addEventListener('click', function() {
+            dropDownList.classList.toggle('hidden');
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickedInside = dropDownWrapper.contains(event.target);
+            if (!isClickedInside) {
+                dropDownList.classList.add('hidden');
+            }
+        });
+    });
+  </script>
+
+  <!-- Sort by label -->
+  <script>
+      window.onload = function() {
+          let currentSortBy = getCurrentSortByFromURL();
+          let selectedSortLabel = document.getElementById('selectedSort');
+          selectedSortLabel.textContent = getSortLabel(currentSortBy);
+          updateDropdownOptions(currentSortBy);
+      };
+
+      function updateSort(sortBy) {
+          document.getElementById('sortBy').value = sortBy;
+          let selectedSortLabel = document.getElementById('selectedSort');
+          selectedSortLabel.textContent = getSortLabel(sortBy);
+          // Prevent the default action of anchor tags
+          event.preventDefault();
+          // Remove all options from the dropdown
+          let dropdownContent = document.querySelector('.dropdown-content');
+          dropdownContent.innerHTML = '';
+          // Add options back to the dropdown, excluding the selected one
+          updateDropdownOptions(sortBy);
+          // Submit the form after a slight delay to allow label update
+          setTimeout(function() {
+              document.getElementById('sortForm').submit();
+          }, 100);
+      }
+
+      // Function to get label for sort option
+      function getSortLabel(sortBy) {
+          switch (sortBy) {
+              case 'report_title':
+                  return 'Report Title';
+              case 'date_requested':
+                  return 'Date Requested';
+              case 'date_issued':
+                  return 'Date Issued';
+              default:
+                  return 'Report Title';
+          }
+      }
+
+      // Function to retrieve current sort criteria from URL
+      function getCurrentSortByFromURL() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get('sort_by') || 'report_title';
+      }
+
+      // Function to update dropdown options based on current sort criteria
+      function updateDropdownOptions(currentSortBy) {
+          let dropdownContent = document.querySelector('.dropdown-content');
+          let options = ['report_title', 'date_requested', 'date_issued'];
+          options.forEach(option => {
+              if (option !== currentSortBy) {
+                  let li = document.createElement('li');
+                  let a = document.createElement('a');
+                  a.href = "#";
+                  a.textContent = getSortLabel(option);
+                  a.onclick = function() { updateSort(option); };
+                  li.appendChild(a);
+                  dropdownContent.appendChild(li);
+              }
+          });
+      }
+  </script>
+
+  <!-- PDF Viewer Script -->
+  <script>
+    function viewPDF(element) {
+      const url = element.getAttribute('data-url');
+      const pdfViewer = document.getElementById('pdfViewer');
+      pdfViewer.data = url;
+    }
+  </script>
 
   <!--Log Out Modal Script-->
   <script>

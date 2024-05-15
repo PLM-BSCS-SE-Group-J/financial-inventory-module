@@ -149,54 +149,54 @@
 
     <!--Lower Div-->
     <div class="flex h-screen">
-    <!--Side Nav Bar-->
-    <div id="accordion" class="bg-indigo-800 text-white h-screen w-80 overflow-hidden flex flex-col">
-      <nav class="flex flex-col h-full w-full">
-        <!--Financial Inventory Title-->
-        <div class="flex items-center justify-center py-6 pl-4 pr-6">
-          <a href="homePage">
-            <span class="text-2xl font-semibold leading-10">Financial Inventory</span>
+      <!--Side Nav Bar-->
+      <div id="accordion" class="bg-indigo-800 text-white h-screen w-80 overflow-hidden flex flex-col">
+        <nav class="flex flex-col h-full w-full">
+          <!--Financial Inventory Title-->
+          <div class="flex items-center justify-center py-6 pl-4 pr-6">
+            <a href="homePage">
+              <span class="text-2xl font-semibold leading-10">Financial Inventory</span>
+            </a>
+          </div>
+          <!--Assets-->
+          <div class="collapse collapse-arrow hover:bg-indigo-900">
+            <input type="checkbox"/> 
+            <div class="collapse-title flex items-center py-2 px-7 gap-3">
+              <img class="w-12 h-8" src="storage/assets/assets.png">
+              <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Assets</span>
+            </div>
+            <div class="collapse-content font-medium flex flex-col gap-2"> 
+              <a href="fixedAssets" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
+              <a href="accounts" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
+            </div>
+          </div>
+          <!--Reports-->
+          <div class="collapse collapse-arrow hover:bg-indigo-900">
+            <input type="checkbox"/> 
+            <div class="collapse-title flex items-center py-2 px-7 gap-3">
+              <img class="w-12 h-8" src="storage/assets/reports.png">
+              <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Reports</span>
+            </div>
+            <div class="collapse-content font-medium flex flex-col gap-2"> 
+              <a href="genReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Generate Report</a>
+              <a href="viewReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
+            </div>
+          </div>
+          <!--Settings-->
+          <a href="" class="flex items-center mt-auto mb-2 hover:bg-indigo-900 py-1 pl-8 gap-5">
+            <img class="w-6 h-6" src="storage/assets/settings.png">
+            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Settings</span>
           </a>
-        </div>
-        <!--Assets-->
-        <div class="collapse collapse-arrow hover:bg-indigo-900">
-          <input type="checkbox"/> 
-          <div class="collapse-title flex items-center py-2 px-7 gap-3">
-            <img class="w-12 h-8" src="storage/assets/assets.png">
-            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Assets</span>
+          <!--Logout-->
+          <div class="relative flex items-center mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
+            <button onclick="showLogoutDialog()" class="flex items-center gap-5">
+              <img class="w-6 h-6" src="storage/assets/logout.png" alt="Logout Icon">
+              <span class="text-xl font-normal leading-7 text-white transition duration-300">Logout</span>
+            </button>
           </div>
-          <div class="collapse-content font-medium flex flex-col gap-2"> 
-            <a href="fixedAssets" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Fixed Assets</a>
-            <a href="accounts" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Accounts</a>
-          </div>
-        </div>
-        <!--Reports-->
-        <div class="collapse collapse-arrow hover:bg-indigo-900">
-          <input type="checkbox"/> 
-          <div class="collapse-title flex items-center py-2 px-7 gap-3">
-            <img class="w-12 h-8" src="storage/assets/reports.png">
-            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Reports</span>
-          </div>
-          <div class="collapse-content font-medium flex flex-col gap-2"> 
-            <a href="genReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">Generate Report</a>
-            <a href="viewReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
-          </div>
-        </div>
-        <!--Settings-->
-        <a href="" class="flex items-center mt-auto mb-2 hover:bg-indigo-900 py-1 pl-8 gap-5">
-          <img class="w-6 h-6" src="storage/assets/settings.png">
-          <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Settings</span>
-        </a>
-        <!--Logout-->
-        <div class="relative flex items-center mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
-          <button onclick="showLogoutDialog()" class="flex items-center gap-5">
-            <img class="w-6 h-6" src="storage/assets/logout.png" alt="Logout Icon">
-            <span class="text-xl font-normal leading-7 text-white transition duration-300">Logout</span>
-          </button>
-        </div>
-      </nav>
-    </div>
-    <!--Side Nav Bar-->
+        </nav>
+      </div>
+      <!--Side Nav Bar-->
     
       <!--Lower-Right Div-->
       <div class="flex w-screen bg-neutral-200">

@@ -15,22 +15,37 @@
           height: auto;
           overflow-y: auto;
       }
-      .vertical-menu a {
+      .vertical-menu .asset-item {
+          display: flex;
+          align-items: center;
           background-color: #f1f5f9;
           color: black;
           display: block;
           padding: 12px;
           text-decoration: none;
       }
-      .vertical-menu a:nth-child(even) {
-          background-color: #FFFFFF;
-      }
-      .vertical-menu a:hover {
+      .vertical-menu .asset-item.odd:hover {
           background-color: #d1d5db; 
           color: black;
           display: block;
           padding: 12px;
           text-decoration: none
+      }
+      .vertical-menu .asset-item.even:hover {
+          background-color: #d1d5db; 
+          color: black;
+          display: block;
+          padding: 12px;
+          text-decoration: none
+      }
+      .vertical-menu .asset-item .checkbox-container {
+          margin-right: 10px;
+      }
+      .vertical-menu .asset-item.odd {
+          background-color: #f1f5f9;
+      }
+      .vertical-menu .asset-item.even {
+          background-color: #FFFFFF;
       }
       .last-name {
           margin-top: 32px;
@@ -177,77 +192,47 @@
         <div class="flex h-[85%] mb-4 mr-5">
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-full w-full mb-auto ml-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
-            <form action="" method="" class="p-2 w-full h-auto">
+            <form action="{{ route('report.generate')}}" method="POST" class="p-2 w-full h-auto">
+              @csrf
                 <div class="flex flex-col gap-4 mt-2">
-                  <div class="flex gap-3 mb-3">
+                  <div class="flex gap-3 mb-5 ">
                     <div class="flex flex-col w-full">
                         <label for="employee name" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Employee Name</label>
-                        <input type="text" name="employee name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="First Name" required="">
+                        <input type="text" name="EmpFirstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="First Name" required="">
                     </div>
                     <div class="last-name flex flex-col w-full">
-                        <input type="text" name="employee name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Last Name" required="">
+                        <input type="text" name="EmpLastName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Last Name" required="">
                     </div>
                   </div>
-                  <div class="flex flex-col mb-3">
+                  <div class="flex flex-col mb-5">
                       <label for="report title" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Report Title</label>
-                      <input type="text" name="report title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Report Title" required="">
+                      <input type="text" name="ReportTitle" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Report Title" required="true">
                   </div>
-                  <div class="flex gap-3 mb-3">
+                  <div class="flex gap-3 mb-7">
                     <div class="flex flex-col w-full">
                       <label for="date requested" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Date Requested</label>
-                      <input type="date" name="date requested" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="dd/mm/yyyy" required="">
+                      <input type="date" name="dateRequested" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="dd/mm/yyyy" required="">
                     </div>
                     <div class="flex flex-col w-full">
                       <label for="date issued" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Date Issued</label>
-                      <input type="date" name="date issued" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="dd/mm/yyyy" required="">
-                    </div>
-                  </div>
-                  <div class="flex items-center justify-center gap-10">
-                    <label for="status" class="block text-base font-medium text-gray-900 dark:text-white">Graphical Presentation:</label>
-                    <div class="flex justify-end">
-                        <div class="flex font-medium text-sm">
-                        <input type="radio" name="radio-1" class="radio radio-sm" checked />
-                        <label for="active" class="cursor-pointer">-Tabular Data</label>
-                        </div>
-                        <div class="flex font-medium text-sm ml-11">
-                        <input type="radio" name="radio-1" class="radio radio-sm" />
-                        <label for="inactive" class="cursor-pointer">-Line Graph</label>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="flex justify-center gap-10 pb-2">
-                    <label for="status" class="block text-base font-medium text-gray-900 dark:text-white">Time Division:</label>
-                    <div class="flex justify-end gap-10">
-                        <div class="flex font-medium text-sm mt-1">
-                        <input type="radio" name="radio-2" class="radio radio-sm" checked />
-                        <label for="manual input" class="cursor-pointer">-In Months</label>
-                        </div>
-                        <div class="flex font-medium text-sm mt-1">
-                        <input type="radio" name="radio-2" class="radio radio-sm" />
-                        <label for="automatic input" class="cursor-pointer">-In Years</label>
-                        </div>
+                      <input type="date" name="dateIssued" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="dd/mm/yyyy" required="">
                     </div>
                   </div>
                   <div>
                     <div class="remarks flex flex-col mb-3">
-                      <label for="remarks" class="block text-base font-medium text-gray-900 dark:text-white">Remarks</label>
-                      <textarea id="remarks" rows="5" name="remarks" class="bg-gray-50 border scroll-container border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-auto p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Remarks" required=""></textarea>
+                      <label for="remarks" class="block text-base text-start font-medium text-gray-900 dark:text-white">Remarks</label>
+                      <textarea id="remarks" rows="10" name="Remarks" class="bg-gray-50 border scroll-container border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-auto p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Remarks" required=""></textarea>
                     </div>
                   </div>
                 </div>
-
                 <div class="flex flex-col flex-1 justify-center items-center gap-3">
-                  <button type="button" onclick="" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
+                  <button type="submit" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
                     <img src="storage/assets/Generate.png" alt="Print Button" class="generate h-6">
                     <div class="text-white text-base font-medium leading-normal">GENERATE</div>
                   </button>
-                  <button type="button" onclick="" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
-                    <img src="storage/assets/Print Icon.png" alt="Print Button" class="print h-6">
-                    <div class="text-white text-base font-medium leading-normal">PRINT</div>
-                  </button>
-                  <button type="button" onclick="" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
-                    <img src="storage/assets/Save Icon.png" alt="Print Button" class="save h-6">
-                    <a class="text-white text-base font-medium leading-normal" href="{{route('exportPDF')}}">SAVE as PDF</a>
+                  <button type="button" onclick="saveAsPDF()" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
+                      <img src="storage/assets/Save Icon.png" alt="Print Button" class="save h-6">
+                      <span class="text-white text-base font-medium leading-normal">SAVE as PDF</span>
                   </button>
                 </div>
               </form>
@@ -255,35 +240,41 @@
             <!--Generate Report Format-->
             <!--Scroll Menu-->
             <div class="flex flex-col h-full w-auto mb-auto ml-4 px-4 py-3 bg-white rounded-2xl shadow-lg">
-              <div class="flex ml-2 justify-between items-center border-8 border-white">
-                <div class="flex items-center justify-start">
-                  <div>
-                    <label for="sort">Sort By: </label>
-                  </div>
-                  <div class="dropdown dropdown-hover">
-                    <div tabindex="0" role="button" class="btn ml-2">Asset Code</div>
-                    <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52">
-                      <li><a>Asset Description</a></li>
-                      <li><a>Date Acquired</a></li>
-                    </ul>
-                  </div>
+                <form action="" method="" id="sortForm">
+                    <div class="flex ml-2 justify-between items-center border-8 border-white">
+                        <div class="flex items-center justify-start">
+                            <div>
+                                <label for="sort">Sort By: </label>
+                            </div>
+                            <div class="dropdown dropdown-hover">
+                                <div tabindex="0" role="button" class="btn btn-ghost ml-2" id="selectedSort">Asset Code</div>
+                                <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52"></ul>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                                <span class="label-text mr-2">Select All</span>
+                                <input type="checkbox" id="select-all-checkbox" class="checkbox checkbox-sm" />
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="sort_by" id="sortBy" value="">
+                </form>
+                <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
+                    <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
+                        <div class="vertical-menu scroll-container rounded-xl">
+                            @foreach($fixedassets as $index => $data)
+                            <div class="asset-item {{$index % 2 == 0 ? 'even' : 'odd'}}">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="asset-checkbox" value="{{$data->id}}">
+                                    <span class="checkmark"></span>
+                                    {{$data->AssetDesc}}
+                                </label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
-                <div class="form-control">
-                  <label class="label cursor-pointer">
-                    <span class="label-text mr-2">Select All</span> 
-                    <input type="checkbox" checked="checked" class="checkbox checkbox-sm" />
-                  </label>
-                </div>
-              </div>
-              <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
-                <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
-                  <div class="vertical-menu scroll-container rounded-xl">
-                  @foreach($fixedassets as $data)
-                    <a href="#">{{$data->AssetCode}}</a>
-                  @endforeach
-                  </div>
-                </div>
-              </div>
             </div>
             <!--Scroll Menu-->
         </div>
@@ -296,6 +287,139 @@
 
   </div>
   <!--Main Div-->
+
+  <!--Save as PDF-->
+  <script>
+    function saveAsPDF() {
+        // Get user input values
+        let EmpFirstName = document.querySelector('input[name="EmpFirstName"]').value;
+        let EmpLastName = document.querySelector('input[name="EmpLastName"]').value;
+        let ReportTitle = document.querySelector('input[name="ReportTitle"]').value;
+        let dateRequested = document.querySelector('input[name="dateRequested"]').value;
+        let dateIssued = document.querySelector('input[name="dateIssued"]').value;
+        let Remarks = document.querySelector('textarea[name="Remarks"]').value;
+
+        // Create an object to store the user input
+        let userInput = {
+            EmpFirstName: EmpFirstName,
+            EmpLastName: EmpLastName,
+            ReportTitle: ReportTitle,
+            dateRequested: dateRequested,
+            dateIssued: dateIssued,
+            Remarks: Remarks
+        };
+
+        // Serialize the object to pass it as a query parameter
+        let userInputString = encodeURIComponent(JSON.stringify(userInput));
+
+        // Get selected assets
+        let selectedAssets = [];
+        document.querySelectorAll('.asset-checkbox').forEach(function(checkbox) {
+            if (checkbox.checked) {
+                selectedAssets.push(checkbox.value);
+            }
+        });
+
+        // Serialize the array of selected asset IDs
+        let selectedAssetsString = encodeURIComponent(JSON.stringify(selectedAssets));
+
+        // Redirect to the backend route with the user input and selected asset IDs as query parameters
+        window.location.href = "{{ route('exportPDF') }}?userInput=" + userInputString + "&assetIds=" + selectedAssetsString;
+    }
+
+        // Select All checkbox functionality
+        document.getElementById('select-all-checkbox').addEventListener('change', function() {
+            let checkboxes = document.querySelectorAll('.asset-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = document.getElementById('select-all-checkbox').checked;
+            });
+    });
+  </script>
+
+  <!--Sort by-->
+  <script>
+    // Dropdown toggle
+    document.querySelectorAll('.dropdown').forEach(function(dropDownWrapper) {
+        const dropDownToggler = dropDownWrapper.querySelector('.btn');
+        const dropDownList = dropDownWrapper.querySelector('.dropdown-content');
+
+        dropDownToggler.addEventListener('click', function() {
+            dropDownList.classList.toggle('hidden');
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickedInside = dropDownWrapper.contains(event.target);
+            if (!isClickedInside) {
+                dropDownList.classList.add('hidden');
+            }
+        });
+    });
+  </script>
+
+  <!-- Sort by label -->
+  <script>
+      window.onload = function() {
+          let currentSortBy = getCurrentSortByFromURL();
+          let selectedSortLabel = document.getElementById('selectedSort');
+          selectedSortLabel.textContent = getSortLabel(currentSortBy);
+          updateDropdownOptions(currentSortBy);
+      };
+
+      function updateSort(sortBy) {
+          document.getElementById('sortBy').value = sortBy;
+          let selectedSortLabel = document.getElementById('selectedSort');
+          selectedSortLabel.textContent = getSortLabel(sortBy);
+          // Prevent the default action of anchor tags
+          event.preventDefault();
+          // Remove all options from the dropdown
+          let dropdownContent = document.querySelector('.dropdown-content');
+          dropdownContent.innerHTML = '';
+          // Add options back to the dropdown, excluding the selected one
+          updateDropdownOptions(sortBy);
+          // Submit the form after a slight delay to allow label update
+          setTimeout(function() {
+              document.getElementById('sortForm').submit();
+          }, 100);
+      }
+
+      // Function to get label for sort option
+      function getSortLabel(sortBy) {
+          switch (sortBy) {
+              case 'asset_code':
+                  return 'Asset Code';
+              case 'asset_desc':
+                  return 'Asset Description';
+              case 'date_acquired':
+                  return 'Date Acquired';
+              default:
+                  return 'Asset Code';
+          }
+      }
+
+      // Function to retrieve current sort criteria from URL
+      function getCurrentSortByFromURL() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get('sort_by') || 'asset_code'; // Default to 'asset_code' if not found in URL
+      }
+
+      // Function to update dropdown options based on current sort criteria
+      function updateDropdownOptions(currentSortBy) {
+          let dropdownContent = document.querySelector('.dropdown-content');
+          let options = ['asset_code', 'asset_desc', 'date_acquired'];
+          options.forEach(option => {
+              if (option !== currentSortBy) {
+                  let li = document.createElement('li');
+                  let a = document.createElement('a');
+                  a.href = "#";
+                  a.textContent = getSortLabel(option);
+                  a.onclick = function() { updateSort(option); };
+                  li.appendChild(a);
+                  dropdownContent.appendChild(li);
+              }
+          });
+      }
+  </script>
 
   <!--Log Out Modal Script-->
   <script>

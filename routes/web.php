@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FixedAssetsController;
+use App\Http\Controllers\ReportController;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
@@ -82,6 +83,19 @@ Route::get('/genReport', function () {
 Route::get('/viewReport', function () {
     return view('viewReport');
 });
-Route::get('/viewReport',[FixedAssetsController::class, 'display']);
+
+Route::get('/viewReport',[ReportController::class,'viewReports'])->name('viewReport');
+Route::get('/viewReport',[ReportController::class,'viewReport'])->name('viewReport');
 Route::get('/genReport',[FixedAssetsController::class,'index']);
+Route::get('/genReport',[FixedAssetsController::class,'genReport'])->name('genReport');
+
 Route::get('/exportPDF', [FixedAssetsController::class,'exportPDF'])->name('exportPDF');
+
+Route::post('/genReport', [ReportController::class, 'generateReport'])->name('report.generate');
+
+Route::get('/report/pdf', [ReportController::class, 'generatePDF'])->name('report.pdf');
+Route::get('/report/pdf', 'ReportController@generatePdf')->name('report.pdf');
+
+Route::post('delete-reports/{id}', [ReportController::class, 'deleteReports'])->name('delete-reports');
+
+

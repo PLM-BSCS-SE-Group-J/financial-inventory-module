@@ -191,12 +191,31 @@ class FixedAssetsController extends Controller
         return view('fixedAssets',compact('fixedassets'));
     }
     
-    public function exportPDF(){
-        $fixedassets = fixed_assets::get();
-        $pdf = PDF::loadView('pdf.assets',[
-            'fixedassets'=>$fixedassets
+    public function exportPDF(Request $request){
+        // Fetch the selected asset IDs from the request
+        $selectedAssetIds = json_decode($request->assetIds, true);
+    
+        // Fetch the fixed assets based on the selected IDs
+        if (is_array($selectedAssetIds)) {
+            $fixedassets = fixed_assets::whereIn('id', $selectedAssetIds)->get();
+        } else {
+            $fixedassets = fixed_assets::where('id', $selectedAssetIds)->get();
+        }
+    
+        // Extract user input from the request and decode it
+        $userInput = json_decode($request->userInput, true);
+    
+        // Pass both fixed assets and user input to the view
+        $pdf = PDF::loadView('pdf.assets', [
+            'fixedassets' => $fixedassets,
+            'userInput' => $userInput,
         ]);
-        return $pdf->download('assets.pdf');
+    
+        // Set the filename dynamically based on the ReportTitle input
+        $filename = isset($userInput['ReportTitle']) ? $userInput['ReportTitle'] . '.pdf' : 'assets.pdf';
+
+        // Download the PDF with the dynamically set filename
+        return $pdf->download($filename);
     }
 
     public function import(Request $request){
@@ -210,7 +229,6 @@ class FixedAssetsController extends Controller
         return Excel::download(new UsersExport, 'fixedAssets.xlsx');
     }
 
-
     public function catfunct(){
         $categoryData=account::all();
         $classData=acc_class::all();
@@ -222,9 +240,27 @@ class FixedAssetsController extends Controller
         $fixedassets = fixed_assets::all();
         return view('genReport',compact('fixedassets'));
    }
-    
-    public function display(){
-        $fixedassets = fixed_assets::all();
-        return view('viewReport',compact('fixedassets'));
+
+   public function genReport(Request $request)
+   {
+       // Get the sorting parameter from the request
+       $sortBy = $request->query('sort_by');
+   
+       // Default sorting column
+       $sortColumn = 'AssetCode';
+   
+       // Check if the sorting parameter is provided and valid
+       if ($sortBy === 'asset_desc') {
+           $sortColumn = 'AssetDesc';
+       } elseif ($sortBy === 'date_acquired') {
+        $sortColumn = 'dateAcquired';
+        $sortDirection = 'asc'; // Sort in ascending order for date acquired
+       }
+   
+       // Fetch assets from the database and order them by the selected column
+       $fixedAssets = fixed_assets::orderBy($sortColumn)->get();
+   
+       // Return the view with the sorted assets
+       return view('genReport', ['fixedassets' => $fixedAssets]);
    }
 }
