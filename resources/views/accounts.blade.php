@@ -166,7 +166,7 @@
               <thead class="bg-slate-100 sticky top-0">
                 <tr class="h-10">
                   <th class="border rowtext-margin text-left border-slate-100">Account Classification</th>
-                  <th class="border rowtext-margin text-left border-slate-100">Useful Life</th>
+                  <th class="border rowtext-margin text-left border-slate-100" style="text-align: left;">Useful Life (In Years)</th>
                   <th class="border rowtext-margin text-left border-slate-100">Actions</th>
                 </tr>
               </thead>
@@ -174,7 +174,7 @@
                 @foreach ($data as $dt)
                 <tr class="h-8 hover:bg-gray-300">
                   <td class="border rowtext-margin border-slate-100">{{$dt->AccountClass}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$dt->UseLife}}</td>
+                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">{{$dt->UseLife}}</td>
                   <td class="border rowtext-margin border-slate-100 flex flex-col rowtext-margin">
                     <a href="{{ url('editAccounts/'.$dt->id) }}" class="text-indigo-800 underline">View</a>
                     <a href="{{ url('deleteAccount/'.$dt->id) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
