@@ -18,6 +18,15 @@ class allreports extends Model
         'dateRequested',
         'dateIssued',
         'Remarks',
+        'selectedAssets',
+    ];
+    protected $casts = [
+        'selectedAssets' => 'array',
     ];
     protected $dateFormat = 'Y-m-d H:i:sO';
+
+    public function fixedAssets()
+    {
+        return $this->belongsToMany(fixed_assets::class, 'fixed_asset_report', 'report_id', 'asset_id');
+    }    
 }

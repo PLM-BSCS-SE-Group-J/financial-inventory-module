@@ -5,6 +5,7 @@ use App\Http\Controllers\FixedAssetsController;
 use App\Http\Controllers\ReportController;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
+use App\Models\allreports;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,10 @@ Route::get('/loginPage', function () {
 });
 
 Route::get('/homePage', function () {
-    return view('homePage');
+
+    $reports = allreports::all();
+
+    return view('homePage', ['reports' => $reports]);
 });
 
 
@@ -92,10 +96,6 @@ Route::get('/genReport',[FixedAssetsController::class,'genReport'])->name('genRe
 Route::get('/exportPDF', [FixedAssetsController::class,'exportPDF'])->name('exportPDF');
 
 Route::post('/genReport', [ReportController::class, 'generateReport'])->name('report.generate');
+Route::get('deleteReport/{ReportTitle}', [ReportController::class,'destroy']);
 
-Route::get('/report/pdf', [ReportController::class, 'generatePDF'])->name('report.pdf');
-Route::get('/report/pdf', 'ReportController@generatePdf')->name('report.pdf');
-
-Route::post('delete-reports/{id}', [ReportController::class, 'deleteReports'])->name('delete-reports');
-
-
+Route::get('/report/{ReportTitle}', [ReportController::class, 'show']);

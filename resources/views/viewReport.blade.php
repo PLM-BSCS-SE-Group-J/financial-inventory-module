@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
     <title>Financial Inventory</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./dist/output.css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,6 +63,41 @@
       }
       .scroll-container::-webkit-scrollbar-thumb:hover {
           background-color: #555; 
+      }
+      .scrollable {
+            max-height: 100%; /* Adjust this height as necessary */
+            overflow-y: auto;
+      }
+      .rounded-table {
+            border: 2px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+      }
+
+      .rounded-table th:first-child {
+          border-top-left-radius: 15px;
+      }
+
+      .rounded-table th:last-child {
+          border-top-right-radius: 15px;
+      }
+
+      .rounded-table td:first-child {
+          border-bottom-left-radius: 15px;
+      }
+
+      .rounded-table td:last-child {
+          border-bottom-right-radius: 15px;
+      }
+      
+      .image-properties {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: 100px;
+      }
+      .bg-custom {
+          background-color: #f1f5f9;
       }
     </style>
 
@@ -183,52 +219,79 @@
                             <ul tabindex="0" class="dropdown-content z-[1] menu shadow bg-base-100 rounded-box w-52"></ul>
                           </div>
                         </div>
-                        <div class="flex flex-1 justify-end items-center gap-3">
-                          <div>
-                            <label for="sort">Actions: </label>
-                          </div>
-                          <button type="button" onclick="deleteReports()" class="delete-button w-20 h-8 bg-red-700 hover:bg-red-900 rounded-md shadow flex items-center justify-center">
-                              <span class="text-white text-sm font-medium">Delete</span>
-                          </button>
-                          <button type="btn" onclick="" class="w-40 h-8 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow flex items-center justify-center">
-                            <span class="text-white text-sm font-medium">Show PDF Preview</span>
-                          </button>
-                          <div class="form-control">
-                            <label class="label cursor-pointer">
-                              <span class="label-text mr-2">Select All</span>
-                              <input type="checkbox" id="select-all-checkbox" class="checkbox checkbox-sm" />
-                            </label>
-                          </div>
-                        </div>
                     </div>
                     <input type="hidden" name="sort_by" id="sortBy" value="">
                 </form>
                 <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
-                  <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
-                    <div class="vertical-menu scroll-container rounded-xl">
-                      @foreach($reports as $index => $report)
-                          <div class="asset-item {{$index % 2 == 0 ? 'even' : 'odd'}}" data-url="path/to/pdf/{{ $report->ReportTitle }}" onclick="viewPDF(this)">
-                            <label class="checkbox-container">
-                                <input type="checkbox" class="asset-checkbox" data-id="{{ $report->ReportTitle }}">
-                                <a href="{{ url('delete-reports/').$report->ReportTitle }}" class="text-indigo-800 underline" onclick=""></a>
-                                <span class="checkmark"></span>
-                                {{ $report->ReportTitle }}
-                            </label>
+                  <div class="w-full shadow-lg">
+                      <table id="myTable" class="table-fixed rounded-table w-auto shadow-lg border-collapse border border-slate-300">
+                          <div class="vertical-menu scroll-container rounded-xl">
+                              <tbody class="bg-white">
+                                  @if($reports->isEmpty())
+                                      <tr>
+                                          <td class="flex items-center justify-center py-4 image-properties">
+                                              <img src="{{ asset('storage/assets/noreports.png') }}" alt="No reports image">
+                                          </td>
+                                      </tr>
+                                  @else
+                                    @foreach($reports as $index => $report)
+                                      <tr class="h-12 {{ $index % 2 == 0 ? 'bg-custom' : 'bg-white' }} hover:bg-gray-300">
+                                          <td class="w-full border text-center border-slate-100" style="text-align: left; padding-left: 20px;">
+                                              {{ $report->ReportTitle }}
+                                          </td>
+                                          <td class="w-36 flex flex-col border rowtext-margin border-slate-100" style="text-align: left; padding-left: 20px; padding-top: 10px; padding-bottom: 10px;">
+                                              <a href="{{ url('viewReport/'.$report->ReportTitle) }}" class="text-indigo-800 underline show-details" data-id="{{ $report->ReportTitle }}" data-assets="{{ $report->selectedAssets }}">Show Details</a>
+                                              <a href="{{ url('deleteReport/'.$report->ReportTitle) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
+                                          </td>
+                                          <input type="hidden" name="selectedAssets_{{ $report->id }}" value="{{ $report->selectedAssets }}">
+                                      </tr>
+                                    @endforeach
+                                  @endif
+                              </tbody>
                           </div>
-                      @endforeach
-                    </div>
+                      </table>
                   </div>
-                </div>
+              </div>
             </div>
             <!--Scroll Menu-->
 
-            <!--PDF Viewer-->
-            <div class="h-full w-full ml-4 rounded-2xl shadow-lg scroll-container">
-                <object id="pdfViewer" data="{{ route('report.pdf', $reports->first()->id ?? 0) }}" type="application/pdf" class="flex justify-center items-center h-full w-full">
-                    <p class="py-2 px-4 bg-gold rounded-md">Unable to display PDF file. <a href=""><strong><u>Download</u></strong></a> instead.</p>
-                </object>
+            <!--Report Details-->
+            <div class="h-full w-full ml-4 rounded-2xl bg-white px-4 py-3 shadow-lg scroll-container scrollable overflow-y-scroll">
+              <form action="{{ route('report.generate')}}" method="POST" class="p-2 w-full h-auto">
+                @csrf
+                <div class="flex flex-col gap-4 mt-2">
+                  <div class="flex gap-3 items-center">
+                    <div class="flex flex-col w-full">
+                        <label for="employee name" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Employee Name</label>
+                        <input type="text" name="EmpFirstName" readonly value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                    </div>
+                    <div class="last-name flex flex-col w-full mt-8">
+                        <input type="text" name="EmpLastName" readonly value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                    </div>
+                  </div>
+                  <div class="flex flex-col">
+                      <label for="report title" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Report Title</label>
+                      <input type="text" name="ReportTitle" readonly value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="true">
+                  </div>
+                  <div class="flex gap-3">
+                    <div class="flex flex-col w-full">
+                      <label for="date requested" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Date Requested</label>
+                      <input type="date" name="dateRequested" readonly value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                    </div>
+                    <div class="flex flex-col w-full">
+                      <label for="date issued" class="block text-start mb-2 text-base font-medium text-gray-900 dark:text-white">Date Issued</label>
+                      <input type="date" name="dateIssued" readonly value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                    </div>
+                  </div>
+                  <div class="flex flex-col w-full">
+                      <label for="assets-included" class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Assets Included (Asset Description):</label>
+                      <div id="selectedAssetDescriptions">-</div>
+                  </div>
+                </div>
+              </form>
             </div>
-            <!--PDF Viewer-->
+
+            <!--Report Details-->
         </div>
         
       </div>
@@ -240,63 +303,70 @@
   </div>
   <!--Main Div-->
 
-  <!--Select all-->
   <script>
-    const selectAllCheckbox = document.getElementById('select-all-checkbox');
-      selectAllCheckbox.addEventListener('change', function(event) {
-          // Get all checkboxes in the vertical menu
-          const assetCheckboxes = document.querySelectorAll('.asset-checkbox');
-          // Update the state of all checkboxes based on the state of the "Select All" checkbox
-          assetCheckboxes.forEach(function(checkbox) {
-              checkbox.checked = event.target.checked;
-          });
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to display selected asset descriptions
+        function displaySelectedAssetDescriptions(event) {
+            event.preventDefault(); // Prevent the default action (navigation)
+            
+            const reportTitle = this.dataset.id;
+            const assetDescriptions = JSON.parse(this.dataset.assets);
+
+            // Clear the previous contents
+            const selectedAssetDescriptionsDiv = document.getElementById('selectedAssetDescriptions');
+            selectedAssetDescriptionsDiv.innerHTML = '';
+
+            // Append the selected asset descriptions
+            assetDescriptions.forEach(asset => {
+                const div = document.createElement('div');
+                div.textContent = asset.description; // Display description directly
+                selectedAssetDescriptionsDiv.appendChild(div);
+            });
+        }
+
+        // Add event listeners to "Show Details" links
+        const showDetailsLinks = document.querySelectorAll('.show-details');
+        showDetailsLinks.forEach(link => {
+            link.addEventListener('click', displaySelectedAssetDescriptions);
+        });
+    });
   </script>
 
-  <!--Delete-->
   <script>
-    document.querySelector('.delete-button').addEventListener('click', function(event) {
-        event.preventDefault();
-        const selectedReports = [];
-        
-        // Get all selected checkboxes
-        document.querySelectorAll('.asset-checkbox:checked').forEach(function(checkbox) {
-            selectedReports.push(checkbox.getAttribute('data-id'));
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.show-details').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const reportId = this.getAttribute('data-id');
+          
+          // Fetch the report data via AJAX
+          fetch(`/report/${reportId}`)
+            .then(response => response.json())
+            .then(data => {
+              // Update the form fields
+              document.querySelector('input[name="EmpFirstName"]').value = data.EmpFirstName;
+              document.querySelector('input[name="EmpLastName"]').value = data.EmpLastName;
+              document.querySelector('input[name="ReportTitle"]').value = data.ReportTitle;
+              document.querySelector('input[name="dateRequested"]').value = data.dateRequested;
+              document.querySelector('input[name="dateIssued"]').value = data.dateIssued;
+              document.querySelector('input[name="AssetCode"]').value = data.AssetCode;
+              document.querySelector('select[name="status"]').value = data.status;
+              document.querySelector('input[name="AssetDesc"]').value = data.AssetDesc;
+              document.querySelector('select[name="AccountTitle"]').value = data.AccountTitle;
+              document.querySelector('select[name="AccountClass"]').value = data.AccountClass;
+              document.querySelector('input[name="dateAcquired"]').value = data.dateAcquired;
+              document.querySelector('input[name="UseLife"]').value = data.UseLife;
+              document.querySelector('input[name="OrigCost"]').value = data.OrigCost;
+              document.querySelector('input[name="NetbookVal"]').value = data.NetbookVal;
+              document.querySelector('input[name="AccuDep"]').value = data.AccuDep;
+              document.querySelector('input[name="YearlyDep"]').value = data.YearlyDep;
+              document.querySelector('input[name="MonthlyDep"]').value = data.MonthlyDep;
+              document.querySelector('input[name="dateRetired"]').value = data.dateRetired;
+              document.querySelector('input[name="PersonCharge"]').value = data.PersonCharge;
+              document.querySelector('textarea[name="Remarks"]').value = data.Remarks;
+            });
         });
-        
-        if (selectedReports.length > 0) {
-            // Confirm deletion
-            const confirmDelete = confirm('Are you sure you want to delete the selected reports?');
-            if (confirmDelete) {
-                // Send delete request to the server
-                fetch('/delete-reports', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Ensure CSRF token is included for security
-                    },
-                    body: JSON.stringify({ reportTitles: selectedReports })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Remove deleted reports from the UI
-                        selectedReports.forEach(function(title) {
-                            document.querySelector(`.asset-checkbox[data-id="${title}"]`).closest('.asset-item').remove();
-                        });
-                        alert('Selected reports have been deleted.');
-                    } else {
-                        alert('An error occurred while deleting the reports.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while deleting the reports.');
-                });
-            }
-        } else {
-            alert('No reports selected for deletion.');
-        }
+      });
     });
   </script>
 

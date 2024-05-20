@@ -83,6 +83,9 @@
       .scroll-container::-webkit-scrollbar-thumb:hover {
           background-color: #555; 
       }
+      .image-properties {
+          margin-left: 90px;
+      }
     </style>
   @livewireStyles
 </head>
@@ -225,6 +228,7 @@
                     </div>
                   </div>
                 </div>
+                <input type="hidden" name="selectedAssets" id="selectedAssets">
                 <div class="flex flex-col flex-1 justify-center items-center gap-3">
                   <button type="submit" class="w-48 h-12 px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-center gap-2 flex">
                     <img src="storage/assets/Generate.png" alt="Print Button" class="generate h-6">
@@ -263,15 +267,15 @@
                 <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
                     <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
                         <div class="vertical-menu scroll-container rounded-xl">
-                            @foreach($fixedassets as $index => $data)
-                            <div class="asset-item {{$index % 2 == 0 ? 'even' : 'odd'}}">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" class="asset-checkbox" value="{{$data->id}}">
-                                    <span class="checkmark"></span>
-                                    {{$data->AssetDesc}}
-                                </label>
-                            </div>
-                            @endforeach
+                          @foreach($fixedassets as $index => $data)
+                              <div class="asset-item {{$index % 2 == 0 ? 'even' : 'odd'}}">
+                                  <label class="checkbox-container">
+                                      <input type="checkbox" class="asset-checkbox" name="selectedAssets[]" value="{{$data->id}}">
+                                      <span class="checkmark"></span>
+                                      {{$data->AssetDesc}}
+                                  </label>
+                              </div>
+                          @endforeach
                         </div>
                     </div>
                 </div>
@@ -288,10 +292,62 @@
   </div>
   <!--Main Div-->
 
+  <script>
+    // Function to update the hidden input field with selected asset IDs and descriptions
+    function updateSelectedAssets() {
+        // Get all checked checkboxes
+        const checkedCheckboxes = document.querySelectorAll('.asset-checkbox:checked');
+
+        // Map the checked checkboxes to their corresponding asset IDs and descriptions
+        const selectedAssets = Array.from(checkedCheckboxes).map(checkbox => {
+            return {
+                id: checkbox.value,
+                description: checkbox.parentElement.textContent.trim() // Trim any extra white spaces
+            };
+        });
+
+        // Update the value of the hidden input field with JSON stringified data
+        document.getElementById('selectedAssets').value = JSON.stringify(selectedAssets);
+    }
+
+    // Add event listeners to checkboxes to update selected assets when they are checked or unchecked
+    const checkboxes = document.querySelectorAll('.asset-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedAssets);
+    });
+ </script>
+
+  <script>
+    function generateReport() {
+        const checkboxes = document.querySelectorAll('.asset-checkbox');
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                const assetId = checkbox.value;
+                const assetData = getAssetDataById(assetId);
+
+                appendHiddenInput('assetIds[]', assetId);
+                appendHiddenInput('assetDescs[]', assetData.AssetDesc);
+            }
+        });
+
+        document.getElementById('generateForm').submit();
+    }
+
+    function getAssetDataById(assetId) {
+    }
+
+    function appendHiddenInput(name, value) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        document.getElementById('generateForm').appendChild(input);
+    }
+  </script>
+
   <!--Save as PDF-->
   <script>
     function saveAsPDF() {
-        // Get user input values
         let EmpFirstName = document.querySelector('input[name="EmpFirstName"]').value;
         let EmpLastName = document.querySelector('input[name="EmpLastName"]').value;
         let ReportTitle = document.querySelector('input[name="ReportTitle"]').value;
@@ -299,7 +355,6 @@
         let dateIssued = document.querySelector('input[name="dateIssued"]').value;
         let Remarks = document.querySelector('textarea[name="Remarks"]').value;
 
-        // Create an object to store the user input
         let userInput = {
             EmpFirstName: EmpFirstName,
             EmpLastName: EmpLastName,
@@ -309,10 +364,8 @@
             Remarks: Remarks
         };
 
-        // Serialize the object to pass it as a query parameter
         let userInputString = encodeURIComponent(JSON.stringify(userInput));
 
-        // Get selected assets
         let selectedAssets = [];
         document.querySelectorAll('.asset-checkbox').forEach(function(checkbox) {
             if (checkbox.checked) {
@@ -320,14 +373,11 @@
             }
         });
 
-        // Serialize the array of selected asset IDs
         let selectedAssetsString = encodeURIComponent(JSON.stringify(selectedAssets));
 
-        // Redirect to the backend route with the user input and selected asset IDs as query parameters
         window.location.href = "{{ route('exportPDF') }}?userInput=" + userInputString + "&assetIds=" + selectedAssetsString;
     }
 
-        // Select All checkbox functionality
         document.getElementById('select-all-checkbox').addEventListener('change', function() {
             let checkboxes = document.querySelectorAll('.asset-checkbox');
             checkboxes.forEach(function(checkbox) {
@@ -338,7 +388,6 @@
 
   <!--Sort by-->
   <script>
-    // Dropdown toggle
     document.querySelectorAll('.dropdown').forEach(function(dropDownWrapper) {
         const dropDownToggler = dropDownWrapper.querySelector('.btn');
         const dropDownList = dropDownWrapper.querySelector('.dropdown-content');
@@ -347,7 +396,6 @@
             dropDownList.classList.toggle('hidden');
         });
 
-        // Hide dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const isClickedInside = dropDownWrapper.contains(event.target);
             if (!isClickedInside) {
@@ -370,20 +418,15 @@
           document.getElementById('sortBy').value = sortBy;
           let selectedSortLabel = document.getElementById('selectedSort');
           selectedSortLabel.textContent = getSortLabel(sortBy);
-          // Prevent the default action of anchor tags
           event.preventDefault();
-          // Remove all options from the dropdown
           let dropdownContent = document.querySelector('.dropdown-content');
           dropdownContent.innerHTML = '';
-          // Add options back to the dropdown, excluding the selected one
           updateDropdownOptions(sortBy);
-          // Submit the form after a slight delay to allow label update
           setTimeout(function() {
               document.getElementById('sortForm').submit();
           }, 100);
       }
 
-      // Function to get label for sort option
       function getSortLabel(sortBy) {
           switch (sortBy) {
               case 'asset_code':
@@ -397,10 +440,9 @@
           }
       }
 
-      // Function to retrieve current sort criteria from URL
       function getCurrentSortByFromURL() {
           const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get('sort_by') || 'asset_code'; // Default to 'asset_code' if not found in URL
+          return urlParams.get('sort_by') || 'asset_code';
       }
 
       // Function to update dropdown options based on current sort criteria
