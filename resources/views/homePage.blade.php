@@ -9,6 +9,8 @@
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
       .assets-dashboard {
           height: 500px;
@@ -105,6 +107,28 @@
       }
       .scroll-container::-webkit-scrollbar-thumb:hover {
           background-color: #555; 
+      }
+      .rounded-table {
+          width: 380px;
+          border: 2px solid #333;
+          border-radius: 15px;
+          overflow: hidden;
+      }
+
+      .rounded-table th:first-child {
+          border-top-left-radius: 15px;
+      }
+
+      .rounded-table th:last-child {
+          border-top-right-radius: 15px;
+      }
+
+      .rounded-table td:first-child {
+          border-bottom-left-radius: 15px;
+      }
+
+      .rounded-table td:last-child {
+          border-bottom-right-radius: 15px;
       }
     </style>
 
@@ -254,40 +278,29 @@
               </div>
             </div>
             <div class="overflow-auto border-8 items-center border-white scroll-container" style="max-height: 900px;">
-              <div class="ml-4 mr-4 mb-4 w-auto shadow-lg">
-                <div class="vertical-menu scroll-container rounded-xl">
-                  <a href="#">Recently Viewed 1</a>
-                  <a href="#">Recently Viewed 2</a>
-                  <a href="#">Recently Viewed 3</a>
-                  <a href="#">Recently Viewed 4</a>
-                  <a href="#">Recently Viewed 5</a>
-                  <a href="#">Recently Viewed 6</a>
-                  <a href="#">Recently Viewed 7</a>
-                  <a href="#">Recently Viewed 8</a>
-                  <a href="#">Recently Viewed 9</a>
-                  <a href="#">Recently Viewed 10</a>
-                  <a href="#">Recently Viewed 11</a>
-                  <a href="#">Recently Viewed 12</a>
-                  <a href="#">Recently Viewed 13</a>
-                  <a href="#">Recently Viewed 14</a>
-                  <a href="#">Recently Viewed 15</a>
-                  <a href="#">Recently Viewed 16</a>
-                  <a href="#">Recently Viewed 17</a>
-                  <a href="#">Recently Viewed 18</a>
-                  <a href="#">Recently Viewed 19</a>
-                  <a href="#">Recently Viewed 20</a>
-                  <a href="#">Recently Viewed 21</a>
-                  <a href="#">Recently Viewed 22</a>
-                  <a href="#">Recently Viewed 23</a>
-                  <a href="#">Recently Viewed 24</a>
-                  <a href="#">Recently Viewed 25</a>
-                  <a href="#">Recently Viewed 26</a>
-                  <a href="#">Recently Viewed 27</a>
-                  <a href="#">Recently Viewed 28</a>
-                  <a href="#">Recently Viewed 29</a>
-                  <a href="#">Recently Viewed 30</a>
+                <div class="w-full shadow-lg">
+                    <table id="myTable" class="table-fixed rounded-table shadow-lg border-collapse border border-slate-300">
+                        <div class="vertical-menu scroll-container rounded-xl">
+                            <tbody class="bg-white">
+                                @if($reports->isEmpty())
+                                <tr>
+                                    <td colspan="1" class="text-center py-4">
+                                        <img src="storage/assets/norecentreport.png" alt="No recent reports">
+                                    </td>
+                                </tr>
+                                @else
+                                @foreach($reports as $index => $report)
+                                <tr class="h-12 hover:bg-gray-300">
+                                    <td class="w-full border text-center border-slate-100" style="text-align: left; padding-left: 20px;">
+                                        <a href="viewReport?id={{ $report->id }}">{{ $report->ReportTitle }}</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </tbody>
+                        </div>
+                    </table>
                 </div>
-              </div>
             </div>
           </div>
           <!--Scroll Menu-->

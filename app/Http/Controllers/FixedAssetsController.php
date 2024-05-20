@@ -211,12 +211,16 @@ class FixedAssetsController extends Controller
             'userInput' => $userInput,
         ]);
     
+        // Set the paper size to letter and orientation to landscape
+        $pdf->setPaper('letter', 'landscape');
+    
         // Set the filename dynamically based on the ReportTitle input
         $filename = isset($userInput['ReportTitle']) ? $userInput['ReportTitle'] . '.pdf' : 'assets.pdf';
-
+    
         // Download the PDF with the dynamically set filename
         return $pdf->download($filename);
     }
+    
 
     public function import(Request $request){
         $request->validate(['fixed_assets'=> ['required']]);

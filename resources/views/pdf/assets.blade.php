@@ -57,12 +57,17 @@ strong {
   color: black;
 }
 
-.logo-container {
+.logo-container1 {
+  text-align: center;
+}
+
+.logo-container2 {
   text-align: center;
 }
 
 .office-info {
   text-align: center;
+  margin-left: -250px;
   color:#000000;  
   font-family: 'Arial', 'sans-serif';
 }
@@ -114,101 +119,131 @@ strong {
   page-break-before: always;
 }
 
+#fixed-assets {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#fixed-assets th {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  color: #000;
+}
+
+#fixed-assets td {
+  border: none; 
+  padding: 8px;
+}
+
+#fixed-assets tbody tr:last-child td {
+  border-bottom: 1px solid #000; 
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+
 </style>
 </head>
-<body class="format">
+<body>
 
 <table>
     <tbody>
         <tr>
             <td class="logo-container">
-                <p><img src="storage/assets/pamantasan logo.png" alt="image"></p>
+                <p><img src="storage/assets/pamantasan logo.png" alt="image" style="margin-left: 140px;"></p>
             </td>
             <td class="office-info">
-                <p>Republic of the Philippines<br>
-                    <span class = 'university'>PAMANTASAN NG LUNGSOD NG MAYNILA</span>
-                <br>Intramuros, Manila</p>
+                <div style="margin-left: -50px;">
+                    <p>Republic of the Philippines<br>
+                        <span class = 'university'>PAMANTASAN NG LUNGSOD NG MAYNILA</span>
+                    <br>Intramuros, Manila
+                    <br>Accounting Office</p>
+                </div>
             </td>
             <td class="logo-container">
-                <p><img src="storage/assets/manila.jpg" alt="manila_logo"></p>
+                <p><img src="storage/assets/manila.jpg" alt="manila_logo" style="margin-right: 100px;"></p>
             </td>
         </tr>
         
     </tbody>
 </table>
+<br>
+<!-- <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 40px; font-weight: bold;">{{ $userInput['ReportTitle'] }}</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Prepared by:</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['EmpFirstName'] }} {{ $userInput['EmpLastName'] }}</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Requested On:</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['dateRequested'] }}</p>
+<br>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Issued On:</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['dateIssued'] }}</p> -->
 
-<h1>Report Information</h1>
+<div class="footer">
+  <p style="font-family: 'Times New Roman';  text-align: right; font-size: 16px;">Prepared by: {{ $userInput['EmpFirstName'] }} {{ $userInput['EmpLastName'] }} | Requested On: {{ $userInput['dateRequested'] }} | Issued On: {{ $userInput['dateIssued'] }}</p>
+</div>
+<!-- <p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['EmpFirstName'] }} {{ $userInput['EmpLastName'] }}</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Requested On:</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['dateRequested'] }}</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Issued On:</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">{{ $userInput['dateIssued'] }}</p> -->
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px; font-weight: bold;">Financial Inventory</p>
+<p style="font-family: 'Times New Roman';  text-align: center; font-size: 16px;">Asset Ledger for {{ $userInput['ReportTitle'] }}</p>
+<br>
+<table id="fixed-assets">
+  <thead>
+    <tr>
+      <th style="text-align: left; width: 120px">Asset Code</th>
+      <th style="text-align: left; width: 140px">Asset Description</th>
+      <th style="text-align: left;">Account Title</th>
+      <th style="text-align: left;">Account Classification</th>
+      <th style="text-align: left; width: 140px">Netbook Value</th>
+      <th style="text-align: left;">Accumulated Depreciation</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if(count($fixedassets))
+      @foreach($fixedassets as $index => $data)
+        <tr>
+          <td>{{$data->AssetCode}}</td>
+          <td>{{$data->AssetDesc}}</td>
+          <td>{{$data->AccountTitle}}</td>
+          <td>{{$data->AccountClass}}</td>
+          <td>P{{ number_format(floatval($data->NetbookVal), 2) }}</td>
+          <td>P{{ number_format(floatval($data->AccuDep), 2) }}</td>
+        </tr>
+      @endforeach
+    @else
+      <tr>
+        <td colspan="14">No Assets Found</td>
+      </tr>
+    @endif
+  </tbody>
+</table>
 
-<h2>Employee Name</h2>
-<p>{{ $userInput['EmpFirstName'] }} {{ $userInput['EmpLastName'] }}</p>
-
-<h2>Report Title</h2>
-<p>{{ $userInput['ReportTitle'] }}</p>
-
-<h2>Date Requested</h2>
-<p>{{ $userInput['dateRequested'] }}</p>
-
-<h2>Date Issued</h2>
-<p>{{ $userInput['dateIssued'] }}</p>
-
-<div class="page-break"></div>
-
-<h1>Fixed Assets Table</h1>
-
-  @if(count($fixedassets))
-    @foreach($fixedassets as $index => $data)
-       @if($index > 0)
-          <div class="page-break"></div>
-       @endif
-
-       <h2>Asset Code</h2>
-       <p>{{$data->AssetCode}}</p>
-
-       <h2>Asset Description</h2>
-       <p>{{$data->AssetDesc}}</p>
-
-       <h2>Account Title</h2>
-       <p>{{$data->AccountTitle}}</p>
-
-       <h2>Account Classification</h2>
-       <p>{{$data->AccountClass}}</p>
-
-       <h2>Use Life</h2>
-       <p>{{$data->UseLife}}</p>
-
-       <h2>Date Acquired</h2>
-       <p>{{$data->dateAcquired}}</p>
-
-       <h2>Original Cost</h2>
-       <p>{{$data->OrigCost}}</p>
-
-       <h2>Netbook Value</h2>
-       <p>{{$data->NetbookVal}}</p>
-
-       <h2>Status</h2>
-       <p>{{$data->status}}</p>
-
-       <h2>Accumulated Depreciation</h2>
-       <p>{{$data->AccuDep}}</p>
-
-       <h2>Monthly Depreciation</h2>
-       <p>{{$data->MonthlyDep}}</p>
-
-       <h2>Yearly Depreciation</h2>
-       <p>{{$data->YearlyDep}}</p>
-
-       <h2>Date Retired</h2>
-       <p>{{$data->dateRetired}}</p>
-
-       <h2>Person In Charge</h2>
-       <p>{{$data->PersonCharge}}</p>
-
-    @endforeach
-  @else
-    <h2>No Assets Found</h2>
-  @endif
-
-<h2>Remarks</h2>
+<br>
 <p>{{ $userInput['Remarks'] }}</p>
 
 </body>
