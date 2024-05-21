@@ -11,6 +11,9 @@
     <title>Financial Inventory</title>
     <link rel="stylesheet" href="./dist/output.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
     <style>
       tr:nth-child(even) {
       background-color: #EFF0FF;
@@ -369,7 +372,29 @@
     });
   </script>
   
-  
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var successMessage = "{{ session('success') }}";
+            var errorMessage = "{{ session('error') }}";
+
+            if (errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage
+                });
+            }
+
+            if (successMessage) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: successMessage
+                });
+            }
+        });
+    </script>
+
   <!--Confirm Delete-->
   <script>
       function confirmation(ev) {

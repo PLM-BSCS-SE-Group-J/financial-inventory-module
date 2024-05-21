@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use function Laravel\Prompts\confirm;
@@ -255,9 +256,16 @@ class FixedAssetsController extends Controller
 
     public function import(Request $request){
         $request->validate(['fixed_assets'=> ['required']]);
-        Excel::import(new UsersImport, $request->file('fixed_assets'));
-
-        return redirect('/fixedAssets')->with('success', 'Uploaded Successfully!');
+        
+        try {
+            Excel::import(new UsersImport, $request->file('fixed_assets'));
+            return redirect('/fixedAssets')->with('success', 'Uploaded Successfully!');
+        } catch (\Exception $e) {
+            // Log the error message if needed
+            Log::error('Error during import: ' . $e->getMessage());
+    
+            return redirect('/fixedAssets')->with('error', 'Upload Unsuccessful: ' . $e->getMessage());
+        }
     }
 
     public function export(){
