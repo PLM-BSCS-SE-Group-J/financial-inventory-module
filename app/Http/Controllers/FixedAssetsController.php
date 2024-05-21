@@ -161,26 +161,57 @@ class FixedAssetsController extends Controller
         return view('editAssets', compact(['fixedassets','categoryData','classData']));
     }
 
-    public function editAssets(Request $request, $id){
+    public function editAssets(Request $request, $id)
+    {
+        // Find the existing fixed asset record
         $fixedassets = fixed_assets::find($id);
-        $fixedassets->AssetCode=$request->input('AssetCode');
-        $fixedassets->AssetDesc=$request->input('AssetDesc');
-        $fixedassets->AccountTitle=$request->input('AccountTitle');
-        $fixedassets->AccountClass=$request->input('AccountClass');
-        $fixedassets->UseLife=$request->input('UseLife');
-        $fixedassets->dateAcquired=$request->input('dateAcquired');
-        $fixedassets->OrigCost=$request->input('OrigCost');
-        $fixedassets->NetbookVal=$request->input('NetbookVal');
-        $fixedassets->status=$request->input('status');
-        $fixedassets->AccuDep=$request->input('AccuDep');
-        $fixedassets->MonthlyDep=$request->input('MonthlyDep');
-        $fixedassets->YearlyDep=$request->input('YearlyDep');
-        $fixedassets->dateRetired=$request->input('dateRetired');
-        $fixedassets->PersonCharge=$request->input('PersonCharge');
-        $fixedassets->timestamps=false;
-
-        $fixedassets->update();       
-
+    
+        // Update the fixed asset fields from the request
+        $fixedassets->AssetCode = $request->input('AssetCode');
+        $fixedassets->AssetDesc = $request->input('AssetDesc');
+        $fixedassets->AccountTitle = $request->input('AccountTitle');
+        $fixedassets->AccountClass = $request->input('AccountClass');
+        $fixedassets->UseLife = $request->input('UseLife');
+        $fixedassets->dateAcquired = $request->input('dateAcquired');
+        $fixedassets->OrigCost = $request->input('OrigCost');
+        $fixedassets->PersonCharge = $request->input('PersonCharge');
+        $fixedassets->dateRetired = $request->input('dateRetired');
+        $fixedassets->timestamps = false;
+    
+        // Get today's date
+        $today = Carbon::today()->format('Y-m-d');
+        $current = Carbon::parse($today);
+    
+        // Recalculate depreciation values
+        $salvageVal = $fixedassets->OrigCost * 0.05;
+        $fixedassets->YearlyDep = ($fixedassets->OrigCost - $salvageVal) / $fixedassets->UseLife;
+        $fixedassets->MonthlyDep = $fixedassets->YearlyDep / 12;
+    
+        // Parse the date acquired and determine status based on useful life
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->dateAcquired);
+        $acquired = Carbon::parse($fixedassets->dateAcquired);
+    
+        // Check if the asset's useful life has expired
+        if ($date->addYears($fixedassets->UseLife) < $today) {
+            $fixedassets->status = "Expired";
+        } else {
+            $fixedassets->status = "Active";
+        }
+    
+        // Calculate net book value and accumulated depreciation
+        if ($acquired == $current) {
+            $fixedassets->NetbookVal = $fixedassets->OrigCost;
+            $fixedassets->AccuDep = 0;
+        } else {
+            $diffmonth = $acquired->diffInMonths($current);
+            $fixedassets->AccuDep = $fixedassets->MonthlyDep * $diffmonth;
+            $fixedassets->NetbookVal = $fixedassets->OrigCost - $fixedassets->AccuDep;
+        }
+    
+        // Save the updated record
+        $fixedassets->update();
+    
+        // Redirect with success message
         return redirect()->route('fixedAssets')->with('status', 'Updated Successfully!');
     }
 
