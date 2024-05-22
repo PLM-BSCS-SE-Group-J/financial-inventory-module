@@ -32,7 +32,15 @@ return new class extends Migration
             ['AccountClass' => 'Projector', 'UseLife' => 5],
             ['AccountClass' => 'Fire Extinguisher', 'UseLife' => 5],
             ['AccountClass' => 'Basketball Hoop', 'UseLife' => 10],
-        
+            ['AccountClass' => 'Land Improvements', 'UseLife' => 10],
+            ['AccountClass' => 'Railways', 'UseLife' => 40],
+            ['AccountClass' => 'Runways/taxiways', 'UseLife' => 20],
+            ['AccountClass' => 'Office Equipment', 'UseLife' => 10],
+            ['AccountClass' => 'Furniture and Fixtures', 'UseLife' => 10],
+            ['AccountClass' => 'IT Equipment', 'UseLife' => 10],
+            ['AccountClass' => 'Airport Equipment', 'UseLife' => 10],
+            ['AccountClass' => 'Electrification', 'UseLife' => 10],
+            ['AccountClass' => 'Power and Energy Structures', 'UseLife' => 10],
         ]);
     }
 
