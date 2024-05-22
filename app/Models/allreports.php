@@ -28,5 +28,5 @@ class allreports extends Model
     public function fixedAssets()
     {
         return $this->belongsToMany(fixed_assets::class, 'fixed_asset_report', 'report_id', 'asset_id');
-    }    
+    }
 }

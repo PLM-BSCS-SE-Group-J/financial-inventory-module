@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('allreports', function (Blueprint $table) {
-            //
+        Schema::create('allreports', function (Blueprint $table) {
+        $table->id()->unique()->autoIncrement();
+        $table->string('EmpFirstName');
+        $table->string('EmpLastName');
+        $table->date('dateRequested');
+        $table->date('dateIssued');
+        $table->string('Remarks');
+        $table->string('selectedAssets');
         });
     }
 
@@ -21,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('allreports', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

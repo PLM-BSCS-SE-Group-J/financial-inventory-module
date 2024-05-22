@@ -27,6 +27,7 @@ return new class extends Migration
             $table->double('YearlyDep',12,2);
             $table->date('dateRetired')->nullable();
             $table->string('PersonCharge')->nullable();
+
         });
     }
 

@@ -15,6 +15,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@esbuild/win32-x64": "^0.21.3",
         "sweetalert2": "^11.10.8"
     }
 }
