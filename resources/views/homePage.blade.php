@@ -253,9 +253,9 @@
               </div>
             </div>
             <div class="interact-dashboard h-auto flex flex-col mb-2 bg-white rounded-2xl justify-between shadow-lg">
-              <div class="flex flex-col items-center mt-5 pt-2">
-                <p class="text-indigo-900 font-semibold text-4xl mt-2">Hello, Mara!</p>
-                <p class="text-gray-900 font-medium text-xl mt-4">What do you want to do today?</p>
+              <div class="flex flex-col items-center mt-5 pt-2" id="greeting-container">
+                <p class="text-indigo-900 font-semibold text-3xl mt-2" id="greeting-text"></p>
+                <p class="text-gray-900 font-medium text-xl mt-2">What do you want to do today?</p>
               </div>
               <div class="flex justify-center opacity-100">
                 <img src="storage/assets/officerworker.png" class="image-size">
@@ -315,6 +315,28 @@
 
   </div>
   <!--Main Div-->
+
+  <script>
+  // Get the current date and time
+  var now = new Date();
+  var hour = now.getHours();
+
+  // Define the greeting based on the time of day
+  var greeting;
+  if (hour >= 5 && hour < 12) {
+    greeting = "Good Morning";
+  } else if (hour >= 12 && hour < 18) {
+    greeting = "Good Afternoon";
+  } else {
+    greeting = "Good Evening";
+  }
+
+  // Set the greeting text
+  var greetingText = document.getElementById("greeting-text");
+  if (greetingText) {
+    greetingText.textContent = "Hello, " + greeting + "!";
+  }
+  </script>
 
   <!--Log Out Modal Script-->
   <script>
