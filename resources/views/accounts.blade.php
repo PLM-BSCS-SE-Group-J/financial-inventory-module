@@ -91,7 +91,7 @@
         <nav class="flex flex-col h-full w-full">
           <!--Financial Inventory Title-->
           <div class="flex items-center justify-center py-6 pl-4 pr-6">
-            <a href="homePage">
+            <a href="/">
               <span class="text-2xl font-semibold leading-10">Financial Inventory</span>
             </a>
           </div>

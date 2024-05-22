@@ -22,7 +22,7 @@ Route::get('/loginPage', function () {
     return view('loginPage');
 });
 
-Route::get('/homePage', function () {
+Route::get('/', function () {
 
     $reports = allreports::all();
 
