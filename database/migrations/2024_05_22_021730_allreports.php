@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('allreports', function (Blueprint $table) {
         $table->id()->unique()->autoIncrement();
+        $table->string('ReportTitle');
         $table->string('EmpFirstName');
         $table->string('EmpLastName');
         $table->date('dateRequested');

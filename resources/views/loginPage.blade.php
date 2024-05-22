@@ -83,7 +83,7 @@
             </div>
           </div>
           <div class="flex flex-col justify-center items-center login-button">
-            <button type="button" onclick="document.location='homePage'" class="w-full px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-centerlex">
+            <button type="button" onclick="document.location='/'" class="w-full px-4 py-2 bg-indigo-800 hover:bg-indigo-900 rounded-md shadow items-centerlex">
               <div class="text-white text-base font-medium leading-normal">Log in</div>
             </button>
           </div>
