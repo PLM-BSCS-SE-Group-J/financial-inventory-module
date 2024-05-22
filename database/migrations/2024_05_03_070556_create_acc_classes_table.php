@@ -15,24 +15,26 @@ return new class extends Migration
         Schema::create('acc_classes', function (Blueprint $table) {
             $table->id()->unique()->autoIncrement();
             $table->string('AccountClass');
+            $table->string('AccountTitle');
             $table->integer('UseLife');
+            $table->unsignedBigInteger('acc_ID');
+            $table->foreign('acc_ID')->references('id')->on('accounts');
         });
 
         DB::table('acc_classes')->insert([
-            ['AccountClass' => 'Wood', 'UseLife' =>  10],
-            ['AccountClass' => 'Mixed', 'UseLife' =>  20],
-            ['AccountClass' => 'Concrete', 'UseLife' =>  30],
-            ['AccountClass' => 'Library Books', 'UseLife' =>  5],
-            ['AccountClass' => 'Dental Equipment', 'UseLife' => 10],
-            ['AccountClass' => 'Laboratory Equipment', 'UseLife' => 10],
-            ['AccountClass' => 'Machineries', 'UseLife' => 10],
-            ['AccountClass' => 'Agricultural, Fishery and Forestry', 'UseLife' => 10],
-            ['AccountClass' => 'Computer Monitor', 'UseLife' => 7],
-            ['AccountClass' => 'Keyboard', 'UseLife' => 10],
-            ['AccountClass' => 'Projector', 'UseLife' => 5],
-            ['AccountClass' => 'Fire Extinguisher', 'UseLife' => 5],
-            ['AccountClass' => 'Basketball Hoop', 'UseLife' => 10],
-        
+            ['AccountTitle'=> 'School Buildings', 'AccountClass' => 'Wood', 'UseLife' =>  10, 'acc_ID' => 1],
+            ['AccountTitle'=> 'School Buildings', 'AccountClass' => 'Mixed', 'UseLife' =>  20, 'acc_ID' => 1],
+            ['AccountTitle'=> 'School Buildings', 'AccountClass' => 'Concrete', 'UseLife' =>  30, 'acc_ID' => 1],
+            ['AccountTitle'=> 'Books', 'AccountClass' => 'Library Books', 'UseLife' =>  5, 'acc_ID' => 13],
+            ['AccountTitle'=> 'Medical Equipment', 'AccountClass' => 'Dental Equipment', 'UseLife' => 10, 'acc_ID' => 7],
+            ['AccountTitle'=> 'Medical Equipment', 'AccountClass' => 'Laboratory Equipment', 'UseLife' => 10, 'acc_ID' => 7],
+            ['AccountTitle'=> 'Other Machinery and Equipment', 'AccountClass' => 'Machineries', 'UseLife' => 10, 'acc_ID' => 10],
+            ['AccountTitle'=> 'Other Machinery and Equipment', 'AccountClass' => 'Agricultural, Fishery and Forestry', 'UseLife' => 10, 'acc_ID' => 10],
+            ['AccountTitle'=> 'Information and Communication Technology', 'AccountClass' => 'Computer Monitor', 'UseLife' => 7, 'acc_ID' => 4],
+            ['AccountTitle'=> 'Information and Communication Technology', 'AccountClass' => 'Keyboard', 'UseLife' => 10, 'acc_ID' => 4],
+            ['AccountTitle'=> 'Information and Communication Technology', 'AccountClass' => 'Projector', 'UseLife' => 5, 'acc_ID' => 4],
+            ['AccountTitle'=> 'Disaster Response and Rescue Equipment', 'AccountClass' => 'Fire Extinguisher', 'UseLife' => 5 , 'acc_ID' => 5],
+            ['AccountTitle'=> 'Sports Equipment', 'AccountClass' => 'Basketball Hoop', 'UseLife' => 10, 'acc_ID' => 8],
         ]);
     }
 
