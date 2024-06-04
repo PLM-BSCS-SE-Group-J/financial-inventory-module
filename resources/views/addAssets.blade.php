@@ -31,10 +31,9 @@
           <span class="text-lg text-gray-500">Clicking Yes will log you out of the session.</span>
           <div class="flex justify-end pt-2 gap-4">
             <button onclick="hideLogoutDialog()">
-              <img class="rounded-s h-10 cursor-pointer" src="{{asset('storage/assets/Cancel.png')}}" alt="Cancel">
+              <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Cancel.png" alt="Cancel">
             </button>
-            <button onclick="document.location='Login Page.html'">
-              <img class="rounded-s h-10 cursor-pointer" src="{{asset('storage/assets/Log Out.png')}}" alt="Yes">
+            <button onclick="window.location.href = 'https://login.plmerp24.cloud/'">  <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
             </button>
           </div>
         </div>

@@ -43,6 +43,9 @@
   .arrow-margin2{
       margin-left: 60px;
   }
+  .marginlogout{
+      margin-left: -28px;
+  }
 </style>
 
 <body class="bg-neutral-100">
@@ -57,8 +60,7 @@
             <button onclick="hideLogoutDialog()">
               <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Cancel.png" alt="Cancel">
             </button>
-            <button onclick="document.location='Login Page.html'">
-              <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
+            <button onclick="window.location.href = 'https://login.plmerp24.cloud/'">  <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
             </button>
           </div>
         </div>
@@ -118,16 +120,11 @@
               <a href="viewReport" class="w-48 h-fit px-2 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
             </div>
           </div>
-          <!--Settings-->
-          <a href="" class="flex items-center mt-auto mb-2 hover:bg-indigo-900 py-1 pl-8 gap-5">
-            <img class="w-6 h-6" src="storage/assets/settings.png">
-            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Settings</span>
-          </a>
           <!--Logout-->
-          <div class="relative flex items-center mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
+          <div class="relative flex items-center mt-auto mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
             <button onclick="showLogoutDialog()" class="flex items-center gap-5">
               <img class="w-6 h-6" src="storage/assets/logout.png" alt="Logout Icon">
-              <span class="text-xl font-normal leading-7 text-white transition duration-300">Logout</span>
+              <span class="text-xl font-normal leading-7 marginlogout text-white transition duration-300">Logout</span>
             </button>
           </div>
         </nav>
