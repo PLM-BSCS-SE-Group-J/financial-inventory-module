@@ -19,6 +19,19 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.scroll-container::-webkit-scrollbar {
+          width: 8px;
+}
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
 </style>
 
 <body class="bg-neutral-100">
@@ -83,7 +96,7 @@
         <div class="flex h-[85%] mb-4 justify-center">
             <!--Generate Report Format-->
             <div class="tab flex flex-col h-full w-[50%] mb-auto px-4 py-3 bg-white rounded-2xl shadow-lg">
-              <div class="jumbotron h-full w-full flex flex-col justify-start p-4">
+              <div class="jumbotron h-full w-full flex flex-col justify-start p-4 overflow-auto scroll-container">
                 <form action="{{ url('updateAssets/'.$fixedassets->id)}}" method="POST">
                     @csrf
                     @method('PUT')
@@ -157,7 +170,7 @@
                           <input type="number" name="MonthlyDep" value="{{$fixedassets->MonthlyDep}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
                       </div>
                     </div>
-                    <div class="flex gap-3 mb-3 w-full">
+                    <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Date of Retirement</label>
                           <input type="date" name="dateRetired" value="{{$fixedassets->dateRetired}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"> 
@@ -165,6 +178,34 @@
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Person in Charge</label>
                           <input type="text" name="PersonCharge" value="{{$fixedassets->PersonCharge}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Person in Charge"> 
+                      </div>
+                    </div>
+                    <div class="flex gap-3 w-full">
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Supplier</label>
+                          <input type="text" name="d_supplier" value="{{$fixedassets->d_supplier}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
+                      </div>
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">PR No.</label>
+                          <input type="number" name="d_pr_no" value="{{$fixedassets->d_pr_no}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
+                      </div>
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">PO No.</label>
+                          <input type="number" name="d_po_no" value="{{$fixedassets->d_po_no}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
+                      </div>
+                    </div>
+                    <div class="flex gap-3 mb-3 w-full">
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Invoice No.</label>
+                          <input type="number" name="d_invoice_no" value="{{$fixedassets->d_invoice_no}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
+                      </div>
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Date of Invoice</label>
+                          <input type="date" name="d_date_invoice" value="{{$fixedassets->d_date_invoice}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
+                      </div>
+                      <div class="form-group mb-3 w-full">
+                          <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Place of Delivery</label>
+                          <input type="text" name="d_place_of_delivery" value="{{$fixedassets->d_place_of_delivery}}" readonly class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" required=""> 
                       </div>
                     </div>
                     <div class="form-group mt-8">

@@ -25,6 +25,12 @@ class delivered_asset extends Model
         'YearlyDep',
         'dateRetired',
         'PersonCharge',
+        'd_supplier',
+        'd_pr_no',
+        'd_po_no',
+        'd_invoice_no',
+        'd_date_invoice',
+        'd_place_of_delivery',
     ];
     protected $dateFormat = 'Y-m-d H:i:sO';
 }
