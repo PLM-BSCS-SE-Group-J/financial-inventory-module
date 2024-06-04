@@ -175,6 +175,12 @@ class FixedAssetsController extends Controller
         $fixedassets->d_unit_cost = $request->input('d_unit_cost');
         $fixedassets->PersonCharge = $request->input('PersonCharge');
         $fixedassets->dateRetired = $request->input('dateRetired');
+        $fixedassets->d_supplier = $request->input('d_supplier');
+        $fixedassets->d_pr_no = $request->input('d_pr_no');
+        $fixedassets->d_po_no = $request->input('d_po_no');
+        $fixedassets->d_invoice_no = $request->input('d_invoice_no');
+        $fixedassets->d_date_invoice = $request->input('d_date_invoice');
+        $fixedassets->d_place_of_delivery = $request->input('d_place_of_delivery');
         $fixedassets->timestamps = false;
     
         // Get today's date
