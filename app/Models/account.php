@@ -12,6 +12,6 @@ class account extends Model
     protected $table='accounts';
     protected $fillable = [
         'id',
-        'AccountTitle',
+        'd_category',
     ];
 }

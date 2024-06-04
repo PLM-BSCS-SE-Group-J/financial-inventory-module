@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\allreports;
-use App\Models\fixed_assets;
+use App\Models\delivered_asset;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Redirect;
 
@@ -31,7 +31,7 @@ class ReportController extends Controller
     
         $report->save();
     
-        $fixedassets = fixed_assets::all();
+        $fixedassets = delivered_asset::all();
         
         return view('genReport', [
             'report' => $report,
@@ -42,8 +42,8 @@ class ReportController extends Controller
     public function viewReports()
     {
         $reports = allreports::all();
-        $fixedassets = fixed_assets::all();
-        return view('viewReport', compact('reports', 'fixed_assets'));
+        $fixedassets = delivered_asset::all();
+        return view('viewReport', compact('reports', 'asset'));
 
     }
     
@@ -72,7 +72,7 @@ class ReportController extends Controller
         $reports = allreports::orderBy($sortColumn)->get();
     
         // Fetching only the AssetDesc column from fixed_assets table
-        $fixedassets = fixed_assets::pluck('AssetDesc');
+        $fixedassets = delivered_asset::pluck('d_description');
     
         // Pass the reports and fixed assets data to the view
         return view('viewReport', [

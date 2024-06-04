@@ -6,7 +6,7 @@ use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Models\acc_class;
 use App\Models\account;
-use App\Models\fixed_assets;
+use App\Models\delivered_asset;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -21,26 +21,26 @@ class FixedAssetsController extends Controller
     public function show(Request $request): Response
     {
 
-        $query = fixed_assets::query();
+        $query = delivered_asset::query();
         $date = $request->date_filter;
         $status = $request->status_filter;
         $title = $request->title_filter;
 
         switch($date){
             case 'this_week':
-                $query->whereBetween('dateAcquired',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                $query->whereBetween('date',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
                 break;
             case 'this_month':
-                $query->whereMonth('dateAcquired',Carbon::now()->month);
+                $query->whereMonth('date',Carbon::now()->month);
                 break;
             case 'this_year':
-                $query->whereYear('dateAcquired',Carbon::now()->year);
+                $query->whereYear('date',Carbon::now()->year);
                 break;
             case 'this_decade':
-                $query->whereBetween('dateAcquired',[Carbon::now()->startOfDecade(), Carbon::now()]);
+                $query->whereBetween('date',[Carbon::now()->startOfDecade(), Carbon::now()]);
                 break;
             case 'all_dates':
-                $query->whereBetween('dateAcquired',[Carbon::now()->startOfCentury(), Carbon::now()]);
+                $query->whereBetween('date',[Carbon::now()->startOfCentury(), Carbon::now()]);
                 break;
         }
         
@@ -58,46 +58,46 @@ class FixedAssetsController extends Controller
 
         switch($title){
             case 'school_build':
-                $query->where('AccountTitle','Like','%School Buildings%');
+                $query->where('d_category','Like','%School Buildings%');
                 break;
             case 'other_struc':
-                $query->where('AccountTitle','Like','%Other Structures%');
+                $query->where('d_category','Like','%Other Structures%');
                 break;
             case 'office_equip':
-                $query->where('AccountTitle','Like','%Office Equipment%');
+                $query->where('d_category','Like','%Office Equipment%');
                 break;
             case 'ict':
-                $query->where('AccountTitle','Like','%Information and Communication Technology%');
+                $query->where('d_category','Like','%Information and Communication Technology%');
                 break;
             case 'drre':
-                $query->where('AccountTitle','Like','%Disaster Response and Rescue Equipment%');
+                $query->where('d_category','Like','%Disaster Response and Rescue Equipment%');
                 break;
             case 'mpse':
-                $query->where('AccountTitle','Like','%Military, Police and Security Equipment%');
+                $query->where('d_category','Like','%Military, Police and Security Equipment%');
                 break;
             case 'medical_equip':
-                $query->where('AccountTitle','Like','%Medical Equipment%');
+                $query->where('d_category','Like','%Medical Equipment%');
                 break;
             case 'sports_equip':
-                $query->where('AccountTitle','Like','%Sports Equipment%');
+                $query->where('d_category','Like','%Sports Equipment%');
                 break;
             case 'tech_equip':
-                $query->where('AccountTitle','Like','%Technical and Scientific Equipment%');
+                $query->where('d_category','Like','%Technical and Scientific Equipment%');
                 break;
             case 'other_mac':
-                $query->where('AccountTitle','Like','%Other Machinery and Equipment%');
+                $query->where('d_category','Like','%Other Machinery and Equipment%');
                 break;
             case 'motor_vehicles':
-                $query->where('AccountTitle','Like','%Motor Vehicles%');
+                $query->where('d_category','Like','%Motor Vehicles%');
                 break;
             case 'furni_fix':
-                $query->where('AccountTitle','Like','%Furniture and Fixtures%');
+                $query->where('d_category','Like','%Furniture and Fixtures%');
                 break;
             case 'books':
-                $query->where('AccountTitle','Like','%Books%');
+                $query->where('d_category','Like','%Books%');
                 break;
             case 'display_all':
-                $query->where('AccountTitle','Like','%i%')->orWhere('AccountTitle','Like','%o%');
+                $query->where('d_category','Like','%i%')->orWhere('d_category','Like','%o%');
                 break;
         }
 
@@ -107,24 +107,24 @@ class FixedAssetsController extends Controller
     }
     public function DataInsert(Request $request){
 
-        $fixedassets = new fixed_assets;
+        $fixedassets = new delivered_asset;
 
         $today = Carbon::today()->format('Y-m-d');
         $current = Carbon::parse($today);
-        $fixedassets->AssetCode=$request->AssetCode;
-        $fixedassets->AssetDesc=$request->AssetDesc;
-        $fixedassets->AccountTitle=$request->AccountTitle;
+        $fixedassets->d_item_no=$request->d_item_no;
+        $fixedassets->d_description=$request->d_description;
+        $fixedassets->d_category=$request->d_category;
         $fixedassets->AccountClass=$request->AccountClass;
         $fixedassets->UseLife=$request->UseLife;
-        $fixedassets->dateAcquired=$request->dateAcquired;
-        $fixedassets->OrigCost=$request->OrigCost;
+        $fixedassets->date=$request->date;
+        $fixedassets->d_unit_cost=$request->d_unit_cost;
         
-        $salvageVal = $fixedassets->OrigCost * 0.05;
-        $fixedassets->YearlyDep= ($fixedassets->OrigCost - $salvageVal) / $fixedassets->UseLife;
+        $salvageVal = $fixedassets->d_unit_cost * 0.05;
+        $fixedassets->YearlyDep= ($fixedassets->d_unit_cost - $salvageVal) / $fixedassets->UseLife;
         $fixedassets->MonthlyDep=$fixedassets->YearlyDep/12;
         $fixedassets->timestamps=false;
-        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->dateAcquired);
-        $acquired = Carbon::parse($fixedassets->dateAcquired);
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->date);
+        $acquired = Carbon::parse($fixedassets->date);
         if($date->addYears($fixedassets->UseLife)<$today){
             $fixedassets->status="Expired";
         }
@@ -132,13 +132,12 @@ class FixedAssetsController extends Controller
             $fixedassets->status="Active";
         }
 
-        if($acquired == $current){
-            $fixedassets->NetbookVal=$fixedassets->OrigCost;
-        }
-        else{
-            $diffmonth = $acquired->diffInMonths($current);
-            $fixedassets->AccuDep=$fixedassets->MonthlyDep * $diffmonth;
-            $fixedassets->NetbookVal=$fixedassets->OrigCost - $fixedassets->AccuDep;
+        if ($acquired->equalTo($current)) {
+            $fixedassets->NetbookVal = $fixedassets->d_unit_cost;
+        } else {
+            $diffMonths = $acquired->diffInMonths($current);
+            $fixedassets->AccuDep = $fixedassets->MonthlyDep * $diffMonths;
+            $fixedassets->NetbookVal = $fixedassets->d_unit_cost - $fixedassets->AccuDep;
         }
         
         $fixedassets->save();
@@ -148,14 +147,14 @@ class FixedAssetsController extends Controller
 
     public function destroy($id){
         
-        $fixedassets = fixed_assets::find($id);
+        $fixedassets = delivered_asset::find($id);
         $fixedassets->delete();
         return redirect()->route('fixedAssets')->with('success','Deleted Successfully!');
     }
 
     public function edit($id)
     {
-        $fixedassets = fixed_assets::find($id);
+        $fixedassets = delivered_asset::find($id);
         $categoryData=account::all();
         $classData=acc_class::all();
         return view('editAssets', compact(['fixedassets','categoryData','classData']));
@@ -164,16 +163,16 @@ class FixedAssetsController extends Controller
     public function editAssets(Request $request, $id)
     {
         // Find the existing fixed asset record
-        $fixedassets = fixed_assets::find($id);
+        $fixedassets = delivered_asset::find($id);
     
         // Update the fixed asset fields from the request
-        $fixedassets->AssetCode = $request->input('AssetCode');
-        $fixedassets->AssetDesc = $request->input('AssetDesc');
-        $fixedassets->AccountTitle = $request->input('AccountTitle');
+        $fixedassets->d_item_no = $request->input('d_item_no');
+        $fixedassets->d_description = $request->input('d_description');
+        $fixedassets->d_category = $request->input('d_category');
         $fixedassets->AccountClass = $request->input('AccountClass');
         $fixedassets->UseLife = $request->input('UseLife');
-        $fixedassets->dateAcquired = $request->input('dateAcquired');
-        $fixedassets->OrigCost = $request->input('OrigCost');
+        $fixedassets->date = $request->input('date');
+        $fixedassets->d_unit_cost = $request->input('d_unit_cost');
         $fixedassets->PersonCharge = $request->input('PersonCharge');
         $fixedassets->dateRetired = $request->input('dateRetired');
         $fixedassets->timestamps = false;
@@ -183,13 +182,13 @@ class FixedAssetsController extends Controller
         $current = Carbon::parse($today);
     
         // Recalculate depreciation values
-        $salvageVal = $fixedassets->OrigCost * 0.05;
-        $fixedassets->YearlyDep = ($fixedassets->OrigCost - $salvageVal) / $fixedassets->UseLife;
+        $salvageVal = $fixedassets->d_unit_cost * 0.05;
+        $fixedassets->YearlyDep = ($fixedassets->d_unit_cost - $salvageVal) / $fixedassets->UseLife;
         $fixedassets->MonthlyDep = $fixedassets->YearlyDep / 12;
     
         // Parse the date acquired and determine status based on useful life
-        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->dateAcquired);
-        $acquired = Carbon::parse($fixedassets->dateAcquired);
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->date);
+        $acquired = Carbon::parse($fixedassets->date);
     
         // Check if the asset's useful life has expired
         if ($date->addYears($fixedassets->UseLife) < $today) {
@@ -200,12 +199,12 @@ class FixedAssetsController extends Controller
     
         // Calculate net book value and accumulated depreciation
         if ($acquired == $current) {
-            $fixedassets->NetbookVal = $fixedassets->OrigCost;
+            $fixedassets->NetbookVal = $fixedassets->d_unit_cost;
             $fixedassets->AccuDep = 0;
         } else {
             $diffmonth = $acquired->diffInMonths($current);
             $fixedassets->AccuDep = $fixedassets->MonthlyDep * $diffmonth;
-            $fixedassets->NetbookVal = $fixedassets->OrigCost - $fixedassets->AccuDep;
+            $fixedassets->NetbookVal = $fixedassets->d_unit_cost - $fixedassets->AccuDep;
         }
     
         // Save the updated record
@@ -218,7 +217,7 @@ class FixedAssetsController extends Controller
     public function search(Request $request){
         $search = $request->search;
 
-        $fixedassets = fixed_assets::where('AssetCode','Like','%'.$search.'%')->orWhere('AccountTitle','Like','%'.$search.'%')->get();
+        $fixedassets = delivered_asset::where('d_item_no','Like','%'.$search.'%')->orWhere('d_category','Like','%'.$search.'%')->get();
         return view('fixedAssets',compact('fixedassets'));
     }
     
@@ -228,9 +227,9 @@ class FixedAssetsController extends Controller
     
         // Fetch the fixed assets based on the selected IDs
         if (is_array($selectedAssetIds)) {
-            $fixedassets = fixed_assets::whereIn('id', $selectedAssetIds)->get();
+            $fixedassets = delivered_asset::whereIn('id', $selectedAssetIds)->get();
         } else {
-            $fixedassets = fixed_assets::where('id', $selectedAssetIds)->get();
+            $fixedassets = delivered_asset::where('id', $selectedAssetIds)->get();
         }
     
         // Extract user input from the request and decode it
@@ -254,8 +253,8 @@ class FixedAssetsController extends Controller
     
 
     public function import(Request $request){
-        $request->validate(['fixed_assets'=> ['required']]);
-        Excel::import(new UsersImport, $request->file('fixed_assets'));
+        $request->validate(['asset'=> ['required']]);
+        Excel::import(new UsersImport, $request->file('asset'));
 
         return redirect('/fixedAssets')->with('success', 'Uploaded Successfully!');
     }
@@ -272,7 +271,7 @@ class FixedAssetsController extends Controller
     }
 
     public function index(){
-        $fixedassets = fixed_assets::all();
+        $fixedassets = delivered_asset::all();
         return view('genReport',compact('fixedassets'));
    }
 
@@ -282,18 +281,18 @@ class FixedAssetsController extends Controller
        $sortBy = $request->query('sort_by');
    
        // Default sorting column
-       $sortColumn = 'AssetCode';
+       $sortColumn = 'd_item_no';
    
        // Check if the sorting parameter is provided and valid
        if ($sortBy === 'asset_desc') {
-           $sortColumn = 'AssetDesc';
+           $sortColumn = 'd_description';
        } elseif ($sortBy === 'date_acquired') {
-        $sortColumn = 'dateAcquired';
+        $sortColumn = 'date';
         $sortDirection = 'asc'; // Sort in ascending order for date acquired
        }
    
        // Fetch assets from the database and order them by the selected column
-       $fixedAssets = fixed_assets::orderBy($sortColumn)->get();
+       $fixedAssets = delivered_asset::orderBy($sortColumn)->get();
    
        // Return the view with the sorted assets
        return view('genReport', ['fixedassets' => $fixedAssets]);

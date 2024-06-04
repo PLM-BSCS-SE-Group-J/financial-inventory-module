@@ -137,15 +137,6 @@
     <div class="flex items-center space-x-4">
       <img class="w-116 h-20 rounded-xl" style="margin:10px" src="storage/assets/PLM LOGO.png" alt="Logo">
     </div>
-    <div class="relative flex items-center space-x-4 ml-auto">
-      <input type="text" class="block w-full h-10 rounded-lg border-0 py-1.5 pl-11 pr-24 bg-zinc-100 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Search Here">
-      <img class="absolute top-1/2 transform -translate-y-1/2 w-5 h-5" src="storage/assets/search.png" alt="Search Icon">
-    </div>
-    <div class="flex items-center space-x-4 ml-8 pr-8">
-      <img class="w-10 h-10" src="storage/assets/usericon.png" alt="Profile Picture">
-      <span class="text-lg text-gray-500">Mara Calinao</span>
-      <img class="w-3 h-2" src="storage/assets/dropdowndark.png" alt="arrow down">
-    </div>
     </nav>
     <!--Header-->
 
@@ -216,16 +207,19 @@
           <div class="overflow-auto border-8 border-white scroll-container">
             <table id="myTable" class="table-fixed ml-4 mr-4 mb-4 mt-4 w-auto shadow-lg border-collapse border border-slate-300">
               <div class="flex items-center">
-                <div class="relative flex items-center w-full space-x-4 mt-4">
-                  <!--Add Button Trigger-->
+                <div class="relative flex items-center justify-between w-full space-x-4 mt-4">
+
+                  <!-- Add Button Trigger
                   <a href="addAssets">
                     <img class="w-50 h-10" src="storage/assets/Add Button.png" alt="Add Button">
-                  </a>
+                  </a> -->
+
                   <!--Export Button Trigger-->
                   <a href="{{ route('export') }}">
                     <img class="w-50 h-10" src="storage/assets/Export Button.png" alt="Export to Excel">
                   </a>
-                  <!--Import Button Trigger-->
+
+                  <!-- Import Button Trigger
                   <div class="flex flex-1 items-center">
                     <form action="{{route('import')}}" method="POST" enctype="multipart/form-data" class="absolute">
                       @csrf
@@ -234,7 +228,8 @@
                       </button>
                       <input type="file" name="fixed_assets" class="ml-2" required>
                     </form>
-                  </div>
+                  </div> -->
+
                   <button class="btn btn-ghost" onclick="my_modal_1.showModal()">
                       <img src="storage/assets/filter.png" class="h-5" alt="Open Modal">
                   </button>
@@ -312,10 +307,10 @@
               </div>
               <thead class="bg-slate-100 sticky top-0">
                 <tr class="h-10">
-                  <th class="border border-slate-100" style="text-align: left;">Asset Code</th>
-                  <th class="border rowtext-margin text-left border-slate-100">Asset Description</th>
-                  <th class="border rowtext-margin text-left border-slate-100">Account Title</th>
-                  <th class="w-24 border rowtext-margin text-left border-slate-100">Status</th>
+                  <th class="w-32 border border-slate-100" style="text-align: left;">Asset Code</th>
+                  <th class="w-44 border rowtext-margin border-slate-100" style="text-align: left;">Asset Description</th>
+                  <th class="border rowtext-margin text-left border-slate-100" style="text-align: left;">Account Title</th>
+                  <th class="w-24 border rowtext-margin text-left border-slate-100" style="text-align: left;">Status</th>
                   <th class="w-32 border rowtext-margin text-left border-slate-100" style="text-align: left;">Date Acquired</th>
                   <th class="border rowtext-margin text-left border-slate-100" style="text-align: left;">Original Cost</th>
                   <th class="border rowtext-margin text-left border-slate-100" style="text-align: left;">Netbook Value</th>
@@ -326,24 +321,40 @@
                 </tr>
               </thead>
               <tbody class="bg-white">
-              @foreach($fixedassets as $data)
-                <tr class="h-8 hover:bg-gray-300">
-                  <td class="border text-center border-slate-100" style="text-align: left;">{{$data->AssetCode}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->AssetDesc}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->AccountTitle}}</td>
-                  <td class="border rowtext-margin border-slate-100">{{$data->status}}</td>
-                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">{{$data->dateAcquired}}</td>
-                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->OrigCost}}</td>
-                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->NetbookVal}}</td>
-                  <td class="border rowtext-margin border-slate-100 depreciation-cell" style="text-align: left;">₱{{$data->AccuDep}}</td>
-                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->YearlyDep}}</td>
-                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->MonthlyDep}}</td>
-                  <td class="flex flex-col border rowtext-margin border-slate-100">
-                    <a href="{{ url('editAssets/'.$data->id) }}" class="text-indigo-800 underline">View</a>
-                    <a href="{{ url('delete/'.$data->id) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
-                  </td> 
-                </tr>
-            @endforeach
+                  @foreach($fixedassets as $data)
+                      @php
+                          $categories = ['SCHOOL BUILDINGS', 'OTHER STRUCTURES', 'OFFICE EQUIPMENT', 'INFORMATION AND COMMUNICATION TECHNOLOGY EQUIPMENT', 'DISASTER RESPONSE AND RESCUE EQUIPMENT', 'MILITARY, POLICE AND SECURITY EQUIPMENT', 'MEDICAL EQUIPMENT', 'SPORTS EQUIPMENT', 'TECHNICAL AND SCIENTIFIC EQUIPMENT', 'OTHER MACHINERY AND EQUIPMENT', 'OTHER LAND IMPROVEMENTS', 'MOTOR VEHICLES', 'FURNITURE AND FIXTURES', 'BOOKS'];
+                      @endphp
+                      @if(in_array(strtoupper($data->d_category), array_map('strtoupper', $categories)))
+                          <tr class="h-8 hover:bg-gray-300">
+                              <td class="border text-center border-slate-100" style="text-align: left;">{{$data->d_item_no}}</td>
+                              <td class="border rowtext-margin border-slate-100">{{$data->d_description}}</td>
+                              <td class="border rowtext-margin border-slate-100">{{ucwords(strtolower($data->d_category))}}</td>
+                              @if($data->status == null)
+                                  <td class="border rowtext-margin border-slate-100">Active</td>
+                              @else
+                                  <td class="border rowtext-margin border-slate-100">{{$data->status}}</td>
+                              @endif
+                              <td class="border rowtext-margin border-slate-100" style="text-align: left;">{{$data->date}}</td>
+                              <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->d_unit_cost}}</td>
+                              @if($data->NetbookVal != null && $data->AccuDep != null && $data->YearlyDep != null && $data->MonthlyDep != null) 
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->NetbookVal}}</td>
+                                  <td class="border rowtext-margin border-slate-100 depreciation-cell" style="text-align: left;">₱{{$data->AccuDep}}</td>
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->YearlyDep}}</td>
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->MonthlyDep}}</td>
+                              @else
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left; color: red;">N/A Useful Life</td>
+                                  <td class="border rowtext-margin border-slate-100 depreciation-cell" style="text-align: left; color: red;">N/A Useful Life</td>
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left; color: red;">N/A Useful Life</td>
+                                  <td class="border rowtext-margin border-slate-100" style="text-align: left; color: red;">N/A Useful Life</td>
+                              @endif
+                              <td class="flex flex-col border rowtext-margin border-slate-100">
+                                  <a href="{{ url('editAssets/'.$data->id) }}" class="text-indigo-800 underline">View</a>
+                                  <a href="{{ url('delete/'.$data->id) }}" class="text-indigo-800 underline" onclick="confirmation(event)">Delete</a>
+                              </td> 
+                          </tr>
+                      @endif
+                  @endforeach
               </tbody>
             </table>
           </div>

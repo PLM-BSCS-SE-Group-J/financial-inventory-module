@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class fixed_assets extends Model
+class delivered_asset extends Model
 {
     use HasFactory;
+    protected $table = 'delivered_asset';
     public $timestamps = false;
     protected $fillable = [
-        'AssetCode',
-        'AssetDesc',
-        'AccountTitle',
+        'd_item_no',
+        'd_description',
+        'd_category',
         'AccountClass',
         'UseLife',
-        'dateAcquired',
-        'OrigCost',
+        'date',
+        'd_unit_cost',
         'NetbookVal',
         'status',
         'AccuDep',
