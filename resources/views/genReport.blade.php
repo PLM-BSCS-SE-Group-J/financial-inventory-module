@@ -421,13 +421,13 @@
       function getSortLabel(sortBy) {
           switch (sortBy) {
               case 'asset_code':
-                  return 'Asset Code';
+                  return 'd_item_no';
               case 'asset_desc':
-                  return 'Asset Description';
+                  return 'd_description';
               case 'date_acquired':
-                  return 'Date Acquired';
+                  return 'd_date_of_delivery';
               default:
-                  return 'Asset Code';
+                  return 'd_item_no';
           }
       }
 

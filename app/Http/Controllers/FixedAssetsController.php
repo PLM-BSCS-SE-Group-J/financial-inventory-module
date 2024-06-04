@@ -28,19 +28,19 @@ class FixedAssetsController extends Controller
 
         switch($date){
             case 'this_week':
-                $query->whereBetween('date',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                $query->whereBetween('d_date_of_delivery',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
                 break;
             case 'this_month':
-                $query->whereMonth('date',Carbon::now()->month);
+                $query->whereMonth('d_date_of_delivery',Carbon::now()->month);
                 break;
             case 'this_year':
-                $query->whereYear('date',Carbon::now()->year);
+                $query->whereYear('d_date_of_delivery',Carbon::now()->year);
                 break;
             case 'this_decade':
-                $query->whereBetween('date',[Carbon::now()->startOfDecade(), Carbon::now()]);
+                $query->whereBetween('d_date_of_delivery',[Carbon::now()->startOfDecade(), Carbon::now()]);
                 break;
             case 'all_dates':
-                $query->whereBetween('date',[Carbon::now()->startOfCentury(), Carbon::now()]);
+                $query->whereBetween('d_date_of_delivery',[Carbon::now()->startOfCentury(), Carbon::now()]);
                 break;
         }
         
@@ -116,15 +116,15 @@ class FixedAssetsController extends Controller
         $fixedassets->d_category=$request->d_category;
         $fixedassets->AccountClass=$request->AccountClass;
         $fixedassets->UseLife=$request->UseLife;
-        $fixedassets->date=$request->date;
+        $fixedassets->d_date_of_delivery=$request->d_date_of_delivery;
         $fixedassets->d_unit_cost=$request->d_unit_cost;
         
         $salvageVal = $fixedassets->d_unit_cost * 0.05;
         $fixedassets->YearlyDep= ($fixedassets->d_unit_cost - $salvageVal) / $fixedassets->UseLife;
         $fixedassets->MonthlyDep=$fixedassets->YearlyDep/12;
         $fixedassets->timestamps=false;
-        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->date);
-        $acquired = Carbon::parse($fixedassets->date);
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->d_date_of_delivery);
+        $acquired = Carbon::parse($fixedassets->d_date_of_delivery);
         if($date->addYears($fixedassets->UseLife)<$today){
             $fixedassets->status="Expired";
         }
@@ -171,7 +171,7 @@ class FixedAssetsController extends Controller
         $fixedassets->d_category = $request->input('d_category');
         $fixedassets->AccountClass = $request->input('AccountClass');
         $fixedassets->UseLife = $request->input('UseLife');
-        $fixedassets->date = $request->input('date');
+        $fixedassets->d_date_of_delivery = $request->input('d_date_of_delivery');
         $fixedassets->d_unit_cost = $request->input('d_unit_cost');
         $fixedassets->PersonCharge = $request->input('PersonCharge');
         $fixedassets->dateRetired = $request->input('dateRetired');
@@ -187,8 +187,8 @@ class FixedAssetsController extends Controller
         $fixedassets->MonthlyDep = $fixedassets->YearlyDep / 12;
     
         // Parse the date acquired and determine status based on useful life
-        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->date);
-        $acquired = Carbon::parse($fixedassets->date);
+        $date = Carbon::createFromFormat('Y-m-d', $fixedassets->d_date_of_delivery);
+        $acquired = Carbon::parse($fixedassets->d_date_of_delivery);
     
         // Check if the asset's useful life has expired
         if ($date->addYears($fixedassets->UseLife) < $today) {
@@ -286,8 +286,8 @@ class FixedAssetsController extends Controller
        // Check if the sorting parameter is provided and valid
        if ($sortBy === 'asset_desc') {
            $sortColumn = 'd_description';
-       } elseif ($sortBy === 'date_acquired') {
-        $sortColumn = 'date';
+       } elseif ($sortBy === 'd_date_of_delivery') {
+        $sortColumn = 'd_date_of_delivery';
         $sortDirection = 'asc'; // Sort in ascending order for date acquired
        }
    

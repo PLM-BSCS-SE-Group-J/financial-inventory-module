@@ -25,7 +25,7 @@ class UsersImport implements ToModel, WithStartRow
             'd_category' => $row[3],
             'AccountClass' => $row[4],
             'UseLife' => $row[5],
-            'date' => $row[6],
+            'd_date_of_delivery' => $row[6],
             'd_unit_cost' => $row[7],
             'NetbookVal' => $row[8],
             'status' => $row[9],

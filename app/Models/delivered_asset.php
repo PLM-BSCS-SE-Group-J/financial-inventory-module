@@ -16,7 +16,7 @@ class delivered_asset extends Model
         'd_category',
         'AccountClass',
         'UseLife',
-        'date',
+        'd_date_of_delivery',
         'd_unit_cost',
         'NetbookVal',
         'status',

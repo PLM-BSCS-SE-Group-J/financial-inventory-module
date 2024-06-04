@@ -335,7 +335,7 @@
                               @else
                                   <td class="border rowtext-margin border-slate-100">{{$data->status}}</td>
                               @endif
-                              <td class="border rowtext-margin border-slate-100" style="text-align: left;">{{$data->date}}</td>
+                              <td class="border rowtext-margin border-slate-100" style="text-align: left;">{{$data->d_date_of_delivery}}</td>
                               <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->d_unit_cost}}</td>
                               @if($data->NetbookVal != null && $data->AccuDep != null && $data->YearlyDep != null && $data->MonthlyDep != null) 
                                   <td class="border rowtext-margin border-slate-100" style="text-align: left;">₱{{$data->NetbookVal}}</td>

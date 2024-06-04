@@ -345,7 +345,7 @@
               document.querySelector('input[name="d_description"]').value = data.d_description;
               document.querySelector('select[name="d_category"]').value = data.d_category;
               document.querySelector('select[name="AccountClass"]').value = data.AccountClass;
-              document.querySelector('input[name="date"]').value = data.date;
+              document.querySelector('input[name="d_date_of_delivery"]').value = data.d_date_of_delivery;
               document.querySelector('input[name="UseLife"]').value = data.UseLife;
               document.querySelector('input[name="d_unit_cost"]').value = data.d_unit_cost;
               document.querySelector('input[name="NetbookVal"]').value = data.NetbookVal;
