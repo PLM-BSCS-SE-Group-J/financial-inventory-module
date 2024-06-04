@@ -63,7 +63,7 @@
        <p>{{$data->UseLife}}</p>
 
        <h2>Date Acquired</h2>
-       <p>{{$data->date}}</p>
+       <p>{{$data->d_date_of_delivery}}</p>
 
        <h2>Original Cost</h2>
        <p>{{$data->d_unit_cost}}</p>
