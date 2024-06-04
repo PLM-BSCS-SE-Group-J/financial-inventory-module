@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FixedAssetsController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\VerifyController;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 use App\Models\allreports;
@@ -100,3 +101,4 @@ Route::post('/genReport', [ReportController::class, 'generateReport'])->name('re
 Route::get('deleteReport/{ReportTitle}', [ReportController::class,'destroy']);
 
 Route::get('/report/{ReportTitle}', [ReportController::class, 'show']);
+Route::get('/verify', [VerifyController::class, 'index']);

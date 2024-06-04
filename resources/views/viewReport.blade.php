@@ -115,8 +115,7 @@
             <button onclick="hideLogoutDialog()">
               <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Cancel.png" alt="Cancel">
             </button>
-            <button onclick="document.location='Login Page.html'">
-              <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
+            <button onclick="window.location.href = 'https://login.plmerp24.cloud/'">  <img class="rounded-s h-10 cursor-pointer" src="storage/assets/Log Out.png" alt="Yes">
             </button>
           </div>
         </div>
@@ -168,13 +167,8 @@
               <a href="viewReport" class="w-48 h-fit ml-8 pl-4 pr-8 rounded-md hover:bg-neutral-100 hover:text-black">View All Reports</a>
             </div>
           </div>
-          <!--Settings-->
-          <a href="" class="flex items-center mt-auto mb-2 hover:bg-indigo-900 py-1 pl-8 gap-5">
-            <img class="w-6 h-6" src="storage/assets/settings.png">
-            <span class="w-full text-xl font-normal leading-7 text-white transition duration-300">Settings</span>
-          </a>
           <!--Logout-->
-          <div class="relative flex items-center mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
+          <div class="relative flex items-center mt-auto mb-8 hover:bg-indigo-900 py-1 pl-8 gap-5">
             <button onclick="showLogoutDialog()" class="flex items-center gap-5">
               <img class="w-6 h-6" src="storage/assets/logout.png" alt="Logout Icon">
               <span class="text-xl font-normal leading-7 text-white transition duration-300">Logout</span>
