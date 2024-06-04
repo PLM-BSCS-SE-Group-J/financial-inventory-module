@@ -227,10 +227,14 @@ strong {
     @if(count($fixedassets))
       @foreach($fixedassets as $index => $data)
         <tr>
-          <td>{{$data->AssetCode}}</td>
-          <td>{{$data->AssetDesc}}</td>
-          <td>{{$data->AccountTitle}}</td>
+          <td>{{$data->d_item_no}}</td>
+          <td>{{$data->d_description}}</td>
+          <td>{{ucwords(strtolower($data->d_category))}}</td> 
+          @if($data->AccountClass == null)
+          <td>-----</td>
+          @else
           <td>{{$data->AccountClass}}</td>
+          @endif
           <td>P{{ number_format(floatval($data->NetbookVal), 2) }}</td>
           <td>P{{ number_format(floatval($data->AccuDep), 2) }}</td>
         </tr>

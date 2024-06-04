@@ -48,13 +48,13 @@
   @if(count($fixedassets))
     @foreach($fixedassets as $data)
        <h2>Asset Code</h2>
-       <p>{{$data->AssetCode}}</p>
+       <p>{{$data->d_item_no}}</p>
 
        <h2>Asset Description</h2>
-       <p>{{$data->AssetDesc}}</p>
+       <p>{{$data->d_description}}</p>
 
        <h2>Account Title</h2>
-       <p>{{$data->AccountTitle}}</p>
+       <p>{{$data->d_category}}</p>
 
        <h2>Account Classification</h2>
        <p>{{$data->AccountClass}}</p>
@@ -63,10 +63,10 @@
        <p>{{$data->UseLife}}</p>
 
        <h2>Date Acquired</h2>
-       <p>{{$data->dateAcquired}}</p>
+       <p>{{$data->d_date_of_delivery}}</p>
 
        <h2>Original Cost</h2>
-       <p>{{$data->OrigCost}}</p>
+       <p>{{$data->d_unit_cost}}</p>
 
        <h2>Netbook Value</h2>
        <p>{{$data->NetbookVal}}</p>

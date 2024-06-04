@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\category;
+use App\Models\categories;
 class products extends Model
 {
     use HasFactory;
     protected $fillable = [
         'id',
-        'AccountTitle',
+        'd_category',
         'AccountClass',
         'UseLife',
     ];

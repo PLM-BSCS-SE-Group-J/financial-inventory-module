@@ -117,15 +117,6 @@
       <div class="flex items-center space-x-4">
         <img class="w-116 h-20 rounded-xl" style="margin:10px" src="storage/assets/PLM LOGO.png" alt="Logo">
       </div>
-      <div class="relative flex items-center space-x-4 ml-auto">
-        <input type="text" class="block w-full h-10 rounded-lg border-0 py-1.5 pl-11 pr-24 bg-zinc-100 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Search Here">
-        <img class="absolute top-1/2 transform -translate-y-1/2 w-5 h-5" src="storage/assets/search.png" alt="Search Icon">
-      </div>
-      <div class="flex items-center space-x-4 ml-8 pr-8">
-        <img class="w-10 h-10" src="storage/assets/usericon.png" alt="Profile Picture">
-        <span class="text-lg text-gray-500">Mara Calinao</span>
-        <img class="w-3 h-2" src="storage/assets/dropdowndark.png" alt="arrow down">
-      </div>
       </nav>
     <!--Header-->
 
@@ -272,7 +263,7 @@
                                   <label class="checkbox-container">
                                       <input type="checkbox" class="asset-checkbox" name="selectedAssets[]" value="{{$data->id}}">
                                       <span class="checkmark"></span>
-                                      {{$data->AssetDesc}}
+                                      {{$data->d_description}}
                                   </label>
                               </div>
                           @endforeach
@@ -326,7 +317,7 @@
                 const assetData = getAssetDataById(assetId);
 
                 appendHiddenInput('assetIds[]', assetId);
-                appendHiddenInput('assetDescs[]', assetData.AssetDesc);
+                appendHiddenInput('assetDescs[]', assetData.d_description);
             }
         });
 
@@ -430,13 +421,13 @@
       function getSortLabel(sortBy) {
           switch (sortBy) {
               case 'asset_code':
-                  return 'Asset Code';
+                  return 'd_item_no';
               case 'asset_desc':
-                  return 'Asset Description';
+                  return 'd_description';
               case 'date_acquired':
-                  return 'Date Acquired';
+                  return 'd_date_of_delivery';
               default:
-                  return 'Asset Code';
+                  return 'd_item_no';
           }
       }
 

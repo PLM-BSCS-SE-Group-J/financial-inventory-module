@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\fixed_assets;
+use App\Models\delivered_asset;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -15,7 +15,7 @@ class UsersExport implements FromCollection, WithHeadings, WithStyles
     */
     public function collection()
     {
-        return fixed_assets::all();
+        return delivered_asset::all();
     }
     public function headings() :array
     {

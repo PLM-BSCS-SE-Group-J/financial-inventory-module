@@ -90,7 +90,7 @@
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Asset Code</label>
-                          <input type="text" name="AssetCode" value="{{$fixedassets->AssetCode}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
+                          <input type="text" name="d_item_no" readonly value="{{$fixedassets->d_item_no}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Status</label>
@@ -103,40 +103,40 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Asset Description</label>
-                        <input type="text" name="AssetDesc" value="{{$fixedassets->AssetDesc}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
+                        <input type="text" name="d_description" readonly value="{{$fixedassets->d_description}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
                     </div>
                     <div class="form-group mb-3">
                         <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <select name="AccountTitle" class ="form-select w-full dropdown-border">
-                            <option value="{{$fixedassets->AccountTitle}}" selected="true">{{$fixedassets->AccountTitle}}</option>
+                        <select name="d_category" class ="form-select w-full dropdown-border">
+                            <option value="{{$fixedassets->d_category}}" selected="true">{{$fixedassets->d_category}}</option>
                               @foreach ($categoryData as $cat)
-                                <option value="{{$cat->AccountTitle}}">{{$cat->AccountTitle}}</option>
+                                <option value="{{$cat->d_category}}">{{$cat->d_category}}</option>
                               @endforeach
                         </select> 
                     </div>
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Classification</label>
-                          <select name="AccountClass" class ="form-select w-full dropdown-border">
+                          <select id="accountClassDropdown" name="AccountClass" class ="form-select w-full dropdown-border">
                             <option value="{{$fixedassets->AccountClass}}" selected="true">{{$fixedassets->AccountClass}}</option>
                               @foreach ($classData as $class)
-                                <option data-price="{{$class->UseLife}}"value="{{$class->AccountClass}}">{{$class->AccountClass}}</option>
+                                <option data-price="{{$class->UseLife}}" value="{{$class->AccountClass}}">{{$class->AccountClass}}</option>
                               @endforeach
                           </select>
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Date Acquired</label>
-                          <input type="date" name="dateAcquired" value="{{$fixedassets->dateAcquired}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
+                          <input type="date" name="d_date_of_delivery" readonly value="{{$fixedassets->d_date_of_delivery}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">UseLife</label>
-                          <input type="number" name="UseLife" readonly value="{{$fixedassets->UseLife}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
+                          <input type="number" id="useLifeInput" name="UseLife" readonly value="{{$fixedassets->UseLife}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Account Classification" required=""> 
                       </div>
                     </div>
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Original Cost</label>
-                          <input type="number" name="OrigCost" value="{{$fixedassets->OrigCost}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
+                          <input type="number" name="d_unit_cost" readonly value="{{$fixedassets->d_unit_cost}}" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
                       </div>
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-base text-left font-medium text-gray-900 dark:text-white">Netbook Value</label>
@@ -196,6 +196,29 @@
       $(this).find(':selected').data('price')
       );
     });
+  </script>
+
+  <!--Auto change use life based on Acc Class-->
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const accountClassDropdown = document.getElementById('accountClassDropdown');
+          const useLifeInput = document.getElementById('useLifeInput');
+
+          // Event listener for change event on AccountClass dropdown
+          accountClassDropdown.addEventListener('change', function () {
+              // Get the selected option value
+              const selectedOption = this.value;
+
+              // Perform an AJAX request to get the UseLife value based on the selected AccountClass
+              fetch(`{{ url('getUseLife') }}/${selectedOption}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      // Update the UseLife input with the retrieved value
+                      useLifeInput.value = data.useLife;
+                  })
+                  .catch(error => console.error('Error:', error));
+          });
+      });
   </script>
 
   <!--Log Out Modal Script-->

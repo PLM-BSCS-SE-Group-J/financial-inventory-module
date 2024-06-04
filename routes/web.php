@@ -49,6 +49,7 @@ Route::get('/addAssets',[FixedAssetsController::class,'catfunct']);
 // For Editing Fixed Assets page:
 Route::get('editAssets/{id}',[FixedAssetsController::class, 'edit'])->name('assets.edit');
 Route::put('updateAssets/{id}', [FixedAssetsController::class, 'editAssets']);
+Route::get('getUseLife/{accountClass}', [AccountController::class, 'getUseLife']);
 
 
 //For Excel Import and Export

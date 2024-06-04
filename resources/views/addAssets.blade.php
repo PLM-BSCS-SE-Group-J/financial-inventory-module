@@ -89,19 +89,19 @@
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-2 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Code</label>
-                          <input type="text" name="AssetCode" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
+                          <input type="text" name="d_item_no" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Code" required=""> 
                       </div>
                     </div>
                     <div class="form-group mb-1">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Asset Description</label>
-                        <input type="text" name="AssetDesc" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
+                        <input type="text" name="d_description" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Asset Description" required=""> 
                     </div>
                     <div class="form-group mb-1">
                         <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Account Title</label>
-                        <select name="AccountTitle" class ="form-select w-full dropdown-border">
+                        <select name="d_category" class ="form-select w-full dropdown-border">
                             <option value="0" disabled="true" selected="true">Select Account Title</option>
                               @foreach ($categoryData as $cat)
-                                <option value="{{$cat->AccountTitle}}">{{$cat->AccountTitle}}</option>
+                                <option value="{{$cat->d_category}}">{{$cat->d_category}}</option>
                               @endforeach
                         </select> 
                     </div>
@@ -123,11 +123,11 @@
                     <div class="flex gap-3 w-full">
                       <div class="form-group mb-3 w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Date Acquired</label>
-                          <input type="date" name="dateAcquired" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
+                          <input type="date" name="d_date_of_delivery" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required=""> 
                       </div>
                       <div class="form-group w-full">
                           <label class="block mb-2 text-left text-base font-medium text-gray-900 dark:text-white">Original Cost</label>
-                          <input type="number" name="OrigCost" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
+                          <input type="number" name="d_unit_cost" value="" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Original Cost" required=""> 
                       </div>
                     </div>
                     <div class="flex gap-3 w-full">
